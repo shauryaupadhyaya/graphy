@@ -1,0 +1,133 @@
+#heroTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+#heroTitle h1{
+    margin: 0;
+    font-size: 3rem;
+}
+
+#heroTitle p{
+    margin: 0;
+}
+
+#about, #tools, #team{
+    margin: 0 5vw;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+.section-header{
+    font-size: 1.8rem;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.tool-cards{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.tool-card{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 0;
+}
+
+.tool-header{
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.tool-desc{
+    margin: 0;
+}
+
+#footer{
+    margin-top: 60px;
+    padding: 25px 0 15px;
+    border-top: 1px solid black;
+}
+
+.footer-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.footer-main{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin: 0 30px;
+}
+
+.footerhead{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tools{
+    margin: 0;
+}
+
+#footerTitle{
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.tools a{
+    text-decoration: none;
+    color: black;
+}
+
+.quick-links{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#linkTitle{
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+#quickLinks{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#quickLinks a{
+    text-decoration: none;
+    color: black;
+}
+
+.footer-bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px black solid;
+    padding: 20px 30px 0;
+}
+
+.footer-bottom p{
+    margin: 0;
+}
+
+.footer-bottom p a{
+    text-decoration: none;
+    color: #000000;
+}
