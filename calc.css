@@ -181,6 +181,7 @@ body{
     gap: 50px;
     align-items: center;
     width: 100%;
+    margin-bottom: 30px;
 }
 
 .top-controls > .row:first-child{
@@ -259,4 +260,107 @@ body{
 #downarrow{
     grid-column: 2;
     grid-row: 3;
+}
+
+.fractions,
+.roots,
+.powers,
+.square,
+.logs,
+.sine,
+.cosine,
+.tangent{
+    position: relative;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fractions > button:first-child,
+.roots > button:first-child,
+.powers > button:first-child,
+.square > button:first-child,
+.logs > button:first-child,
+.sine > button:first-child,
+.cosine > button:first-child,
+.tangent > button:first-child{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 5px;
+    color: #f2f2f2;
+    background: #454545;
+    border: 1px solid #777777;
+    font-size: 1rem;
+}
+
+.fractions > .shift,
+.roots > .shift,
+.powers > .shift,
+.square > .shift,
+.logs > .shift,
+.sine > .shift,
+.cosine > .shift,
+.tangent > .shift{
+    display: none;
+}
+
+.fractions::before,
+.roots::before,
+.powers::before,
+.square::before,
+.logs::before,
+.sine::before,
+.cosine::before,
+.tangent::before{
+    position: absolute;
+    top: -15px;
+    left: 50px;
+    z-index: 2;
+    color: #f3dc79;
+    font-family: inherit;
+    font-size: 0.75em;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.fractions::before{
+    content: 'a x/y';
+}
+
+.roots::before{
+    content: 'ⁿ√x';
+}
+
+.powers::before{
+    content: 'x⁻¹';
+}
+
+.square::before{
+    content: 'lg';
+}
+
+.logs::before{
+    content: 'ln';
+}
+
+.sine::before{
+    content: 'sin⁻¹';
+}
+
+.cosine::before{
+    content: 'cos⁻¹';
+}
+
+.tangent::before{
+    content: 'tan⁻¹';
+}
+
+.calcbuttons > .row:not(.arrow-row){
+    margin-top: 10px;
 }
