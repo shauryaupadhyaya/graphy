@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator</title>
+    <link rel="stylesheet" href="calc.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="nav-wrapper">
+            <div class="nav">
+                <a href="index.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8z"/>
+                    </svg>
+                </a>
+
+                <a href="calc.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
+                        <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                        <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </a>
+
+                <a href="graphing.html">
+                    <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/>
+                        <path d="m19 9-5 5-4-4-3 3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>      
+        
+        <div class="main">
+            <div class="calc-wrapper">
+                <div class="calc">
+                    <div class="calcheader">
+                        <h2 class="calctitle">Graphy</h2>
+                        <p class="calcdesc">Scientific Calculator</p>
+                    </div>
+
+                    <div class="display">
+                        <div class="expression" id="expression">6 + 7</div>
+                        <div class="result" id="result">67</div>
+                    </div>
+
+                    <div class="calcbuttons">
+                        <div class="top-controls">
+                            <div class="row">
+                                <button class="on" data-value="on">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                                        <line x1="12" y1="2" x2="12" y2="12"></line>
+                                    </svg>
+                                </button>
+
+                                <button class="home" data-value="home">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                        <polyline points="9 22 9 12 15 12 15 22"/>
+                                    </svg>
+                                </button>
+
+                                <button class="settings" data-value="settings">
+                                    <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+
+                                <button class="shiftbtn" data-value="shift">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shift-thick-long" viewBox="0 0 16 16">
+                                        <path d="M6.9 1.15a1.5 1.5 0 0 1 2.2 0l6.35 6.3a1.5 1.5 0 0 1-1.06 2.55H12.5v5a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-5H1.61a1.5 1.5 0 0 1-1.06-2.55zM14.39 8.5 8 2.11 1.61 8.5H4.5a1 1 0 0 1 1 1v5.5h5v-5.5a1 1 0 0 1 1-1z"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <div class="row arrow-row">
+                                <button class="arrow" id="uparrow">↑</button>
+                                <button class="arrow" id="rightarrow">→</button>
+                                <button class="ok" id="ok">OK</button>
+                                <button class="arrow" id="leftarrow">←</button>
+                                <button class="arrow" id="downarrow">↓</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="fractions">
+                                <button class="fraction" aria-label="Fraction">
+                                    <math display="block">
+                                        <mfrac>
+                                            <mi>x</mi>
+                                            <mi>y</mi>
+                                        </mfrac>
+                                    </math>
+                                </button>
+                                <button class="mixedfraction shift">
+                                    <math display="block">
+                                        <mrow>
+                                            <mi>a</mi>
+                                            <mspace width="0.3em"/>
+                                            <mfrac>
+                                                <mi>x</mi>
+                                                <mi>y</mi>
+                                            </mfrac>
+                                        </mrow>
+                                    </math>
+                                </button>
+                            </div>
+
+                            <div class="roots">
+                                <button class="sqrt">
+                                    √x
+                                </button>
+                                <button class="root shift">
+                                    ⁿ√x
+                                </button>
+                            </div>
+
+                            <div class="powers">
+                                <button class="power">
+                                    xⁿ
+                                </button>
+                                <button class="power-1 shift">
+                                    x⁻¹
+                                </button>
+                            </div>
+
+                            <div class="square">
+                                <button class="squared">
+                                    x²
+                                </button>
+                                <button class="lg shift">
+                                    lg
+                                </button>
+                            </div>
+
+                            <div class="logs">
+                                <button class="log">
+                                    log
+                                </button>
+                                <button class="ln shift">
+                                    ln
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="sine">
+                                <button class="sin">sin</button>
+                                <button class="sin-1 shift">sin⁻¹</button>
+                            </div>
+                            <div class="cosine">
+                                <button class="cos">cos</button>
+                                <button class="cos-1 shift">cos⁻¹</button>
+                            </div>
+                            <div class="tangent">
+                                <button class="tan">tan</button>
+                                <button class="tan-1 shift">tan⁻¹</button>
+                            </div>
+                            <button class="openbracket">(</button>
+                            <button class="closebracket">)</button>
+                        </div>
+
+                        <div class="numrows">
+                            <div class="numrow">
+                                <button class="num" id="7">7</button>
+                                <button class="num" id="8">8</button>
+                                <button class="num" id="9">9</button>
+                                <button class="delete" id="delete">⌫</button>
+                                <button class="allclear" id="allclear">AC</button>
+                            </div>
+
+                            <div class="numrow">
+                                <button class="num" id="4">4</button>
+                                <button class="num" id="5">5</button>
+                                <button class="num" id="6">6</button>
+                                <button class="multiply" id="multiply">×</button>
+                                <button class="divide" id="divide">÷</button>
+                            </div>
+
+                            <div class="numrow">
+                                <button class="num" id="1">1</button>
+                                <button class="num" id="2">2</button>
+                                <button class="num" id="3">3</button>
+                                <button class="addition" id="addition">+</button>
+                                <button class="subtraction" id="subtraction">-</button>
+                            </div>
+
+                            <div class="numrow">
+                                <button class="num" id="0">0</button>
+                                <button class="decimal" id="decimal">.</button>
+                                <button class="tenpower" id="tenpower">×10ⁿ</button>
+                                <button class="format" id="format">Format</button>
+                                <button class="exe" id="exe">=</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="calc.js"></script>
+</body>
+</html>
