@@ -16,7 +16,7 @@
 
     <h3>Supported Equations</h3>
     <p id="supported-item">1. Algebraic Equations & Functions</p>
-    <p id="supported-subtitle">Graphy supports standard algebraic equations in the graphing calculator.<br> This is achieved through the Marching Squares algorithm, but at a very basic level.<br>Examples (of supported equations):</p>
+    <p id="item-subtitle">Graphy supports standard algebraic equations in the graphing calculator.<br> This is achieved through the Marching Squares algorithm, but at a very basic level.<br>Examples (of supported equations):</p>
     <math>
         <mrow class="start-mrow">
             <msup><mi>x</mi><mn>2</mn></msup>
@@ -56,7 +56,7 @@
         </mrow>
     </math>
     <p id="supported-item">2. Straight straight lines</p>
-    <p id="supported-subtitle">Graphy supports very straight straight lines. hehe. <br>Examples:</p>
+    <p id="item-subtitle">Graphy supports very straight straight lines. hehe. <br>Examples:</p>
     <math>
         <mrow class="start-mrow">
             <mi>x</mi>
@@ -70,7 +70,7 @@
         </mrow>
     </math>
     <p id="supported-item">3. Trignometric Identities</p>
-    <p id="supported-subtitle">The following trignometric identities are supported: 
+    <p id="item-subtitle">The following trignometric identities are supported: 
     </p>
     <math>
         <mtable>
@@ -124,9 +124,9 @@
             </mtr>
         </mtable>
     </math>
-    <p id="supported-subtitle">The support of these identies is established through the Math.JS library, delivered to the HTML file via a CDN.</p>
+    <p id="item-subtitle">The support of these identies is established through the Math.JS library, delivered to the HTML file via a CDN.</p>
     <p id="supported-item">4. Circle Equations</p>
-    <p id="supported-subtitle">Circle equations are very interesting, and these equations CAN be plotted onto Graphy!</p>
+    <p id="item-subtitle">Circle equations are very interesting, and these equations CAN be plotted onto Graphy!</p>
     <math>
         <msup class="start-mrow"><mi>x</mi><mn>2</mn></msup>
         <mo>+</mo>
@@ -134,7 +134,7 @@
         <mo>=</mo>
         <msup><mtext>radius</mtext><mn>2</mn></msup>
     </math>
-    <p id="supported-subtitle">Above is the format for circle equations<br>Examples:</p>
+    <p id="item-subtitle">Above is the format for circle equations<br>Examples:</p>
     <math>
         <mrow id="start-mrow">
             <msup>
@@ -161,5 +161,142 @@
     <p></p>
     <h3>Unsupported Equations & Formulae (coming soon and/or interesting)</h3>
     <p class="section-subtitle">This section includes both unsupported equations and equations that are interesting. <br> This is one place to see all equations you may ever need. It might or might not be used in Graphy.</p>
+    <br>
+    <p>1. Summation</p>
+    <p id="item-subtitle">Summation is a concept usually taught in higher grades of schools but this is a very basic example. It will likely be added once we finish with more common needs. <br>But basically is the addition of a sequence of numbers, functions, vectors, or other mathematical objects to find their total sum.</p>
+    <math>
+        <munderover>
+            <mo>&sum;</mo>
+            <mrow>
+                <mi>i</mi>
+                <mo>=</mo>
+                <mn>1</mn>
+            </mrow>
+            <mi>n</mi>
+        </munderover>
+        <msub>
+            <mi>x</mi>
+            <mi>i</mi>
+        </msub>
+    </math>
+    <p id="item-subtitle">The Sigma Symbol (yes Sigma) - &sum;; - tells you to add them all together. <br>The part <math><mi>i</mi><mo>=</mo><mn>1</mn></math> tells us to start from the first element <br>The <math><mi>n</mi></math> tells us to stop at the last item, where <math><mi>n</mi></math> is the total count of items. <br>Finally, the <math><msub><mi>x</mi><mi>i</mi></msub></math> represents the placeholder for each individual value in the list.</p>
+    <p id="item-subtitle">Here is an example of the answer from the Summation equation above, assuming n = 4</p>
+    <p id="item-subtitle">We have the following items in a list: </p>
+    <math>
+        <mtable>
+            <mtr>
+                <mtd>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>1</mn>
+                    </msub>
+                    <mo>=</mo>
+                    <mn>8</mn>
+                </mtd>
+            </mtr>
+            <mtr>
+                <mtd>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>2</mn>
+                    </msub>
+                    <mo>=</mo>
+                    <mn>10</mn>
+                </mtd>
+            </mtr>
+            <mtr>
+                <mtd>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>3</mn>
+                    </msub>
+                    <mo>=</mo>
+                    <mn>7</mn>
+                </mtd>
+            </mtr>
+            <mtr>
+                <mtd>
+                    <msub>
+                        <mi>x</mi>
+                        <mn>4</mn>
+                    </msub>
+                    <mo>=</mo>
+                    <mn>9</mn>
+                </mtd>
+            </mtr>
+        </mtable>
+    </math>
+    <p id="item-subtitle">Expanding our summation <math><munderover><mo>&sum;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>x</mi><mi>i</mi></msub></math> we get:</p>
+    <math class="start-mrow">
+        <msub>
+            <mi>x</mi>
+            <mn>1</mn>
+        </msub>
+        <mo>+</mo>
+        <msub>
+            <mi>x</mi>
+            <mn>2</mn>
+        </msub>
+        <mo>+</mo>
+        <msub>
+            <mi>x</mi>
+            <mn>3</mn>
+        </msub>
+        <mo>+</mo>
+        <msub>
+            <mi>x</mi>
+            <mn>4</mn>
+        </msub>
+        <mo>=</mo>
+        <mn>8</mn>
+        <mo>+</mo>
+        <mn>10</mn>
+        <mo>+</mo>
+        <mn>7</mn>
+        <mo>+</mo>
+        <mn>9</mn>
+        <mo>=</mo>
+        <mn>34</mn>
+    </math>
+    <p>2. Combinatorics</p>
+    <p id="item-subtitle">Combinatorics is a part of math focused on the study, counting, arrangement, and selection of elements within systems (number systems). </p>
+    <p id="item-subtitle"><em>2.1 Factorial</em></p>
+    <p id="item-subtitle">Factorials are the simplest and easiest part of combinatorics. After factorial it only goes down haha. <br> A factorial is the product of all positive integers less than or equal to  a given number <i>n</i>, written as <math><mrow><mi>n</mi><mo>!</mo></mrow></math></p>
+    <p id="item-subtitle">It is used for calculating how many ways distinct objects can be ordered or arranged. </p>
+    <p id="item-subtitle">Examples:</p>
+    <math>
+        <mrow class="start-mrow">
+            <mi>n</mi>
+            <mo>!</mo>
+            <mo>=</mo>
+            <mi>n</mi>
+            <mo>&times;</mo>
+            <mrow>
+                <mo fence="true">(</mo>
+                <mi>n</mi>
+                <mo>&minus;</mo>
+                <mn>1</mn>
+                <mo fence="true">)</mo>
+            </mrow>
+            <mo>&times;</mo>
+            <mrow>
+                <mo fence="true">(</mo>
+                <mi>n</mi>
+                <mo>&minus;</mo>
+                <mn>2</mn>
+                <mo fence="true">)</mo>
+            </mrow>
+            <mo>&times;</mo>
+            <mrow>
+                <mo fence="true">(</mo>
+                <mi>n</mi>
+                <mo>&minus;</mo>
+                <mn>3</mn>
+                <mo fence="true">)</mo>
+            </mrow>
+            <mo>&times;</mo>
+            <mo>...</mo>
+        </mrow>
+    </math>
 </body>
 </html>

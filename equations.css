@@ -36,7 +36,7 @@ body {
     padding: 0px 20px;
 }
 
-#supported-subtitle {
+#item-subtitle {
     font-size: small;
 }
 
@@ -46,6 +46,10 @@ body {
 
 math mtable mtd {
     padding: 12px 15px;
+}
+
+math mtable mtr {
+    margin: 10px 20px;
 }
 
 .section-subtitle {
