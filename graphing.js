@@ -12,4 +12,53 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             eqInputList.appendChild(clone);
         }
     })
+    const canvas = document.getElementById('graph');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.translate(0, canvas.height);
+    ctx.scale(1, -1);
+    function drawAxes() {
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        // y-axis
+        ctx.moveTo(canvas.width/2, 0);
+        ctx.lineTo(canvas.width/2, canvas.height);
+        // x-axis
+        ctx.moveTo(0, canvas.height/2);
+        ctx.lineTo(canvas.width, canvas.height/2);
+        ctx.stroke();
+    }
+    function drawGrid(gridSize) {
+        ctx.strokeStyle = 'gray';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        for (let x = canvas.width/2; x <= canvas.width; x += gridSize) {
+            let roundedX = Math.floor(x);
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, Math.round(canvas.width));
+        }
+        for (let x = canvas.width/2 - gridSize; x>=0; x -= gridSize) {
+            let roundedX = Math.floor(x);
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, Math.round(canvas.width));
+        }
+        for (let y = canvas.height/2; y <= canvas.height; y += gridSize) {
+            ctx.moveTo(0, y);
+            ctx.lineTo(Math.round(canvas.width), y);
+        }
+        for (let y = canvas.height/2 - gridSize; y>=0; y -= gridSize) {
+            ctx.moveTo(0, y);
+            ctx.lineTo(Math.round(canvas.width), y);
+        }
+        // for (let y = 0; y <= canvas.width; y += gridSize + 1) {
+        //     let roundedY = Math.floor(y);
+        //     ctx.moveTo(0, roundedY);
+        //     ctx.lineTo(canvas.width, roundedY);
+        // }
+        ctx.stroke();
+    }
+    drawGrid(37);
+    drawAxes();
 })

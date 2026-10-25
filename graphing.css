@@ -157,4 +157,5 @@ main {
 
 canvas {
     width: 80%;
-} 
+    image-rendering: pixelated;
+}   
