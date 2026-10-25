@@ -69,11 +69,10 @@ body{
 }
 
 .calc{
-    padding: 25px;
+    padding: 20px 15px;
     padding-top: 0;
     border: 3px solid rgb(32, 32, 32);
     border-radius: 25px;
-    background: white;
     box-shadow: 0 15px 30px black;
     background-color: #2f2f2f;
 }
@@ -82,8 +81,7 @@ body{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    margin-bottom: 15px;
-    margin-top: 20px;
+    margin: 20px 7px 15px 5px;
     justify-content: center;
     align-items: center;
 }
@@ -107,11 +105,14 @@ body{
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-end;
-    min-height: 60px;
-    margin-bottom: 20px;
+    min-height: 90px;
+    margin: 20px 0;
     padding: 20px;
     border: 1px solid black;
     background-color: #8e9f80c9;
+    justify-content: space-between;
+    box-shadow: inset 2px 2px 2px black;
+    border: 1px solid black;
 }
 
 .expression{
@@ -140,19 +141,22 @@ body{
 .row{
     display: grid;
     grid-template-columns: repeat(5, minmax(0,1fr));
+    grid-template-rows: auto;
     gap: 6px;
 }
 
 .row button, .numrow button{
     min-width: 0;
-    min-height: 30px;
-    padding: 5px;
+    min-height: 0;
+    padding: 3px;
     border: none;
     border-radius: 50%;
     aspect-ratio: 1 / 1 ;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 500;
+    width: 100%;
+    height: auto;
 }
 
 .on{
@@ -363,4 +367,49 @@ body{
 
 .calcbuttons > .row:not(.arrow-row){
     margin-top: 10px;
+}
+
+.numrows{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.numrow{
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0,1fr));
+    gap: 8px;
+    align-items: center;
+}
+
+.numrow button{
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 1px solid #717171;
+    border-radius: 50%;
+    color: #f4f4f4;
+    background-color: #454545;
+    font-size: 1rem;
+}
+
+.row .openbracket, .row .closebracket{
+    width: 100%;
+    min-width: 0;
+    min-height: 9;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 1px solid #717171;
+    border-radius: 50%;
+    color: #f4f4f4;
+    background-color: #454545;
 }
