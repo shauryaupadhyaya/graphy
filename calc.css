@@ -335,7 +335,7 @@ body{
 .tangent::before{
     position: absolute;
     top: -15px;
-    left: 50px;
+    left: 70%;
     z-index: 2;
     color: #f3dc79;
     font-family: inherit;
