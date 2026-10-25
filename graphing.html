@@ -26,13 +26,21 @@
                         <p class="equation-number">1</p>
                     </div>
                     <div class="vr"></div>
-                    <input class="equation" type="text" autofocus name="equation">
+                    <input class="equation" type="text" autofocus name="equation" data-color="#ffffff">
                     <button class="equation-delete">x</button>
+                    <button class="color-pick">✎</button>
                 </div>
             </div>
         </div>
         <canvas id="graph"></canvas>
-        <div id="test-graph"></div>
+        <div class="edit-color">
+            <button class="ec-red" data-color="#ff0000">R</button>
+            <button class="ec-green" data-color="#008000">G</button>
+            <button class="ec-blue" data-color="#0000ff">B</button>
+            <button class="ec-yellow" data-color="#ffff00">Y</button>
+            <button class="ec-orange" data-color="#ffa500">O</button>
+            <button class="ec-brown" data-color="#800000">Br</button>
+        </div>
     </main>
     <template id="equation-input-template">
         <div class="equations-input-box">
@@ -40,8 +48,9 @@
                 <p class="equation-number">1</p>
             </div>
             <div class="vr"></div>
-            <input class="equation" type="text" autofocus>
+            <input class="equation" type="text" autofocus data-color="#ffffff">
             <button class="equation-delete">x</button>
+            <button class="color-pick">✎</button>
         </div>
     </template>
     <script src="graphing.js"></script>

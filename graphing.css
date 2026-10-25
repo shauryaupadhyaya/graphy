@@ -158,4 +158,107 @@ main {
 canvas {
     width: 80%;
     image-rendering: pixelated;
-}   
+}
+
+.color-pick {
+    width: 23px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    color: black;
+    background: none;
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.edit-color {
+    position: fixed;
+    top: 50%;                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    display: flex;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    visibility: hidden;
+}
+
+.ec-red, .ec-green, .ec-blue, .ec-yellow, .ec-orange, .ec-brown {
+    padding: 7px 14px;
+}
+
+.ec-red {
+    background-color: red;
+    border: none;
+    color: white;
+}
+
+.ec-green {
+    background-color: green;
+    border: none;
+    color: white;
+}
+
+.ec-blue {
+    background-color: blue;
+    border: none;
+    color: white;
+}
+
+.ec-yellow {
+    background-color: yellow;
+    border: none;
+    color: black;
+}
+
+.ec-orange {
+    background-color: orange;
+    border: none;
+    color: black;
+}
+
+.ec-brown {
+    background-color: maroon;
+    border: none;
+    color: white;
+}
+
+.slideIn {
+   animation: slideIn 0.5s ease forwards;
+}
+
+.slideOut {
+   animation: slideOut 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+   from {
+       transform: translate(-50%, calc(-50% + 50px));
+       opacity: 0;
+       visibility: visible;
+   }
+   to {
+       transform: translate(-50%, -50%);
+       opacity: 1;
+       visibility: visible;
+   }
+}
+@keyframes slideOut {
+   from {
+       transform: translate(-50%, -50%);
+       opacity: 1;
+       visibility: visible;
+   }
+   to {
+       transform: translate(-50%, calc(-50% + 50px));
+       opacity: 0;
+       visibility: hidden;
+   }
+}

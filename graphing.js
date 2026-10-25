@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             cloneNumber++;
             clone.querySelector(".equation-number").textContent = cloneNumber;
             eqInputList.appendChild(clone);
+            // shopSale();
         }
     })
     const canvas = document.getElementById('graph');
@@ -111,11 +112,11 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
                 console.log(input.value)
-                plotEquation(input.value, gridSize);
+                plotEquation(input.value, gridSize, input.dataset.color);
             }
         })
     }
-    function plotEquation(value, gridSize) {
+    function plotEquation(value, gridSize, color) {
         if (value === '' || value === ' ') return;
         console.log("Equation being sent to me: ", value);
         if (isValidEquation(value)) {
@@ -126,8 +127,9 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             const start = -Math.floor((canvas.width/2)/gridSize);
             const end = Math.floor((canvas.width/2)/gridSize);
             const step = 1;
-            ctx.fillStyle = 'red';
-            ctx.lineWidth = 2;
+            ctx.fillStyle = color;
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
             ctx.beginPath();
             let firstPoint = true;
             for (let x = start; x <= end; x+= 0.1) {
@@ -214,4 +216,60 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         }
         ctx.restore();
     }
+    let eqNumberColor = 1;
+    // const colorEditBtns = document.querySelectorAll(".color-pick");
+    const colorMenu = document.querySelector(".edit-color");
+    // function shopSale() {
+    //     colorEditBtns.forEach(element => {
+    //         element.addEventListener("click", (e)=> {
+    //             if (colorMenu.classList.contains("slideIn")) {
+    //                 colorMenu.classList.remove("slideIn");
+    //                 colorMenu.classList.add("slideOut");
+    //             } else if (colorMenu.classList.contains("slideOut")) {
+    //                 colorMenu.classList.remove("slideOut");
+    //                 colorMenu.classList.add("slideIn");
+    //                 eqNumberColor = element.parentElement.querySelector(".equation-number").textContent;
+    //                 console.log("Equation number being editied: " + eqNumberColor)
+    //             } else {
+    //                 colorMenu.classList.remove("slideOut");
+    //                 colorMenu.classList.add("slideIn");
+    //                 eqNumberColor = element.parentElement.querySelector(".equation-number").textContent;
+    //                 console.log("Equation number being editied: " + eqNumberColor)
+    //             }
+    //         })
+    //     })
+    // }
+    let colorToBecome;
+    function setUpListenersC() {
+        colorMenu.querySelectorAll("button").forEach(element => {
+            element.addEventListener('click', (e)=> {
+                colorToBecome = e.target.dataset.color;
+                console.log("color to become: ", colorToBecome)
+                const allNumbers = document.querySelectorAll(".equation-number");
+                console.log(allNumbers[0]);
+                for (let i = 0; i < allNumbers.length; i++) {
+                    console.log(allNumbers[i].parentElement.parentElement);
+                    if (allNumbers[i].textContent === eqNumberColor) {
+                        allNumbers[i].parentElement.parentElement.querySelector(".equation").dataset.color = colorToBecome;
+                        redrawGraph();
+                    }
+                }
+            })
+        })
+    }
+    eqInputList.addEventListener("click", (e)=> {
+        const button = e.target.closest(".color-pick");
+        if (!button) return;
+        eqNumberColor = button.parentElement.querySelector(".equation-number").textContent;
+        if (colorMenu.classList.contains("slideIn")) {
+            colorMenu.classList.remove("slideIn");
+            colorMenu.classList.add("slideOut");
+        } else {
+            colorMenu.classList.remove("slideOut");
+            colorMenu.classList.add("slideIn");
+        }
+        console.log("Equation being edited: ", eqNumberColor);
+    })
+    setUpListenersC();
+    // shopSale();
 })
