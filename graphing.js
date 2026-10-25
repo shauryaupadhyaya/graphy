@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             // shopSale();
         }
     })
+    let redrawTimeout;
     const canvas = document.getElementById('graph');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -96,7 +97,10 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     // })
     eqInputList.addEventListener('input', (e)=> {
         if (e.target.matches('.equation')) {
-            redrawGraph();
+            clearTimeout(redrawTimeout);
+            redrawTimeout = setTimeout(() => {
+                redrawGraph();
+            }, 150);
         }
     })
     function redrawGraph() {
@@ -117,44 +121,158 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         })
     }
     function plotEquation(value, gridSize, color) {
-        if (value === '' || value === ' ') return;
-        console.log("Equation being sent to me: ", value);
-        if (isValidEquation(value)) {
-            console.log("Equation sent is valid");
-            // generate points
-            const compile = math.compile(value);
-            const points = [];
-            const start = -Math.floor((canvas.width/2)/gridSize);
-            const end = Math.floor((canvas.width/2)/gridSize);
-            const step = 1;
-            ctx.fillStyle = color;
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            let firstPoint = true;
-            for (let x = start; x <= end; x+= 0.1) {
-                const y = compile.evaluate({x:x});
-                const canvasX = canvas.width / 2 + x * gridSize;
-                const canvasY = canvas.height / 2 + y * gridSize;
-                points.push({x, y});
-                if (!Number.isFinite(y)) {
-                    firstPoint = true;
+        if (!value.trim()) return;
+        let compiled;
+        try {
+            const parts = value.split('=');
+            if (parts.length === 2) {
+                if (!parts[0].trim() || !parts[1].trim()) return;
+                compiled = math.parse(`${parts[0]} - ${parts[1]}`).compile();
+            } else if (parts.length === 1) {
+                compiled = math.parse(`y - ${value}`).compile();
+            } else {
+                return;
+            }
+            // if (node.isOperatorNode && node.op === '=') {
+            //     const difference = new Math.operatorNode(
+            //         '-',
+            //         'subtract',
+            //         node.args
+            //     );
+            //     compiled = difference.compile();
+            // } else {
+            //     compiled = math.parse(`y-(${value})`).compile();
+            // }
+        } catch (error) {
+            console.error("Invalid equation: ", value, error);
+            return;
+        }
+        function evaluate(x, y) {
+            try {
+                const result = compiled.evaluate({x, y});
+                return typeof result === 'number' && Number.isFinite(result)? result : NaN;
+            } catch {
+                return NaN;
+            }
+        }
+        const width = canvas.width;
+        const height = canvas.height;
+        const originX = width/2;
+        const originY = height/2;
+        
+        function mathX(px) {
+            return (px - originX) / gridSize;
+        }
+
+        function mathY(py) {
+            return (originY - py) / gridSize;
+        }
+
+        // ai generated function below
+        function intersection(a, b, va, vb) {
+            const t = va / (va - vb);
+
+            return {
+                x: a.x + (b.x - a.x) * t,
+                y: a.y + (b.y - a.y) * t
+            };
+        }
+
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        const step = 5;
+
+        for (let py = 0; py < height; py += step) {
+            for (let px = 0; px < width; px += step) {
+                const points = [
+                    {x: px, y: py},
+                    {x: px + step, y: py},
+                    {x: px + step, y: py + step},
+                    {x: px, y: py+step},
+                ]
+                const values = points.map(p => evaluate(mathX(p.x), mathY(p.y)));
+                if (values.some(v => !Number.isFinite(v))) {
                     continue;
                 }
-                if (firstPoint) {
-                    ctx.moveTo(canvasX, canvasY);
-                    firstPoint = false;
-                } else {
-                    ctx.lineTo(canvasX, canvasY )
+                const crossings = [];
+
+                for (let i = 0; i < 4; i++) {
+                    const j = (i + 1) % 4;
+                    const a = values[i];
+                    const b = values[j];
+
+                    if ((a < 0 && b > 0) || (a > 0 && b < 0)) {
+                        crossings.push(
+                            intersection(points[i], points[j], a, b)
+                        );
+                    }
                 }
-                ctx.stroke();
+
+                if (crossings.length === 2) {
+                    ctx.moveTo(crossings[0].x, height - crossings[0].y);
+                    ctx.lineTo(crossings[1].x, height - crossings[1].y);
+                } else if (crossings.length === 4) {
+                    ctx.moveTo(crossings[0].x, height - crossings[0].y);
+                    ctx.lineTo(crossings[1].x, height - crossings[1].y);
+
+                    ctx.moveTo(crossings[2].x, height - crossings[2].y);
+                    ctx.lineTo(crossings[3].x, height - crossings[3].y);
+                }
             }
-            console.log(points);
-            // draw points
-        } else {
-            console.log("Equation sent is invalid");
         }
+        ctx.stroke();
+        ctx.restore();
     }
+        // console.log("Equation being sent to me: ", value);
+        // if (isValidEquation(value)) {
+        //     console.log("Equation sent is valid");
+        //     // generate points
+        //     const node = math.parse(value);
+        //     let compiled;
+        //     if (node.isOperatorNode && node.op === '=') {
+        //         compiled = new Math.operatorNode(
+        //             '-',
+        //             'subtract',
+        //             node.args
+        //         ).compile();
+        //     } else {
+        //         compiled = math.parse(`y-(${value})`).compile();
+        //     }
+        //     const compile = math.compile(value);
+        //     const points = [];
+        //     const start = -Math.floor((canvas.width/2)/gridSize);
+        //     const end = Math.floor((canvas.width/2)/gridSize);
+        //     const step = 1;
+        //     ctx.fillStyle = color;
+        //     ctx.strokeStyle = color;
+        //     ctx.lineWidth = 3;
+        //     ctx.beginPath();
+        //     let firstPoint = true;
+        //     for (let x = start; x <= end; x+= 0.1) {
+        //         const y = compile.evaluate({x:x});
+        //         const canvasX = canvas.width / 2 + x * gridSize;
+        //         const canvasY = canvas.height / 2 + y * gridSize;
+        //         points.push({x, y});
+        //         if (!Number.isFinite(y)) {
+        //             firstPoint = true;
+        //             continue;
+        //         }
+        //         if (firstPoint) {
+        //             ctx.moveTo(canvasX, canvasY);
+        //             firstPoint = false;
+        //         } else {
+        //             ctx.lineTo(canvasX, canvasY )
+        //         }
+        //         ctx.stroke();
+        //     }
+        //     console.log(points);
+        //     // draw points
+        // } else {
+        //     console.log("Equation sent is invalid");
+        // }
+    // }
     
     function isValidEquation(eq) {
         try {
