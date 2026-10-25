@@ -368,6 +368,10 @@ body.modal-open{
     margin: 0;
 }
 
+#tools-header{
+    margin-bottom: 15px;
+}
+
 #footerTitle{
     text-decoration: none;
     color: black;
