@@ -140,7 +140,7 @@ body{
 
 .row{
     display: grid;
-    grid-template-columns: repeat(5, minmax(0,1fr));
+    grid-template-columns: repeat(6, minmax(0,1fr));
     grid-template-rows: auto;
     gap: 6px;
 }
@@ -390,8 +390,9 @@ body{
 
 .numrow{
     display: grid;
-    grid-template-columns: repeat(5, minmax(0,1fr));
-    gap: 8px;
+    grid-template-columns: repeat(5, 55px);
+    column-gap: 10px;
+    row-gap: 8px;
     align-items: center;
 }
 
@@ -409,7 +410,10 @@ body{
     border-radius: 50%;
     color: #f4f4f4;
     background-color: #454545;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    line-height: 1;
+    justify-self: center;
+    align-self: center;
 }
 
 .row .openbracket, .row .closebracket{
@@ -425,4 +429,29 @@ body{
     border-radius: 50%;
     color: #f4f4f4;
     background-color: #454545;
+}
+
+.row .pi, .row .e{
+    width: 100%;
+    min-width: 0;
+    min-height: 9;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 1px solid #717171;
+    border-radius: 50%;
+    color: #f4f4f4;
+    background-color: #454545;
+    font-size: 1.4rem;
+    justify-content: center;
+}
+
+.numrow button.tenpower{
+    font-size: 1rem;
+}
+
+.numrow button.format{
+    font-size: 0.75rem;
 }
