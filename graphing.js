@@ -66,12 +66,19 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     }
     window.addEventListener('resize', resizeArea);
     resizeArea();
-
-    const closeEqButtons = document.querySelectorAll(".equation-delete");
-    closeEqButtons.forEach(button => {
-        button.addEventListener('click', (e)=> {
-            e.preventDefault();
-            console.log("close button: " + e + " pressed.");
-        })
+    let eqInputs;
+    eqInputList.addEventListener('click', (e)=> {
+        e.preventDefault();
+        const button = e.target.closest(".equation-delete");
+        if (!button || !eqInputList.contains(button)) return;
+        eqInputs = eqInputList.querySelectorAll(".equations-input-box");
+        console.log(eqInputs.length);
+        if (eqInputs.length === 1) {
+            eqInputs[0].querySelector(".equation").value = '';
+        } else {
+            const boxToDel = e.target.parentElement;
+            boxToDel.remove();
+        }
+        
     })
 })
