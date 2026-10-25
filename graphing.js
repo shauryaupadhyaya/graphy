@@ -52,13 +52,26 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             ctx.moveTo(0, y);
             ctx.lineTo(Math.round(canvas.width), y);
         }
-        // for (let y = 0; y <= canvas.width; y += gridSize + 1) {
-        //     let roundedY = Math.floor(y);
-        //     ctx.moveTo(0, roundedY);
-        //     ctx.lineTo(canvas.width, roundedY);
-        // }
         ctx.stroke();
     }
-    drawGrid(37);
-    drawAxes();
+    function resizeArea() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        ctx.translate(0, canvas.height);
+        ctx.scale(1, -1);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
+        drawGrid(gridSize);
+        drawAxes();
+    }
+    window.addEventListener('resize', resizeArea);
+    resizeArea();
+
+    const closeEqButtons = document.querySelectorAll(".equation-delete");
+    closeEqButtons.forEach(button => {
+        button.addEventListener('click', (e)=> {
+            e.preventDefault();
+            console.log("close button: " + e + " pressed.");
+        })
+    })
 })
