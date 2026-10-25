@@ -43,3 +43,11 @@ body {
 .start-mrow {
     margin-left: 40px;
 }
+
+math mtable mtd {
+    padding: 12px 15px;
+}
+
+.section-subtitle {
+    font-size: medium;
+}

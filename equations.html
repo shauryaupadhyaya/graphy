@@ -10,6 +10,9 @@
     <h1 id="main-title">Equations</h1>
     <h4 id="main-subtitle">This page contains information about plenty of math equations, both supported and not supported by the graphing calculator</h4>
     <hr>
+    <h3>Usage Guidelines</h3>
+    <p style="font-size: medium;">Certain features may not work completely. Please visit the GitHub repository and create an issue so we can fix it. <br> Graphing calculator is still being built, so not all features of a typical graphing calculator exist.</p>
+    <hr>
 
     <h3>Supported Equations</h3>
     <p id="supported-item">1. Algebraic Equations & Functions</p>
@@ -52,5 +55,111 @@
             </mrow>
         </mrow>
     </math>
+    <p id="supported-item">2. Straight straight lines</p>
+    <p id="supported-subtitle">Graphy supports very straight straight lines. hehe. <br>Examples:</p>
+    <math>
+        <mrow class="start-mrow">
+            <mi>x</mi>
+            <mo>=</mo>
+            <mn>3</mn>
+        </mrow>
+        <mrow class="start-mrow">
+            <mi>y</mi>
+            <mo>=</mo>
+            <mn>10</mn>
+        </mrow>
+    </math>
+    <p id="supported-item">3. Trignometric Identities</p>
+    <p id="supported-subtitle">The following trignometric identities are supported: 
+    </p>
+    <math>
+        <mtable>
+            <mtr>
+                <mtd class="start-mrow">
+                    <mi>sin(</mi><mi>x</mi><mi>)</mi>
+                </mtd>
+                <mtd class="start-mrow">
+                    <mi>cos(</mi><mi>x</mi><mi>)</mi>
+                </mtd>
+                <mtd class="start-mrow">
+                    <mi>tan(</mi><mi>x</mi><mi>)</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mrow><mi>sin(</mi><mi>x</mi><mi>)</mi></mrow>
+                        <mrow><mi>cos(</mi><mi>x</mi><mi>)</mi></mrow>
+                    </mfrac>
+                </mtd>
+            </mtr>
+            <mtr>
+                <mtd class="start-mrow">
+                    <mi>csc(</mi><mi>x</mi><mi>)</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mn>1</mn>
+                        <mrow>
+                            <mrow><mi>sin(</mi><mi>x</mi><mi>)</mi></mrow>
+                        </mrow>
+                    </mfrac>
+                </mtd>
+                <mtd class="start-mrow">
+                    <mi>sec(</mi><mi>x</mi><mi>)</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mn>1</mn>
+                        <mrow>
+                            <mrow><mi>cos(</mi><mi>x</mi><mi>)</mi></mrow>
+                        </mrow>
+                    </mfrac>
+                </mtd>
+                <mtd class="start-mrow">
+                    <mi>cot(</mi><mi>x</mi><mi>)</mi>
+                    <mo>=</mo>
+                    <mfrac>
+                        <mn>1</mn>
+                        <mrow>
+                            <mrow><mi>tan(</mi><mi>x</mi><mi>)</mi></mrow>
+                        </mrow>
+                    </mfrac>
+                </mtd>
+            </mtr>
+        </mtable>
+    </math>
+    <p id="supported-subtitle">The support of these identies is established through the Math.JS library, delivered to the HTML file via a CDN.</p>
+    <p id="supported-item">4. Circle Equations</p>
+    <p id="supported-subtitle">Circle equations are very interesting, and these equations CAN be plotted onto Graphy!</p>
+    <math>
+        <msup class="start-mrow"><mi>x</mi><mn>2</mn></msup>
+        <mo>+</mo>
+        <msup><mi>y</mi><mn>2</mn></msup>
+        <mo>=</mo>
+        <msup><mtext>radius</mtext><mn>2</mn></msup>
+    </math>
+    <p id="supported-subtitle">Above is the format for circle equations<br>Examples:</p>
+    <math>
+        <mrow id="start-mrow">
+            <msup>
+                <mi>x</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>+</mo>
+            <msup>
+                <mrow>
+                    <mo fence="true">(</mo>
+                    <mi>y</mi>
+                    <mo>+</mo>
+                    <mn>5</mn>
+                    <mo fence="true">)</mo>
+                </mrow>
+                <mn>2</mn>
+            </msup>
+            <mo>=</mo>
+            <mn>5</mn>
+        </mrow>
+    </math>
+    <p></p>
+    <hr>
+    <p></p>
+    <h3>Unsupported Equations & Formulae (coming soon and/or interesting)</h3>
+    <p class="section-subtitle">This section includes both unsupported equations and equations that are interesting. <br> This is one place to see all equations you may ever need. It might or might not be used in Graphy.</p>
 </body>
 </html>
