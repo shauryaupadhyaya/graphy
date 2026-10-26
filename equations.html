@@ -296,7 +296,517 @@
             </mrow>
             <mo>&times;</mo>
             <mo>...</mo>
+            <mo>&times;</mo>
+            <mn>3</mn>
+            <mo>&times;</mo>
+            <mn>2</mn>
+            <mo>&times;</mo>
+            <mn>1</mn>
         </mrow>
     </math>
+    <p id="item-subtitle">Now there are some special cases like: both 0! and 1! = 1. And thats all for factorials! (for now)</p>
+    <p id="item-subtitle"><em>2.2 Permutations</em></p>
+    <p id="item-subtitle">A permutation is an arrangement of items in a specific order. There are always rules to permutations. <br> If you have n distinct items, the number of ways to arrange them is n!</p>
+    <p id="item-subtitle">But this isn't the permutations you will be using the most in high school. It is partial permutations that is more common. <br> In partial permutations you pick <i>k</i> items out of <i>n</i>. <br><br> Heres the formula for Partial permutation: <math><mfrac id="start-mrow"><mrow><mi>n</mi><mo>!</mo></mrow><mrow><mo fence="true">(</mo><mi>n</mi><mo>&minus;</mo><mi>k</mi><mo fence="true">)</mo><mo>!</mo></mrow></mfrac></math><br><br>Take a look at the example: </p>
+    <p id="item-subtitle">You are hosting a race with 5 runners (Alice, Bob, Charlie, David and Emma). You want to know how many different ways the Gold, Silver and Bronze medals can be awarded.</p>
+    <math>
+        <mrow id="start-mrow">
+            <mmultiscripts>
+                <mi>P</mi>
+                <mi>k</mi>
+                <none/>
+                <mprescripts/>
+                <mi>n</mi>
+                <none/>
+            </mmultiscripts>
+            <mo>=</mo>
+            <mmultiscripts>
+                <mi>P</mi>
+                <mi>3</mi>
+                <none/>
+                <mprescripts/>
+                <mi>5</mi>
+                <none/>
+            </mmultiscripts>
+            <mo>=</mo>
+            <mfrac>
+                <mrow><mn>5</mn><mo>!</mo></mrow>
+                <mrow>
+                    <mo fence="true">(</mo>
+                    <mn>5</mn>
+                    <mo>&minus;</mo>
+                    <mn>3</mn>
+                    <mo fence="true">)</mo>
+                    <mo>!</mo>
+                </mrow>
+            </mfrac>
+            <mo>=</mo>
+            <mfrac>
+                <mrow>
+                    <mn>5</mn>
+                    <mo>&times;</mo>
+                    <mn>4</mn>
+                    <mo>&times;</mo>
+                    <mn>3</mn>
+                    <mo>&times;</mo>
+                    <mn>2</mn>
+                    <mo>&times;</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mrow>
+                    <mn>2</mn>
+                    <mo>&times;</mo>
+                    <mn>1</mn>
+                </mrow>
+            </mfrac>
+            <mo>=</mo>
+            <mfrac>
+                <mn>120</mn>
+                <mn>2</mn>
+            </mfrac>
+            <mo>=</mo>
+            <mn>60 ways</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">This calculation shows us that there are 60 ways to choose the first 3 places!!</p>
+    <p id="item-subtitle"><em>2.3 Combinations</em></p>
+    <p id="item-subtitle">The man, the myth, the legend has arrived. We are <i>FINALLY</i> doing exactly what the name of this concept says - combinations!</p>
+    <p id="item-subtitle">A combination is a selection of items from a larger set where the order of selection does not matter. <br><br> If you pick items A, B,and C it is the same combination as picking C, A, B. This is what differentiates it from a permutation, where order <em>does</em> matter.</p>
+    <p id="item-subtitle">Here is the formula for Combination: 
+        <math>
+            <mrow style="font-size: 1.1em">
+                <mo>C</mo>
+                <mo fence="true">(</mo>
+                <mi>n</mi>
+                <mo>,</mo>
+                <mi>k</mi>
+                <mo fence="true">)</mo>
+                <mo>=</mo>
+                <mfrac>
+                    <mrow style="font-size: 1.1em">
+                        <mi>n</mi>
+                        <mo>!</mo>
+                    </mrow>
+                    <mrow style="font-size: 1.1em">
+                        <mi>k</mi>
+                        <mo>!</mo>
+                        <mo fence="true">(</mo>
+                        <mi>n</mi>
+                        <mo>&minus;</mo>
+                        <mi>k</mi>
+                        <mo fence="true">)</mo>
+                        <mo>!</mo>
+                    </mrow>
+                </mfrac>
+            </mrow>
+        </math>
+    </p>
+    <p id="item-subtitle">Take a look at the example: </p>
+    <p id="item-subtitle">Imagine you have 5 fruits (Apple, Banana, Cherry, Date, Elderberry) and you want to choose 3 of them for a fruit salad.</p>
+    <p id="item-subtitle">Does order matter in a fruit salad? No. Apple-Banana-Cherry is the same salad as Cherry-Apple-Banana</p>
+    <p id="item-subtitle">Lets use the formula</p>
+    <math>
+        <mrow>
+            <mo>C</mo>
+            <mo fence="true">(</mo>
+            <mn>5, 3</mn>
+            <mo fence="true">)</mo>
+            <mo>=</mo>
+            <mfrac>
+                <mrow>
+                    <mn>5</mn>
+                    <mo>!</mo>
+                </mrow>
+                <mrow>
+                    <mn>3</mn>
+                    <mo>!</mo>
+                    <mo fence="true">(</mo>
+                    <mn>5</mn>
+                    <mo>&minus;</mo>
+                    <mn>3</mn>
+                    <mo fence="true">)</mo>
+                    <mo>!</mo>
+                </mrow>
+            </mfrac>
+            <mo>=</mo>
+            <mfrac>
+                <mrow>
+                    <mn>5</mn>
+                    <mo>&times;</mo>
+                    <mn>4</mn>
+                    <mo>&times;</mo>
+                    <mn>3</mn>
+                    <mo>&times;</mo>
+                    <mn>2</mn>
+                    <mo>&times;</mo>
+                    <mn>1</mn>
+                </mrow>
+                <mrow>
+                    <mn>3</mn>
+                    <mo>&times;</mo>
+                    <mn>2</mn>
+                    <mo>&times;</mo>
+                    <mn>1</mn>
+                    <mo>&times;</mo>
+                    <mn>2</mn>
+                    <mo>&times;</mo>
+                    <mn>1</mn>
+                </mrow>
+            </mfrac>
+            <mo>=</mo>
+            <mfrac>
+                <mrow>
+                    <mn>5</mn>
+                    <mo>&times;</mo>
+                    <mn>4</mn>
+                </mrow>
+                <mrow>
+                    <mn>2</mn>
+                    <mo>&times;</mo>
+                    <mn>1</mn>
+                </mrow>
+            </mfrac>
+            <mo>=</mo>
+            <mn>10 ways</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">With combination we found that there is only 10 UNIQUE ways to organise the given items into a salad! This number would have been much much higher if it was permutation, as ABC and CBA are different to permutation.</p>
+    <p id="item-subtitle">2.4 Binomial Theorem</p>
+    <p id="item-subtitle">The Binomial Theorem is a concept in algebra along with combinatrics that provides a formula to expand a formula to expand any binomial express raised to a non-negative integer power, into a sum of individual terms</p>
+    <math>
+        <mrow>
+            <msup>
+                <mrow>
+                    <mo fence="true">(</mo>
+                    <mi>a</mi>
+                    <mo>&plus;</mo>
+                    <mi>b</mi>
+                    <mo fence="true">)</mo>
+                </mrow>
+                <mn>2</mn>
+            </msup>
+        </mrow>
+        <mo>=</mo>
+        <mrow>
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mi>n</mi>
+                <mi>0</mi>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>a</mi>
+                <mi>n</mi>
+            </msup>
+            <msup>
+                <mi>b</mi>
+                <mi>0</mi>
+            </msup>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mi>n</mi>
+                <mi>1</mi>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>a</mi>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>&minus;</mo>
+                    <mn>1</mn>
+                </mrow>
+            </msup>
+            <msup>
+                <mi>b</mi>
+                <mi>1</mi>
+            </msup>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mi>n</mi>
+                <mi>2</mi>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>a</mi>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>&minus;</mo>
+                    <mn>2</mn>
+                </mrow>
+            </msup>
+            <msup>
+                <mi>b</mi>
+                <mi>2</mi>
+            </msup>
+            <mo>&plus;</mo>
+            <mo>...</mo>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mi>n</mi>
+                <mi>n</mi>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>a</mi>
+                <mrow>
+                    <mn>0</mn>
+                </mrow>
+            </msup>
+            <msup>
+                <mi>b</mi>
+                <mi>n</mi>
+            </msup>
+        </mrow>
+    </math>
+    <p id="item-subtitle">This is the formula for the binomial theorem, at least the expanded one. Here's the summation formula </p>
+    <math>
+        <mrow>
+            <mo fence="true">(</mo>
+            <mi>a</mi>
+            <mo>&plus;</mo>
+            <mi>b</mi>
+            <mo fence="true">)</mo>
+            <mo>=</mo>
+            <munderover>
+                <mo>&sum;</mo>
+                <mrow>
+                    <mi>k</mi>
+                    <mo>=</mo>
+                    <mn>0</mn>
+                </mrow>
+                <mi>n</mi>
+            </munderover>
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mi>n</mi>
+                <mi>k</mi>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>a</mi>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>&minus;</mo>
+                    <mi>k</mi>
+                </mrow>
+            </msup>
+            <msup>
+                <mi>b</mi>
+                <mi>k</mi>
+            </msup>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Let's take a look at a example: </p>
+    <math>
+        <mrow>
+            <mo fence="true">(</mo>
+            <mi>x</mi>
+            <mi>+</mi>
+            <mn>2</mn>
+            <mo fence="true">)</mo>
+            <mo>=</mo>
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mn>3</mn>
+                <mn>0</mn>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>3</mn>
+            </msup>
+            <msup>
+                <mn>2</mn>
+                <mn>0</mn>
+            </msup>
+            <mo>&plus;</mo>
+            <!--2nd term-->
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mn>3</mn>
+                <mn>1</mn>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>2</mn>
+            </msup>
+            <msup>
+                <mn>2</mn>
+                <mn>1</mn>
+            </msup>
+            <mo>&plus;</mo>
+            <!-- 3rd term -->
+             <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mn>3</mn>
+                <mn>2</mn>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>1</mn>
+            </msup>
+            <msup>
+                <mn>2</mn>
+                <mn>2</mn>
+            </msup>
+            <mo>&plus;</mo>
+            <!--third term-->
+            <mo fence="true">(</mo>
+            <mfrac linethickness="0px">
+                <mn>3</mn>
+                <mn>3</mn>
+            </mfrac>
+            <mo fence="true">)</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>0</mn>
+            </msup>
+            <msup>
+                <mn>2</mn>
+                <mn>3</mn>
+            </msup>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Collect the efficients (all the numbers on top of each other) and simplify, i.e.: 
+    <math>
+        <mo fence="true">(</mo>
+        <mfrac linethickness="0px">
+            <mn>3</mn>
+            <mn>0</mn>
+        </mfrac>
+        <mo fence="true">)</mo>
+        <mo>=</mo>
+        <mn>1</mn>
+    </math>, 
+    <math>
+        <mo fence="true">(</mo>
+        <mfrac linethickness="0px">
+            <mn>3</mn>
+            <mn>1</mn>
+        </mfrac>
+        <mo fence="true">)</mo>
+        <mo>=</mo>
+        <mn>3</mn>
+    </math>,
+    <math>
+        <mo fence="true">(</mo>
+        <mfrac linethickness="0px">
+            <mn>3</mn>
+            <mn>2</mn>
+        </mfrac>
+        <mo fence="true">)</mo>
+        <mo>=</mo>
+        <mn>3</mn>
+    </math>,
+    <math>
+        <mo fence="true">(</mo>
+        <mfrac linethickness="0px">
+            <mn>3</mn>
+            <mn>3</mn>
+        </mfrac>
+        <mo fence="true">)</mo>
+        <mo>=</mo>
+        <mn>1</mn>
+    </math>.
+    <br>
+    <br>
+    And now simplify the terms with the coefficients:
+    </p>
+    <math>
+        <mrow>
+            <msup>
+                <mrow>
+                    <mo fence="true">(</mo>
+                    <mi>x</mi>
+                    <mo>&plus;</mo>
+                    <mn>2</mn>
+                    <mo fence="true">)</mo>
+                </mrow>
+                <mn>3</mn>
+            </msup>
+            <mo>=</mo>
+            <!-- first term -->
+            <mo fence="true">(</mo>
+            <mn>1</mn>
+            <mo>&sdot;</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>3</mn>
+            </msup>
+            <mo>&sdot;</mo>
+            <mn>1</mn>
+            <mo fence="true">)</mo>
+            <mo>&plus;</mo>
+            <!-- second term -->
+            <mo fence="true">(</mo>
+            <mn>3</mn>
+            <mo>&sdot;</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>&sdot;</mo>
+            <mn>2</mn>
+            <mo fence="true">)</mo>
+            <mo>&plus;</mo>
+            <!-- third term -->
+            <mo fence="true">(</mo>
+            <mn>3</mn>
+            <mo>&sdot;</mo>
+            <mi>x</mi>
+            <mo>&sdot;</mo>
+            <mn>4</mn>
+            <mo fence="true">)</mo>
+            <mo>&plus;</mo>
+            <!-- fourth term -->
+            <mo fence="true">(</mo>
+            <mn>1</mn>
+            <mo>&sdot;</mo>
+            <mn>1</mn>
+            <mo>&sdot;</mo>
+            <mn>8</mn>
+            <mo fence="true">)</mo>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Simplify that big expression!</p>
+    <math>
+        <mrow>
+            <msup>
+                <mrow>
+                    <mo fence="true">(</mo>
+                    <mi>x</mi>
+                    <mo>&plus;</mo>
+                    <mn>2</mn>
+                    <mo fence="true">)</mo>
+                </mrow>
+                <mn>3</mn>
+            </msup>
+            <mo>=</mo>
+            <msup>
+                <mi>x</mi>
+                <mn>3</mn>
+            </msup>
+            <mo>&plus;</mo>
+            <mn>6</mn>
+            <msup>
+                <mi>x</mi>
+                <mn>2</mn>
+            </msup>
+            <mo>&plus;</mo>
+            <mn>12</mn>
+            <mi>x</mi>
+            <mo>&plus;</mo>
+            <mn>8</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Tada! We got the expanded and simplified answer of this equation!</p>
+    <p id="item-subtitle">Now I know this is a rather easy expression and we actually don't need the binomial theorem, but for the sake of this example (and my fingers) we used a small value.</p>
+    <p id="item-subtitle">Binomial Theorem can be used to expand for example an expression to the power of 5 without breaking your brain!</p>
+    <p id="item-subtitle">And alas, you finally have a good understanding of the basics of Combinatorics!</p>
 </body>
 </html>
