@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphing Calculator || Graphy</title>
+    <link rel="stylesheet" href="graphing.css">
+</head>
+<body>
+    <nav>
+        <div id="nav-left">
+            <p>Graphy</p>
+        </div>
+        <div id="nav-right">
+            <p>Scientific Calculator</p>
+        </div>
+    </nav>
+    <main>
+        <div id="equations">
+            <div id="equations-top">
+                <p id="equations-title">Equations</p>
+            </div>
+            <div id="equations-bottom">
+                <div class="equations-input-box">
+                    <div class="e-input-box-left">
+                        <p class="equation-number">1</p>
+                    </div>
+                    <div class="vr"></div>
+                    <input class="equation" type="text" autofocus name="equation" data-color="#ffffff">
+                    <button class="equation-delete">x</button>
+                    <button class="color-pick">✎</button>
+                </div>
+            </div>
+        </div>
+        <canvas id="graph"></canvas>
+        <div class="edit-color">
+            <button class="ec-red" data-color="#ff0000">R</button>
+            <button class="ec-green" data-color="#008000">G</button>
+            <button class="ec-blue" data-color="#0000ff">B</button>
+            <button class="ec-yellow" data-color="#ffff00">Y</button>
+            <button class="ec-orange" data-color="#ffa500">O</button>
+            <button class="ec-brown" data-color="#800000">Br</button>
+        </div>
+    </main>
+    <template id="equation-input-template">
+        <div class="equations-input-box">
+            <div class="e-input-box-left">
+                <p class="equation-number">1</p>
+            </div>
+            <div class="vr"></div>
+            <input class="equation" type="text" autofocus data-color="#ffffff">
+            <button class="equation-delete">x</button>
+            <button class="color-pick">✎</button>
+        </div>
+    </template>
+    <script src="graphing.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.js"></script>
+</body>
+</html>
