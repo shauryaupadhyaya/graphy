@@ -3,6 +3,7 @@ const resultDisplay = document.getElementById("result");
 let expression = "";
 let isOn = true;
 let justCalculated = false;
+let ans = 0;
 
 // display
 function updateDisplay(){
@@ -43,6 +44,7 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
         if(!isOn) return;
 
         if(justCalculated){
+            expression = "Ans";
             justCalculated = false;
         }
 
@@ -79,14 +81,19 @@ executeBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     try{
-        const answer = Function(`"use strict"; return (${expression})`)();
+        const calculation = expression.replace(/\bAns\b/g, `(${ans})`);
+        const answer = Function(`"use strict"; return (${calculation})`)();
 
         if(!Number.isFinite(answer)){
             throw new Error("Invalid calculation");            
         }
 
-        resultDisplay.textContent = Number(answer.toPrecision(10));
-        justCalculated = false;
+        ans = Number(answer.toPrecision(10));
+        resultDisplay.textContent = ans;
+        expression = "Ans";
+        justCalculated = true;
+
+        updateDisplay();
     } catch{
         resultDisplay.textContent = "Error";
         justCalculated = false;
