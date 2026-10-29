@@ -53,6 +53,59 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
     });
 });
 
+const decimalBtn = document.getElementById("decimal");
+
+decimalBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(justCalculated){
+        expression = "Ans";
+        justCalculated = false;
+    }
+
+    const currentNumber = expression.split(/[+\-*/()]/).pop();
+    if(currentNumber.includes(".")) return;
+
+    if(currentNumber === ""){
+        expression += 0;
+    }
+
+    expression += ".";
+    updateDisplay();
+});
+
+const openBracketBtn = document.querySelector(".openbracket");
+const closeBracketBtn = document.querySelector(".closebracket");
+
+openBracketBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(justCalculated){
+        expression = "Ans";
+        justCalculated = false;
+    }
+
+    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans")){
+        expression += "*";
+    }
+
+    expression += "(";
+    updateDisplay();
+});
+
+closeBracketBtn.addEventListener('click', () => {
+    if(!isOn || justCalculated) return;
+
+    const openCount = (expression.match(/\(/g) || []).length;
+    const closeCount = (expression.match(/\)/g) || []).length;
+
+    if(openCount > closeCount){
+        if(/[+\-*/(]$/.test(expression)) return;
+        expression += ")";
+        updateDisplay();
+    }
+});
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -81,7 +134,7 @@ executeBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     try{
-        const calculation = expression.replace(/\bAns\b/g, `(${ans})`);
+        const calculation = expression.replace(/\bAns\b/g, `(${ans})`).replace(/(\d|\))\(/g, "$1*(").replace(/\)(\d)/g, ")*$1");
         const answer = Function(`"use strict"; return (${calculation})`)();
 
         if(!Number.isFinite(answer)){
