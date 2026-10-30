@@ -7,11 +7,21 @@ let ans = 0;
 
 // display
 function updateDisplay(){
-    const displayExpression = expression.replace(/\*/g, '×').replace(/\//g, '÷');
-    expressionDisplay.textContent = displayExpression || 0;
+    const displayExpression = expression.replace(
+        /\*\*(\d+(?:\.\d+)?|\bAns\b)?|[*/]/g,
+        (match, power) => {
+            if(match.startsWith("**")){
+                return `<sup>${power || "n"}</sup>`
+            }
+
+            return match === "*" ? "×" : "÷"
+        }
+    );
+
+    expressionDisplay.innerHTML = displayExpression || 0;
 }
 
-// buttons
+// number and operator buttons
 const numberButtons = document.querySelectorAll(".num");
 
 numberButtons.forEach((button) => {
@@ -53,6 +63,7 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
     });
 });
 
+// decimal
 const decimalBtn = document.getElementById("decimal");
 
 decimalBtn.addEventListener('click', () => {
@@ -74,6 +85,7 @@ decimalBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+// brackets
 const openBracketBtn = document.querySelector(".openbracket");
 const closeBracketBtn = document.querySelector(".closebracket");
 
@@ -104,6 +116,34 @@ closeBracketBtn.addEventListener('click', () => {
         expression += ")";
         updateDisplay();
     }
+});
+
+// power and roots
+const squareBtn = document.querySelector(".squared");
+const powerBtn = document.querySelector(".power");
+
+squareBtn.addEventListener('click', () => {
+    if(!isOn || !expression) return;
+
+    if(justCalculated){
+        expression = "Ans";
+        justCalculated = false;
+    }
+
+    expression = `${expression}**2`;
+    updateDisplay();
+});
+
+powerBtn.addEventListener('click', () => {
+    if(!isOn || !expression) return;
+
+    if(justCalculated){
+        expression = "Ans";
+        justCalculated = false;
+    }
+
+    expression += "**";
+    updateDisplay();
 });
 
 // all clear and delete buttons
