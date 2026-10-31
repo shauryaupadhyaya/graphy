@@ -4,19 +4,26 @@ let expression = "";
 let isOn = true;
 let justCalculated = false;
 let ans = 0;
+let shiftActive = false;
+let enteringRoot = false;
+let enteringSqrt = false;
+let rootIndex = "";
 
 // display
 function updateDisplay(){
-    const displayExpression = expression.replace(
-        /\*\*(\d+(?:\.\d+)?|\bAns\b)?|[*/]/g,
-        (match, power) => {
-            if(match.startsWith("**")){
-                return `<sup>${power || "n"}</sup>`
-            }
+    const displayExpression = expression
+        .replace(/sqrt\(/g, '√')
+        .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
+        .replace(
+            /\*\*(\d+(?:\.\d+)?|\bAns\b)?|[*/]/g,
+            (match, power) => {
+                if(match.startsWith("**")){
+                    return `<sup>${power || "n"}</sup>`
+                }
 
-            return match === "*" ? "×" : "÷"
-        }
-    );
+                return match === "*" ? "×" : "÷"
+            }
+        );
 
     expressionDisplay.innerHTML = displayExpression || 0;
 }
@@ -33,6 +40,10 @@ numberButtons.forEach((button) => {
         if(justCalculated){
             expression = "";
             justCalculated = false;
+        }
+
+        if(enteringRoot){
+            rootIndex += value;
         }
 
         expression += value;
@@ -61,6 +72,16 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
         expression += operator;
         updateDisplay();
     });
+});
+
+// shift button values
+const shiftBtn = document.querySelector(".shiftbtn");
+
+shiftBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    shiftActive = !shiftActive;
+    shiftBtn.classList.toggle("active", shiftActive);
 });
 
 // decimal
@@ -146,6 +167,34 @@ powerBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+const sqrtBtn = document.querySelector(".sqrt");
+
+sqrtBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(shiftActive){
+        expression +="root(";
+        enteringRoot = true;
+        rootIndex = "";
+
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+
+        justCalculated = false;
+        updateDisplay();
+        return;
+    }
+
+    if(justCalculated){
+        expression = "";
+        justCalculated = false;
+    }
+
+    expression += `sqrt(`;
+    enteringSqrt = true;
+    updateDisplay();
+});
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -174,8 +223,30 @@ executeBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     try{
-        const calculation = expression.replace(/\bAns\b/g, `(${ans})`).replace(/(\d|\))\(/g, "$1*(").replace(/\)(\d)/g, ")*$1");
-        const answer = Function(`"use strict"; return (${calculation})`)();
+        let calculation = expression
+            .replace(/\bAns\b/g, `(${ans})`)
+            .replace(/sqrt\(/g, "Math.sqrt(");
+
+        const openCount = (calculation.match(/\(/g) || []).length;
+        const closeCount = (calculation.match(/\)/g) || []).length;
+
+        calculation += ")".repeat(openCount - closeCount);
+
+        calculation = calculation
+            .replace(/(\d|\))\(/g, "$1*(")
+            .replace(/\)(\d)/g, ")*$1");
+        
+        const rootFunction = (index, value) => {
+            if(index === 0) throw new Error ("Invalid root");
+
+            if(value < 0 && Number.isInteger(index) && index % 2 !== 0){
+                return -Math.pow(-value, 1 / index)
+            }
+
+            return Math.pow(value, 1 / index);
+        }
+        
+        const answer = Function("root", `"use strict"; return (${calculation})`)(rootFunction);
 
         if(!Number.isFinite(answer)){
             throw new Error("Invalid calculation");            
@@ -187,7 +258,8 @@ executeBtn.addEventListener('click', () => {
         justCalculated = true;
 
         updateDisplay();
-    } catch{
+    } catch(error){
+        console.error(error);
         resultDisplay.textContent = "Error";
         justCalculated = false;
     }

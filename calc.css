@@ -193,11 +193,18 @@ html, body{
 }
 
 .row button.shiftbtn{
+    background: black;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+.row button.shiftbtn.active{
     background: #ffcc00df;
     border: 2px solid #8e7203;
     border-radius: 50%;
     color: #695502;
-    font-size: 1.2rem;
 }
 
 .top-controls{
