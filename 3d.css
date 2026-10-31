@@ -1,0 +1,202 @@
+
+:root {
+    --base: light-dark(#eff1f5,#24273a);
+    --mantle: light-dark(#e6e9ef,#1e2030);
+    --crust: light-dark(#dce0e8,#181926);
+    --surface0: light-dark(#ccd0da, #363a4f);
+    --surface1: light-dark(#bcc0cc, #494d64);
+    --surface2: light-dark(#acb0be, #5b6078);
+    --overlay0: light-dark(#9ca0b0, #6e738d);
+    --overlay1: light-dark(#8c8fa1, #8087a2);
+    --overlay2: light-dark(#7c7f93, #939ab7);
+    --subtext0: light-dark(#6c6f85, #a5adcb);
+    --subtext1: light-dark(#5c5f77, #b8c0e0);
+    --text: light-dark(#4c4f69, #cad3f5);
+    --rosewater: light-dark(#dc8a78, #f4dbd6);
+    --flamingo: light-dark(#dd7878, #f0c6c6);
+    --pink: light-dark(#ea76cb, #f5bde6);
+    --mauve: light-dark(#8839ef, #c6a0f6);
+    --red: light-dark(#d20f39, #ed8796);
+    --maroon: light-dark(#e64553, #ee99a0);
+    --peach: light-dark(#fe640b, #f5a97f);
+    --yellow: light-dark(#df8e1d, #eed49f);
+    --green: light-dark(#40a02b, #a6da95);
+    --teal: light-dark(#179299, #8bd5ca);
+    --sky: light-drk(#04a5e5, #8bd5ca);
+    --sapphire: light-dark(#209fb5, #7dc4e4);
+    --blue: light-dark(#1e66f5, #8aadf4);
+    --lavender: light-dark(#7287fd, #b7bdf8);
+    color-scheme: light dark;
+}
+body {
+    min-height: 0;
+    height: 100vh;
+    background-color: var(--base);
+}
+
+body, body p {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+nav {
+    background-color: var(--crust);
+    color: var(--text);
+    font-family: 'Rubik', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    font-weight: bolder;
+    flex-shrink: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+#nav-right {
+    display: flex;
+    gap: 20px;
+}
+
+#equations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--mantle);
+    width: 20%;
+    flex-shrink: 0;
+    min-height: 0;
+}
+
+#equations-title {
+    color: black;
+    font-family: 'Rubik';
+    margin: 15px 10px;
+    align-items: center;
+}
+
+#equations-add {
+    background-color: var(--crust);
+    color: white;
+    font-family: 'Rubik';
+    border: 0px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.equation-delete {
+    background-color: var(--surface0);
+    color: black;
+    font-family: 'Rubik';
+    border: 0px;
+    font-size: 20px;
+    padding: 5px 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#equations-bottom {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+}
+
+.equations-input-box {
+    background-color: var(--surface0);
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-bottom: 2px solid var(--base);
+}
+
+.e-input-box-left {
+    display: flex;
+    flex-direction: column;
+    width: 10%;
+    flex-shrink: 0;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.equation-number {
+    font-size: medium;
+    font-weight: bolder;
+    margin-left: 10px;
+    font-family: 'STIX Two Math';
+}
+
+.equation {
+    background: none;
+    border: 0px;
+    font-family: 'STIX Two Math';
+    font-size: 18px;
+    color: var(--base);
+}
+
+.equation::placeholder, .equation::-webkit-input-placeholder  {
+    color: #24273ab2;
+}
+
+.equation:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#maincanvas {
+    width: 80%;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+#maincanvas canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.color-pick {
+    width: 23px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    color: black;
+    background: none;
+    border: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.edit-color {
+    position: fixed;
+    top: 50%;                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    display: flex;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    visibility: hidden;
+}
+
+.vr {
+    border-left: 4px solid var(--base);
+    width: 4px;
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
