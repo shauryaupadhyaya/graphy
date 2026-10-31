@@ -8,6 +8,8 @@ let shiftActive = false;
 let enteringRoot = false;
 let enteringSqrt = false;
 let rootIndex = "";
+let enteringLog = false;
+let logBase = "";
 
 // display
 function updateDisplay(){
@@ -39,6 +41,10 @@ numberButtons.forEach((button) => {
 
         if(enteringRoot){
             rootIndex += value;
+        }
+
+        if(enteringLog){
+            logBase += value;
         }
 
         expression += value;
@@ -197,6 +203,31 @@ sqrtBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+// log, e and ln
+const logBtn = document.querySelector(".log");
+const eBtn = document.querySelector(".e");
+
+logBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(enteringLog && logBase){
+        expression += ",";
+        enteringLog = false;
+        updateDisplay();
+        return;
+    }
+
+    if(justCalculated){
+        expression = "";
+        justCalculated = false;
+    }
+
+    expression += "log(";
+    enteringLog = true;
+    logBase = "";
+    updateDisplay();
+});
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -209,6 +240,9 @@ allClearBtn.addEventListener('click', () => {
     enteringRoot = false;
     enteringSqrt = false;
     rootIndex = "";
+
+    enteringLog = false;
+    logBase = "";
 
     shiftActive = false;
     shiftBtn.classList.remove("active");
@@ -234,7 +268,8 @@ executeBtn.addEventListener('click', () => {
     try{
         let calculation = expression
             .replace(/\bAns\b/g, `(${ans})`)
-            .replace(/sqrt\(/g, "Math.sqrt(");
+            .replace(/sqrt\(/g, "Math.sqrt(")
+            .replace(/ln\(/g, "Math.log(");
 
         const openCount = (calculation.match(/\(/g) || []).length;
         const closeCount = (calculation.match(/\)/g) || []).length;
@@ -254,8 +289,16 @@ executeBtn.addEventListener('click', () => {
 
             return Math.pow(value, 1 / index);
         }
+
+        const logFunction = (base, value) => {
+            if(base <= 0 || base === 1 || value <= 0){
+                throw new Error("Invalid logarithim");
+            }
+
+            return Math.log(value) / Math.log(base);
+        }
         
-        const answer = Function("root", `"use strict"; return (${calculation})`)(rootFunction);
+        const answer = Function("root", "log", `"use strict"; return (${calculation})`)(rootFunction, logFunction);
 
         if(!Number.isFinite(answer)){
             throw new Error("Invalid calculation");            
@@ -269,6 +312,9 @@ executeBtn.addEventListener('click', () => {
         enteringRoot = false;
         enteringSqrt = false;
         rootIndex = "";
+
+        enteringLog = false;
+        logBase = "";
 
         updateDisplay();
     } catch(error){
