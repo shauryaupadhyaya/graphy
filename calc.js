@@ -19,6 +19,7 @@ function updateDisplay(){
         .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
             return `<sup>${power || "n"}</sup>`
         })
+        .replace(/Math\.E/g, "e")
         .replace(/\*/g, '×')
         .replace(/\//g, '÷');
 
@@ -210,6 +211,21 @@ const eBtn = document.querySelector(".e");
 logBtn.addEventListener('click', () => {
     if(!isOn) return;
 
+    if(shiftActive){
+        if(justCalculated){
+            expression = "";
+            justCalculated = false;
+        }
+
+        expression += "ln(";
+
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+
+        updateDisplay();
+        return;
+    }
+
     if(enteringLog && logBase){
         expression += ",";
         enteringLog = false;
@@ -225,6 +241,22 @@ logBtn.addEventListener('click', () => {
     expression += "log(";
     enteringLog = true;
     logBase = "";
+    updateDisplay();
+});
+
+eBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(justCalculated){
+        expression = "";
+        justCalculated = false;
+    }
+
+    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans")){
+        expression += "*";
+    }
+
+    expression += "Math.E";
     updateDisplay();
 });
 
