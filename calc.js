@@ -12,18 +12,13 @@ let rootIndex = "";
 // display
 function updateDisplay(){
     const displayExpression = expression
-        .replace(/sqrt\(/g, '√')
         .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
-        .replace(
-            /\*\*(\d+(?:\.\d+)?|\bAns\b)?|[*/]/g,
-            (match, power) => {
-                if(match.startsWith("**")){
-                    return `<sup>${power || "n"}</sup>`
-                }
-
-                return match === "*" ? "×" : "÷"
-            }
-        );
+        .replace(/sqrt\(/g, '√')
+        .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
+            return `<sup>${power || "n"}</sup>`
+        })
+        .replace(/\*/g, '×')
+        .replace(/\//g, '÷');
 
     expressionDisplay.innerHTML = displayExpression || 0;
 }
@@ -185,6 +180,13 @@ sqrtBtn.addEventListener('click', () => {
         return;
     }
 
+    if(enteringRoot && rootIndex){
+        expression += ",";
+        enteringRoot = false;
+        updateDisplay();
+        return;
+    }
+
     if(justCalculated){
         expression = "";
         justCalculated = false;
@@ -204,6 +206,13 @@ allClearBtn.addEventListener('click', () => {
 
     expression = "";
     justCalculated = false;
+    enteringRoot = false;
+    enteringSqrt = false;
+    rootIndex = "";
+
+    shiftActive = false;
+    shiftBtn.classList.remove("active");
+
     resultDisplay.textContent = 0;
     updateDisplay();
 });
@@ -256,6 +265,10 @@ executeBtn.addEventListener('click', () => {
         resultDisplay.textContent = ans;
         expression = "Ans";
         justCalculated = true;
+
+        enteringRoot = false;
+        enteringSqrt = false;
+        rootIndex = "";
 
         updateDisplay();
     } catch(error){
