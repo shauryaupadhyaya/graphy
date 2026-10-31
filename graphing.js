@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     ctx.translate(0, canvas.height);
     ctx.scale(1, -1);
     function drawAxes() {
-        ctx.strokeStyle = 'white';
+        ctx.strokeStyle = 'black';
         ctx.lineWidth = 2;
         ctx.beginPath();
         // y-axis
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         // Reset the flipped coordinate system for text
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'black';
         ctx.font = '12px Rubik';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';

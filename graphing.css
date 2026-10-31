@@ -1,32 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Libertinus+Math&family=Rubik:ital,wght@0,300..900;1,300..900&family=STIX+Two+Math&display=swap');
 
 :root {
-    --base: #24273a;
-    --mantle: #1e2030;
-    --crust: #181926;
-    --surface0: #363a4f;
-    --surface1: #494d64;
-    --surface2: #5b6078;
-    --overlay0: #6e738d;
-    --overlay1: #8087a2;
-    --overlay2: #939ab7;
-    --subtext0: #a5adcb;
-    --subtext1: #b8c0e0;
-    --text: #cad3f5;
-    --rosewater: #f4dbd6;
-    --flamingo: #f0c6c6;
-    --pink: #f5bde6;
-    --mauve: #c6a0f6;
-    --red: #ed8796;
-    --maroon: #ee99a0;
-    --peach: #f5a97f;
-    --yellow: #eed49f;
-    --green: #a6da95;
-    --teal: #8bd5ca;
-    --sky: #8bd5ca;
-    --sapphire: #7dc4e4;
-    --blue: #8aadf4;
-    --lavender: #b7bdf8;
+    --base: #eff1f5;
+    --mantle:#e6e9ef;
+    --crust: #dce0e8;
+    --surface0: #ccd0da;
+    --surface1: #bcc0cc;
+    --surface2: #acb0be;
+    --overlay0: #9ca0b0;
+    --overlay1: #8c8fa1;
+    --overlay2: #7c7f93;
+    --subtext0: #6c6f85;
+    --subtext1: #5c5f77;
+    --text: #4c4f69;
+    --rosewater: #dc8a78;
+    --flamingo: #dd7878;
+    --pink: #ea76cb;
+    --mauve: #8839ef;
+    --red: #8839ef;
+    --maroon: #e64553;
+    --peach: #fe640b;
+    --yellow: #df8e1d;
+    --green: #40a02b;
+    --teal: #179299;
+    --sky: #04a5e5;
+    --sapphire: #209fb5;
+    --blue: #1e66f5;
+    --lavender: #7287fd;
 }
 
 body {
@@ -77,7 +77,7 @@ main {
 }
 
 #equations-title {
-    color: white;
+    color: black;
     font-family: 'Rubik';
     margin: 15px 10px;
     align-items: center;
@@ -93,7 +93,7 @@ main {
 }
 
 .equation-delete {
-    background-color: var(--overlay2);
+    background-color: var(--surface0);
     color: black;
     font-family: 'Rubik';
     border: 0px;
@@ -112,7 +112,7 @@ main {
 }
 
 .equations-input-box {
-    background-color: var(--overlay2);
+    background-color: var(--surface0);
     height: 80px;
     width: 100%;
     display: flex;
@@ -261,4 +261,50 @@ canvas {
        opacity: 0;
        visibility: hidden;
    }
+}
+
+
+#graph-nav {
+    position: absolute;
+    top: 59px;
+    right: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+#graph-nav button {
+    padding: 7px 10px;
+}
+
+#graph-up {
+    background-color: var(--maroon);
+    border: none;
+    border-radius: 5px;
+    color: var(--base);
+    grid-column: 2;
+}
+#graph-down {
+    background-color: var(--maroon);
+    border: none;
+    border-radius: 5px;
+    color: var(--base);
+    grid-column: 2;
+    grid-row: 3;
+}
+#graph-right {
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    color: var(--base);
+    grid-column: 3;
+    grid-row: 2;
+}
+#graph-left {
+    background-color: var(--green);
+    border: none;
+    border-radius: 5px;
+    color: var(--base);
+    grid-column: 1;
+    grid-row: 2;
 }

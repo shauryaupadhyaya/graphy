@@ -26,7 +26,7 @@
                         <p class="equation-number">1</p>
                     </div>
                     <div class="vr"></div>
-                    <input class="equation" type="text" autofocus name="equation" data-color="#ffffff">
+                    <input class="equation" type="text" autofocus name="equation" data-color="#000000">
                     <button class="equation-delete">x</button>
                     <button class="color-pick">✎</button>
                 </div>
@@ -48,11 +48,17 @@
                 <p class="equation-number">1</p>
             </div>
             <div class="vr"></div>
-            <input class="equation" type="text" autofocus data-color="#ffffff">
+            <input class="equation" type="text" autofocus data-color="#000000">
             <button class="equation-delete">x</button>
             <button class="color-pick">✎</button>
         </div>
     </template>
+    <div id="graph-nav">
+        <button id="graph-up">W</button>
+        <button id="graph-down">S</button>
+        <button id="graph-left">A</button>
+        <button id="graph-right">D</button>
+    </div>
     <script src="graphing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.js"></script>
 </body>
