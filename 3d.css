@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Libertinus+Math&family=Rubik:ital,wght@0,300..900;1,300..900&family=STIX+Two+Math&display=swap');
 :root {
     --base: light-dark(#eff1f5,#24273a);
     --mantle: light-dark(#e6e9ef,#1e2030);

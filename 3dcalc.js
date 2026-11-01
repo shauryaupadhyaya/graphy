@@ -56,5 +56,44 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         controls.update();
         renderer.render(scene, camera);
     }
+    function updateTheme() {
+        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (isDarkMode) {
+            scene.background = new THREE.Color(0x000000);
+        } else {
+            scene.background = new THREE.Color(0xffffff);
+        }
+    }
+    function createAxesHelper(size = 5, thickness = 0.05) {
+        const group = new THREE.Group();
+        const createAxes = (color, rotation, position) => {
+            const geometry = new THREE.CylinderGeometry(thickness, thickness, size, 16);
+            const material = new THREE.MeshBasicMaterial({color});
+            const cylinder = new THREE.Mesh(geometry, material);
+            cylinder.rotation.set(rotation.x, rotation.y, rotation.z);
+            group.add(cylinder);
+        }
+        createAxes(0xff0000, {
+            x: 0,
+            y: 0,
+            z: Math.PI/2
+        })
+        createAxes(0x00ff00, {
+            x: 0,
+            y: Math.PI/2,
+            z: 0,
+        })
+        createAxes(0x0000ff, {
+            x: Math.PI/2,
+            y: 0,
+            z: 0,
+        })
+        return group;
+    }
+    updateTheme();
+    const axes = createAxesHelper(50, 0.5);
+    scene.add(axes);
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
     renderer.setAnimationLoop(animate);
+    
 })
