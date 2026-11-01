@@ -142,10 +142,10 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         currentSegment = [];
         return segments;
     }
-    function plotEquation(eqPoints) {
+    function plotEquation(eqPoints, color) {
         const geometry = new LineGeometry();
         const material = new LineMaterial({
-            color: 0xff0000,
+            color: color,
             linewidth: 4
         })
         const positions = [];
@@ -170,11 +170,12 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         const equations = eqInputList.querySelectorAll(".equation");
         equations.forEach(input => {
             const equation = input.value.trim();
+            const color = input.dataset.color;
             if (!equation) return;
             try {
                 const segments = getPoints(equation);
                 segments.forEach(segment => {
-                    plotEquation(segment);
+                    plotEquation(segment, color);
                 })
             } catch (err) {
                 console.log(err);
@@ -182,4 +183,59 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         })
     }
     scene.add(graphs);
+    let eqNumberColor = 1;
+    // const colorEditBtns = document.querySelectorAll(".color-pick");
+    const colorMenu = document.querySelector(".edit-color");
+    // function shopSale() {
+    //     colorEditBtns.forEach(element => {
+    //         element.addEventListener("click", (e)=> {
+    //             if (colorMenu.classList.contains("slideIn")) {
+    //                 colorMenu.classList.remove("slideIn");
+    //                 colorMenu.classList.add("slideOut");
+    //             } else if (colorMenu.classList.contains("slideOut")) {
+    //                 colorMenu.classList.remove("slideOut");
+    //                 colorMenu.classList.add("slideIn");
+    //                 eqNumberColor = element.parentElement.querySelector(".equation-number").textContent;
+    //                 console.log("Equation number being editied: " + eqNumberColor)
+    //             } else {
+    //                 colorMenu.classList.remove("slideOut");
+    //                 colorMenu.classList.add("slideIn");
+    //                 eqNumberColor = element.parentElement.querySelector(".equation-number").textContent;
+    //                 console.log("Equation number being editied: " + eqNumberColor)
+    //             }
+    //         })
+    //     })
+    // }
+    let colorToBecome;
+    function setUpListenersC() {
+        colorMenu.querySelectorAll("button").forEach(element => {
+            element.addEventListener('click', (e)=> {
+                colorToBecome = e.target.dataset.color;
+                console.log("color to become: ", colorToBecome)
+                const allNumbers = document.querySelectorAll(".equation-number");
+                console.log(allNumbers[0]);
+                for (let i = 0; i < allNumbers.length; i++) {
+                    console.log(allNumbers[i].parentElement.parentElement);
+                    if (allNumbers[i].textContent === eqNumberColor) {
+                        allNumbers[i].parentElement.parentElement.querySelector(".equation").dataset.color = colorToBecome;
+                        redrawGraph();
+                    }
+                }
+            })
+        })
+    }
+    eqInputList.addEventListener("click", (e)=> {
+        const button = e.target.closest(".color-pick");
+        if (!button) return;
+        eqNumberColor = button.parentElement.querySelector(".equation-number").textContent;
+        if (colorMenu.classList.contains("slideIn")) {
+            colorMenu.classList.remove("slideIn");
+            colorMenu.classList.add("slideOut");
+        } else {
+            colorMenu.classList.remove("slideOut");
+            colorMenu.classList.add("slideIn");
+        }
+        console.log("Equation being edited: ", eqNumberColor);
+    })
+    setUpListenersC();
 })
