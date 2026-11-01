@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         const compiled = math.compile(eq);
         const lines = [];
         // set up for loop to check y values from minimum x to maximum x 
-        for (let x = -20; x <= 20; x+=0.1) {
+        for (let x = -25; x <= 25; x+=0.1) {
             const line = [];
             try {
                 const y = compiled.evaluate({x});
