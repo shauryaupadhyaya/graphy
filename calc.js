@@ -10,6 +10,7 @@ let enteringSqrt = false;
 let rootIndex = "";
 let enteringLog = false;
 let logBase = "";
+let angleMode = localStorage.getItem("angleMode") || "DEG";
 
 // display
 function updateDisplay(){
@@ -315,6 +316,140 @@ piBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+// settings menu
+const leftArrow = document.getElementById("leftarrow");
+const rightArrow = document.getElementById("rightarrow");
+const upArrow = document.getElementById("uparrow");
+const downArrow = document.getElementById("downarrow");
+const okBtn = document.getElementById("ok");
+
+const settingsBtn = document.querySelector(".settings");
+const settingsMenu = document.getElementById("settingsMenu");
+const settingsMain = document.getElementById("settingsMain");
+const angleMenu = document.getElementById("angleMenu");
+const angleSettings = document.getElementById("angleSettings");
+const angleOption = document.getElementById("angleOption");
+const degOption = document.getElementById("degOption");
+const radOption = document.getElementById("radOption");
+
+let settingsOpen = false;
+let settingsPage = "main";
+let selectedAngle = angleMode;
+let selectedSetting = 0;
+
+const settingsItems = [angleSettings];
+
+function updateSettingsDisplay(){
+    settingsMain.classList.toggle("active", settingsPage === "main");
+    angleMenu.classList.toggle("active", settingsPage === "angle");
+
+    settingsItems.forEach((item, index) => {
+        item.classList.toggle("selected", index === selectedSetting)
+    });
+
+    angleOption.textContent = angleMode;
+
+    degOption.classList.toggle("selected", selectedAngle === "DEG");
+    radOption.classList.toggle("selected", selectedAngle === "RAD");
+}
+
+settingsBtn.addEventListener('click', () => {
+    settingsOpen = !settingsOpen;
+
+    if(settingsOpen){
+        settingsPage = "main";
+        selectedAngle = angleMode;
+        selectedSetting = 0;
+        settingsMenu.classList.add("active");
+    } else{
+        settingsMenu.classList.remove("active");
+        settingsPage = "main";
+    }
+
+    updateSettingsDisplay();
+});
+
+function moveSetting(direction){
+    if(!settingsOpen || settingsPage !== "main") return;
+
+    selectedSetting = (selectedSetting + direction + settingsItems.length) % settingsItems.length;
+    updateSettingsDisplay();
+}
+
+function moveAngle(direction){
+    if(!settingsOpen || settingsPage !== "angle") return;
+
+    selectedAngle = direction === 1 ? "RAD" : "DEG";
+    updateSettingsDisplay();
+}
+
+function openSettings(){
+    if(!settingsOpen || settingsPage !== "main") return;
+
+    if(settingsItems[selectedSetting] === angleSettings){
+        settingsPage = "angle";
+        selectedAngle = angleMode;
+    }
+
+    updateSettingsDisplay();
+}
+
+function saveAngle(){
+    if(!settingsOpen || settingsPage !== "angle")
+
+    angleMode = selectedAngle;
+    localStorage.setItem("angleMode", angleMode);
+    settingsPage = "main";
+    updateSettingsDisplay();
+}
+
+// arrow navigation
+upArrow.addEventListener('click', () => {
+    if(settingsPage === "main"){
+        moveSetting(-1);
+    }
+});
+
+downArrow.addEventListener('click', () => {
+    if(settingsPage === "main"){
+        moveSetting(1)
+    }
+});
+
+leftArrow.addEventListener('click', () => {
+    if(!settingsOpen) return;
+
+    if(settingsPage === "main"){
+        settingsMenu.classList.remove("active");
+        settingsOpen = false;
+        settingsPage = "main";
+    } else{
+        moveAngle(-1);
+    }
+});
+
+rightArrow.addEventListener('click', () => {
+    if(!settingsOpen) return;
+
+    if(settingsPage === "main"){
+        openSettings();
+    } else{
+        moveAngle(1);
+    }
+});
+
+okBtn.addEventListener('click', () => {
+    if(!settingsOpen) return;
+
+    if(settingsPage === "main"){
+        openSettings();
+    } else{
+        saveAngle();
+    }
+});
+
+updateSettingsDisplay();
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -385,8 +520,12 @@ executeBtn.addEventListener('click', () => {
             return Math.log(value) / Math.log(base);
         }
 
-        const toRadians = angle => angle * Math.PI / 180;
-        const toDegrees = angle => angle * 180 / Math.PI;
+        const toRadians = angle => {
+            return angleMode === "DEG" ? angle * Math.PI / 180 : angle;
+        };
+        const toDegrees = angle => {
+            return angleMode === "DEG" ? angle * 180 / Math.PI : angle;
+        };
 
         const sin = angle => {
             const result = Math.sin(toRadians(angle));
