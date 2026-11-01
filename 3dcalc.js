@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 document.addEventListener('DOMContentLoaded', async (e)=>{
     const maincanvas = document.getElementById("maincanvas");
     const equationInputTemplate = document.getElementById("equation-input-template");
-    const equationInputs = document.querySelectorAll(".equation");
     const eqInputList = document.getElementById("equations-bottom");
     let gridOffsetX = 0;
     let gridOffsetY = 0;
@@ -33,29 +35,27 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             redrawGraph(gridOffsetX, gridOffsetY);
         }
     })
+    // create new threejs scene to hold all points
     const scene = new THREE.Scene();
+    const environment = new THREE.Group();
+    const graphs = new THREE.Group();
     const camera = new THREE.PerspectiveCamera(75, maincanvas.clientWidth / maincanvas.clientHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(maincanvas.clientWidth, maincanvas.clientHeight);
     maincanvas.appendChild(renderer.domElement)
     const controls = new OrbitControls( camera, renderer.domElement );
+    // box to show points limit
     const material = new THREE.LineBasicMaterial({color: 0x0000ff, linewidth: 2});
     const boxGeometry = new THREE.BoxGeometry(50, 50, 50);
     const edgeGeometry = new THREE.EdgesGeometry(boxGeometry);
     const cubeBorder = new THREE.LineSegments(edgeGeometry, material);
     camera.position.z = 100;
-    scene.add(cubeBorder);
-    const bidirectionalAxes = new THREE.Group();
-    const axesHelper = new THREE.AxesHelper(20);
-    bidirectionalAxes.add(axesHelper);
-    const negAxes = new THREE.AxesHelper(20);
-    negAxes.scale.set(-1, -1, -1);
-    bidirectionalAxes.add(negAxes);
-    scene.add(bidirectionalAxes);
+    environment.add(cubeBorder);
     function animate() {
         controls.update();
         renderer.render(scene, camera);
     }
+    // dark/light mode toggle
     function updateTheme() {
         const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
         if (isDarkMode) {
@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             scene.background = new THREE.Color(0xffffff);
         }
     }
+    // diy axes
     function createAxesHelper(size = 5, thickness = 0.05) {
         const group = new THREE.Group();
         const createAxes = (color, rotation, position) => {
@@ -92,8 +93,93 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     }
     updateTheme();
     const axes = createAxesHelper(50, 0.5);
-    scene.add(axes);
+    environment.add(axes);
+    scene.add(environment);
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
     renderer.setAnimationLoop(animate);
-    
+    // points parsing
+    eqInputList.addEventListener('input', async (e)=> {
+        if (e.target.matches('.equation')) {
+            const equation = e.target.value.trim();
+            if (!equation) return;
+            try {
+                if (math.parse(e.target.value)) {
+                    redrawGraph();
+                };
+
+            } catch(err) {
+                console.log('Error: ', err);
+            }
+        }
+    })
+    function getPoints(eq) {
+        // compile equation
+        const compiled = math.compile(eq);
+        const segments = [];
+        let currentSegment = [];
+        // set up for loop to check y values from minimum x to maximum x 
+        for (let x = -20; x <= 20; x+=0.1) {
+            try {
+                const y = compiled.evaluate({x});
+                if (typeof y === "number" && Number.isFinite(y) && y >= -25 && y <= 25) {
+                    currentSegment.push({x, y});
+                } else {
+                    if (currentSegment.length >= 2) {
+                        segments.push(currentSegment);
+                    }
+                    currentSegment = [];
+                }
+            } catch (error) {
+                if (currentSegment.length >= 2) {
+                    segments.push(currentSegment);
+                }
+                currentSegment = [];
+            }
+        }
+        if (currentSegment.length >= 2) {
+            segments.push(currentSegment);
+        }
+        currentSegment = [];
+        return segments;
+    }
+    function plotEquation(eqPoints) {
+        const geometry = new LineGeometry();
+        const material = new LineMaterial({
+            color: 0xff0000,
+            linewidth: 4
+        })
+        const positions = [];
+        eqPoints.forEach(point => {
+            positions.push(point.x, point.y, point.z ?? 0);
+        });
+        geometry.setPositions(positions);
+        const line = new Line2(geometry, material);
+        line.computeLineDistances();
+        graphs.add(line)
+        return line;
+    }
+    function clearGraphs() {
+        graphs.children.forEach(graph => {
+            graph.geometry.dispose();
+            graph.material.dispose();
+        });
+        graphs.clear();
+    }
+    function redrawGraph() {
+        clearGraphs();
+        const equations = eqInputList.querySelectorAll(".equation");
+        equations.forEach(input => {
+            const equation = input.value.trim();
+            if (!equation) return;
+            try {
+                const segments = getPoints(equation);
+                segments.forEach(segment => {
+                    plotEquation(segment);
+                })
+            } catch (err) {
+                console.log(err);
+            }
+        })
+    }
+    scene.add(graphs);
 })
