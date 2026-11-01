@@ -210,6 +210,21 @@ sqrtBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+// x10^n button
+const tenPowerBtn = document.querySelector(".tenpower");
+
+tenPowerBtn.addEventListener('click', () => {
+    if(!isOn || !expression) return;
+
+    if(justCalculated){
+        expression = "Ans";
+        justCalculated = false;
+    }
+
+    expression += "*10**";
+    updateDisplay();
+});
+
 // log, e and ln
 const logBtn = document.querySelector(".log");
 const eBtn = document.querySelector(".e");
