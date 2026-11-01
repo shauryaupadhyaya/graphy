@@ -812,5 +812,191 @@
     <p id="item-subtitle">Now I know this is a rather easy expression and we actually don't need the binomial theorem, but for the sake of this example (and my fingers) we used a small value.</p>
     <p id="item-subtitle">Binomial Theorem can be used to expand for example an expression to the power of 5 without breaking your brain!</p>
     <p id="item-subtitle">And alas, you finally have a good understanding of the basics of Combinatorics!</p>
+    <hr style="border-color: gray; width: 20%; margin-left: 0; margin-right: auto;">
+    <p>3. Sequences and Series</p>
+    <p id="item-subtitle">Sequences and series are a concept of maths useful when theres repeating patterns or numbers and you are asked to find the relationship between them or to find the value of the Nth Term.</p>
+    <p id="item-subtitle">A sequence is a set of numbers or terms arranged in a specific logical order.</p>
+    <p id="item-subtitle">There are two types of series - finite and infinite</p>
+    <p id="item-subtitle">Take a look at the examples of sequences: </p>
+    <p id="item-subtitle">Finite:</p>
+    <math>
+        <mrow class="start-mrow">
+            <mn>2, 4, 6, 8, 10</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Infinite:</p>
+    <math>
+        <mrow class="start-mrow">
+            <mn>2, 4, 6, 8, 10, ...</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Notice there isn't a big difference in how they both are presented other than the ellipses(...) at the end of the infinite sequence.</p>
+    <p id="item-subtitle">Let us take a look at the different types of sequences</p>
+    <p id="item-subtitle"><em>3.1 Arithmetic Sequences</em></p>
+    <p id="item-subtitle">Each term in an arithmetic sequence increases or decreases by a constant term.</p>
+    <p id="item-subtitle">This term is called the common differnence</p>
+    <p id="item-subtitle">Example: </p>
+    <math>
+        <mrow class="start-mrow">
+            <mn>3, 7, 11, 15, ...</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Here you can see we add 4 to go from one term to the next each time.</p>
+    <p id="item-subtitle">The formula for getting the value of any term in an arithmetic sequence is: </p>
+    <math>
+        <mrow class="start-mrow">
+            <mrow>
+                <msub>
+                    <mi>a</mi>
+                    <mi>n</mi>
+                </msub>
+                <mo>=</mo>
+                <msub>
+                    <mi>a</mi>
+                    <mi>1</mi>
+                </msub>
+                <mo fence="true">(</mo>
+                <mi>n</mi>
+                <mo>&minus;</mo>
+                <mn>1</mn>
+                <mo fence="true">)</mo>
+                <mn>d</mn>
+            </mrow>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Well you see all these letters, what do they mean?</p>
+    <p id="item-subtitle">a<sub>n</sub> = the nth term you want to find</p>
+    <p id="item-subtitle">a<sub>1</sub> = the value of the first term</p>
+    <p id="item-subtitle">n = the position of the term (e.g. n = 10 for the 10th term)</p>
+    <p id="item-subtitle">d = the common difference</p>
+    <p id="item-subtitle">Lets try using this in an example?</p>
+    <p id="item-subtitle">Find the 20th term of: 3, 7, 11, 15, ...</p>
+    <math>
+        <mrow class="start-mrow">
+            <msub>
+                <mi>a</mi>
+                <mn>20</mn>
+            </msub>
+            <mo>&equals;</mo>
+            <mn>3</mn>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mn>20</mn>
+            <mo>&minus;</mo>
+            <mn>1</mn>
+            <mo fence="true">)</mo>
+            <mn>4</mn>
+            <mo>&equals;</mo>
+            <mn>3</mn>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mn>19</mn>
+            <mo>&times;</mo>
+            <mn>4</mn>
+            <mo fence="true">)</mo>
+            <mo>&equals;</mo>
+            <mn>79</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Now the sum formulas, to find the sum of X number of terms</p>
+    <p id="item-subtitle">You can use these formulas to add up the first N terms of an arithmetic sequence quickly.</p>
+    <p id="item-subtitle">Option A: When you know the first and last terms</p>
+    <math>
+        <mrow>
+            <msub>
+                <mi>S</mi>
+                <mi>n</mi>
+            </msub>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mi>n</mi>
+                <mn>2</mn>
+            </mfrac>
+            <mo fence="true">(</mo>
+            <msub>
+                <mi>a</mi>
+                <mn>1</mn>
+            </msub>
+            <mo>&plus;</mo>
+            <msub>
+                <mi>a</mi>
+                <mn>n</mn>
+            </msub>
+            <mo fence="true">)</mo>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Or Option B: When you don't know the last term</p>
+    <math>
+        <mrow class="start-mrow">
+            <msub>
+                <mi>S</mi>
+                <mi>n</mi>
+            </msub>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mi>n</mi>
+                <mn>2</mn>
+            </mfrac>
+            <mo>[</mo>
+            <mn>2</mn>
+            <msub>
+                <mi>a</mi>
+                <mn>1</mn>
+            </msub>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mi>n</mi>
+            <mo>&minus</mo>
+            <mn>1</mn>
+            <mo fence="true">)</mo>
+            <mi>d</mi>
+            <mo>]</mo>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Heres the breakdown of the stuff inside these 2 formulas: </p>
+    <p id="item-subtitle">S<sub>n</sub> = the sum of the first n terms</p>
+    <p id="item-subtitle">a<sub>n</sub> = the last term in the series</p>
+    <p id="item-subtitle">And now you know the Sum formulas and the Nth Term Formulas</p>
+    <p id="item-subtitle">Lets use the formula inside an example: </p>
+    <p id="item-subtitle">Find the sum of the first 10 terms of 3, 7, 11, 15</p>
+    <math>
+        <mrow class="start-mrow">
+            <msub>
+                <mi>S</mi>
+                <mn>10</mn>
+            </msub>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mn>10</mn>
+                <mn>2</mn>
+            </mfrac>
+            <mo>[</mo>
+            <mn>2</mn>
+            <mo fence="true">(</mo>
+            <mn>3</mn>
+            <mo fence="true">)</mo>
+            <mo>&plus;</mo>
+            <mo fence="true">(</mo>
+            <mn>10</mn>
+            <mo>&minus;</mo>
+            <mn>1</mn>
+            <mo fence="true">)</mo>
+            <mn>4</mn>
+            <mo>]</mo>
+            <mo>&equals;</mo>
+            <mn>5</mn>
+            <mo>[</mo>
+            <mn>6</mn>
+            <mo>&plus;</mo>
+            <mn>36</mn>
+            <mo>]</mo>
+            <mo>&equals;</mo>
+            <mn>5</mn>
+            <mo>&times;</mo>
+            <mn>42</mn>
+            <mo>&equals;</mo>
+            <mn>210</mn>
+        </mrow>
+    </math>
 </body>
 </html>
