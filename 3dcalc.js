@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     const maincanvas = document.getElementById("maincanvas");
     const equationInputTemplate = document.getElementById("equation-input-template");
     const eqInputList = document.getElementById("equations-bottom");
+    // extend z button
+    let extendZBtns = document.querySelectorAll('.extend-z');
+    // normal code
     let gridOffsetX = 0;
     let gridOffsetY = 0;
     eqInputList.addEventListener('keydown', (e)=>{
@@ -16,6 +19,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
             cloneNumber++;
             clone.querySelector(".equation-number").textContent = cloneNumber;
+            extendZBtns = document.querySelectorAll('.extend-z');
             eqInputList.appendChild(clone);
         }
     })
@@ -142,6 +146,28 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         currentSegment = [];
         return segments;
     }
+    function getPoints3(eq) {
+        // compile equation
+        const compiled = math.compile(eq);
+        const lines = [];
+        // set up for loop to check y values from minimum x to maximum x 
+        for (let x = -20; x <= 20; x+=0.1) {
+            const line = [];
+            try {
+                const y = compiled.evaluate({x});
+                if (typeof y === "number" && Number.isFinite(y) && y >= -25 && y <= 25) {
+                    // loop through every z value in cube
+                    for (let z = -25; z <= 25; z+=1) {
+                        line.push({x, y, z});
+                    }
+                    lines.push(line);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        return lines;
+    }
     function plotEquation(eqPoints, color) {
         const geometry = new LineGeometry();
         const material = new LineMaterial({
@@ -172,13 +198,17 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             const equation = input.value.trim();
             const color = input.dataset.color;
             if (!equation) return;
-            try {
-                const segments = getPoints(equation);
+            const dimension = input.dataset.dimension || '2d';
+            if (dimension === "3d") {
+                const lines = getPoints3(equation);
+                lines.forEach(line => {
+                    plotEquation(line, color);
+                })
+            } else {
+                const segments = getPoints(equation)
                 segments.forEach(segment => {
                     plotEquation(segment, color);
                 })
-            } catch (err) {
-                console.log(err);
             }
         })
     }
@@ -238,4 +268,20 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         console.log("Equation being edited: ", eqNumberColor);
     })
     setUpListenersC();
+    // extend to z buttons
+    eqInputList.addEventListener('click', (e)=> {
+        const button = e.target.closest(".extend-z");
+        if (!button) return;
+        const equationBox = button.closest('.equations-input-box');
+        const equationNumber = equationBox.querySelector('.equation-number').textContent;
+        const equation = equationBox.querySelector('.equation');
+        equation.dataset.dimension = equation.dataset.dimension === "3d" ? "2d" : "3d";
+        if (equation.dataset.dimension === '3d') {
+            button.textContent = 'Unextend'
+        } else {
+            button.textContent = 'Extend to Z'
+        }
+        redrawGraph();
+        console.log('Extending Equation: ', equationNumber);
+    })
 })
