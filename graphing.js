@@ -112,9 +112,9 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         ctx.translate(0, canvas.height);
         ctx.scale(1, -1);
         const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-        drawGrid(gridSize, offsetY, offsetX);
-        drawAxes(offsetX, offsetY);
-        drawGridNumbers(gridSize, offsetY, offsetX);
+        drawGrid(gridSize, offsetY === 0? 0 : offsetY, offsetX  === 0? 0 : offsetX);
+        drawAxes(offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
+        drawGridNumbers(gridSize, offsetY === 0? 0 : offsetY, offsetX === 0? 0 : offsetX);
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
                 console.log(input.value)
@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     function plotEquation(value, gridSize, color) {
         if (!value.trim()) return;
         let compiled;
+        console.log("Plotting:", value);
         try {
             const parts = value.split('=');
             if (parts.length === 2) {
@@ -145,6 +146,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             // } else {
             //     compiled = math.parse(`y-(${value})`).compile();
             // }
+            console.log("Compiled successfully", compiled);       
         } catch (error) {
             console.error("Invalid equation: ", value, error);
             return;
@@ -205,10 +207,12 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                     const a = values[i];
                     const b = values[j];
 
-                    if ((a < 0 && b > 0) || (a > 0 && b < 0)) {
-                        crossings.push(
-                            intersection(points[i], points[j], a, b)
-                        );
+                    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
+                        if (a !== b) {
+                            crossings.push(
+                                intersection(points[i], points[j], a, b)
+                            );
+                        }
                     }
                 }
 
@@ -392,16 +396,30 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     })
     setUpListenersC();
     // shopSale();
-    const gridControls = document.getElementById("graph-nav");
-    const gridUp = document.getElementById("graph-up");
-    const gridDown = document.getElementById("graph-down");
-    const gridLeft = document.getElementById("graph-left");
-    const gridRight = document.getElementById("graph-right");
-    gridUp.addEventListener('click', (e)=> {
-        e.preventDefault();
-    })
-    function moveGridUp() {
-        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-
-    }
+    // const gridControls = document.getElementById("graph-nav");
+    // const gridUp = document.getElementById("graph-up");
+    // const gridDown = document.getElementById("graph-down");
+    // const gridLeft = document.getElementById("graph-left");
+    // const gridRight = document.getElementById("graph-right");
+    // gridUp.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(0, 1);
+    // })
+    // gridDown.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(0, -1);
+    // })
+    // gridLeft.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(-1, 0);
+    // })
+    // gridRight.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(1, 0);
+    // })
+    // function moveGrid(toOffsetX, toOffsetY) {
+    //     const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
+    //     gridOffsetX = toOffsetX * gridSize;
+    //     gridOffsetY = toOffsetY * gridSize;
+    // }
 })
