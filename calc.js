@@ -260,6 +260,37 @@ eBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+// trig
+const sinBtn = document.querySelector(".sin");
+const cosBtn = document.querySelector(".cos");
+const tanBtn = document.querySelector(".tan");
+
+function TrigFunctions(button, normal, inverse){
+    button.addEventListener('click', () => {
+        if(!isOn) return;
+        
+        const functionName = shiftActive ? inverse : normal;
+
+        if(justCalculated){
+            expression = "";
+            justCalculated = false;
+        }
+
+        if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E")){
+            expression += "*";
+        }
+
+        expression += `${functionName}(`;
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+        updateDisplay();
+    });
+}
+
+TrigFunctions(sinBtn, "sin", "arcsin");
+TrigFunctions(cosBtn, "cos", "arccos");
+TrigFunctions(tanBtn, "tan", "arctan");
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -329,8 +360,32 @@ executeBtn.addEventListener('click', () => {
 
             return Math.log(value) / Math.log(base);
         }
+
+        const toRadians = angle => angle * Math.PI / 180;
+        const toDegrees = angle => angle * 180 / Math.PI;
+
+        const sin = angle => {
+            const result = Math.sin(toRadians(angle));
+            return Math.abs(result) < 1e-10 ? 0 : result;
+        };
+        const cos = angle => {
+            const result = Math.cos(toRadians(angle));
+            return Math.abs(result) < 1e-10 ? 0 : result;
+        };
+        const tan = angle => {
+            if(Math.abs(Math.cos(toRadians(angle))) < 1e-10){
+                return NaN;
+            }
+    
+            const result = Math.tan(toRadians(angle));
+            return Math.abs(result) < 1e-10 ? 0 : result;
+        };
+
+        const asin = value => toDegrees(Math.asin(value));
+        const acos = value => toDegrees(Math.acos(value));
+        const atan = value => toDegrees(Math.atan(value));
         
-        const answer = Function("root", "log", `"use strict"; return (${calculation})`)(rootFunction, logFunction);
+        const answer = Function("root", "log", "sin", "cos", "tan", "arcsin", "arccos", "arctan", `"use strict"; return (${calculation})`)(rootFunction, logFunction, sin, cos, tan, asin, acos, atan);
 
         if(!Number.isFinite(answer)){
             throw new Error("Invalid calculation");            
