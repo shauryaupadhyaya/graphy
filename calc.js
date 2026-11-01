@@ -20,6 +20,7 @@ function updateDisplay(){
             return `<sup>${power || "n"}</sup>`
         })
         .replace(/Math\.E/g, "e")
+        .replace(/Math\.PI/g, "π")
         .replace(/\*/g, '×')
         .replace(/\//g, '÷');
 
@@ -120,7 +121,7 @@ openBracketBtn.addEventListener('click', () => {
         justCalculated = false;
     }
 
-    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans")){
+    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
         expression += "*";
     }
 
@@ -199,6 +200,10 @@ sqrtBtn.addEventListener('click', () => {
         justCalculated = false;
     }
 
+    if(expression.endsWith("Math.PI") || expression.endsWith("Math.E") || expression.endsWith("Ans") || /[0-9.)]$/.test(expression)){
+        expression += "*";
+    }
+
     expression += `sqrt(`;
     enteringSqrt = true;
     updateDisplay();
@@ -252,7 +257,7 @@ eBtn.addEventListener('click', () => {
         justCalculated = false;
     }
 
-    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans")){
+    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.PI")){
         expression += "*";
     }
 
@@ -276,7 +281,7 @@ function TrigFunctions(button, normal, inverse){
             justCalculated = false;
         }
 
-        if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E")){
+        if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
             expression += "*";
         }
 
@@ -290,6 +295,25 @@ function TrigFunctions(button, normal, inverse){
 TrigFunctions(sinBtn, "sin", "arcsin");
 TrigFunctions(cosBtn, "cos", "arccos");
 TrigFunctions(tanBtn, "tan", "arctan");
+
+// pi
+const piBtn = document.querySelector(".pi");
+
+piBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(justCalculated){
+        expression = "";
+        justCalculated = false;
+    }
+
+    if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
+        expression += "*";
+    }
+
+    expression += "Math.PI";
+    updateDisplay();
+});
 
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
@@ -385,7 +409,7 @@ executeBtn.addEventListener('click', () => {
         const acos = value => toDegrees(Math.acos(value));
         const atan = value => toDegrees(Math.atan(value));
         
-        const answer = Function("root", "log", "sin", "cos", "tan", "arcsin", "arccos", "arctan", `"use strict"; return (${calculation})`)(rootFunction, logFunction, sin, cos, tan, asin, acos, atan);
+        const answer = Function("Math", "root", "log", "sin", "cos", "tan", "arcsin", "arccos", "arctan", `"use strict"; return (${calculation})`)(Math, rootFunction, logFunction, sin, cos, tan, asin, acos, atan);
 
         if(!Number.isFinite(answer)){
             throw new Error("Invalid calculation");            
