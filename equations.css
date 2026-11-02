@@ -1,32 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Libertinus+Math&family=Rubik:ital,wght@0,300..900;1,300..900&family=STIX+Two+Math&display=swap');
 
 :root {
-    --base: #24273a;
-    --mantle: #1e2030;
-    --crust: #181926;
-    --surface0: #363a4f;
-    --surface1: #494d64;
-    --surface2: #5b6078;
-    --overlay0: #6e738d;
-    --overlay1: #8087a2;
-    --overlay2: #939ab7;
-    --subtext0: #a5adcb;
-    --subtext1: #b8c0e0;
-    --text: #cad3f5;
-    --rosewater: #f4dbd6;
-    --flamingo: #f0c6c6;
-    --pink: #f5bde6;
-    --mauve: #c6a0f6;
-    --red: #ed8796;
-    --maroon: #ee99a0;
-    --peach: #f5a97f;
-    --yellow: #eed49f;
-    --green: #a6da95;
-    --teal: #8bd5ca;
-    --sky: #8bd5ca;
-    --sapphire: #7dc4e4;
-    --blue: #8aadf4;
-    --lavender: #b7bdf8;
+    --base: light-dark(#eff1f5,#24273a);
+    --mantle: light-dark(#e6e9ef,#1e2030);
+    --crust: light-dark(#dce0e8,#181926);
+    --surface0: light-dark(#ccd0da, #363a4f);
+    --surface1: light-dark(#bcc0cc, #494d64);
+    --surface2: light-dark(#acb0be, #5b6078);
+    --overlay0: light-dark(#9ca0b0, #6e738d);
+    --overlay1: light-dark(#8c8fa1, #8087a2);
+    --overlay2: light-dark(#7c7f93, #939ab7);
+    --subtext0: light-dark(#6c6f85, #a5adcb);
+    --subtext1: light-dark(#5c5f77, #b8c0e0);
+    --text: light-dark(#4c4f69, #cad3f5);
+    --rosewater: light-dark(#dc8a78, #f4dbd6);
+    --flamingo: light-dark(#dd7878, #f0c6c6);
+    --pink: light-dark(#ea76cb, #f5bde6);
+    --mauve: light-dark(#8839ef, #c6a0f6);
+    --red: light-dark(#d20f39, #ed8796);
+    --maroon: light-dark(#e64553, #ee99a0);
+    --peach: light-dark(#fe640b, #f5a97f);
+    --yellow: light-dark(#df8e1d, #eed49f);
+    --green: light-dark(#40a02b, #a6da95);
+    --teal: light-dark(#179299, #8bd5ca);
+    --sky: light-drk(#04a5e5, #8bd5ca);
+    --sapphire: light-dark(#209fb5, #7dc4e4);
+    --blue: light-dark(#1e66f5, #8aadf4);
+    --lavender: light-dark(#7287fd, #b7bdf8);
+    color-scheme: light dark;
 }
 
 body {
