@@ -590,3 +590,22 @@ executeBtn.addEventListener('click', () => {
 });
 
 updateDisplay();
+
+// how to use popup
+const howToUse = document.getElementById("howToUse");
+const howPopup = document.getElementById("howPopup");
+const closeHow = document.getElementById("closeHow");
+
+howToUse.addEventListener('click', () => {
+    howPopup.classList.add("active");
+});
+
+closeHow.addEventListener('click', () => {
+    howPopup.classList.remove("active");
+});
+
+document.addEventListener('keydown', (e) => {
+    if(e.key === "Escape"){
+        howPopup.classList.remove("active");
+    }
+});
