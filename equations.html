@@ -2259,5 +2259,219 @@
             </mfrac>
         </mrow>
     </math>
+    <hr style="border-color: gray; width: 20%; margin-left: 0; margin-right: auto;">
+    <p>8. Statistics</p>
+    <p id="item-subtitle">Statistics is the sciene of collecting, organizing, analyzing, interpreting, and presenting data.</p>
+    <p id="item-subtitle">Here are some formulas for statistics:</p>
+    <math>
+        <mrow>
+            <mtext>Mean</mtext>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mtext>Sum of all Numbers</mtext>
+                <mtext>Number of Numbers</mtext>
+            </mfrac>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mrow>
+            <mtext>Median</mtext>
+            <mo>:</mo>
+            <mtext>If you have an ODD amount of numbers</mtext>
+            <mo>&DoubleRightArrow;</mo>
+            <mtext>Pick the exact middle number</mtext>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mrow>
+            <mtext>Median</mtext>
+            <mo>:</mo>
+            <mtext>If you have an EVEN amount of numbers</mtext>
+            <mo>&DoubleRightArrow;</mo>
+            <mfrac>
+                <mtext>Add two middle numbers together</mtext>
+                <mtext>2</mtext>
+            </mfrac>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mrow>
+            <mtext>Mode</mtext>
+            <mo>:</mo>
+            <mtext>The number that appears the most times</mtext>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mrow>
+            <mtext>Range</mtext>
+            <mo>&equals;</mo>
+            <mtext>Largest Number</mtext>
+            <mo>&minus;</mo>
+            <mtext>Smallest Number</mtext>
+        </mrow>
+    </math>
+    <br>
+    <p id="item-subtitle"><strong><em>Lower Quartile (Q<sub>1</sub>)</em></strong></p>
+    <p id="item-subtitle">This is the 25% percentile mark. It cuts off the bottom 25% of data</p>
+    <math>
+        <mrow> 
+            <mtext>Positon of </mtext> 
+            <msub>
+                <mi>Q</mi>
+                <mn>1</mn>
+            </msub>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mtext>Total Count of Numbers + 1</mtext>
+                <mn>4</mn>
+            </mfrac>
+        </mrow>
+    </math>
+    <p id="item-subtitle"><strong><em>Upper Quartile (Q<sub>3</sub>)</em></strong></p>
+    <p id="item-subtitle">This is the 75th percentile mark. It cuts off the top of 25% of data.</p>
+    <math>
+        <mrow>
+            <mtext>Position of </mtext>
+        </mrow>
+        <msub>
+            <mi>Q</mi>
+            <mn>3</mn>
+        </msub>
+        <mo>&equals;</mo>
+        <mfrac>
+            <mrow>
+                <mn>3</mn>
+                <mo>&times;</mo>
+                <mo>(</mo>
+                <mtext>Total Count of Numbers + 1</mtext>
+                <mo>)</mo>
+            </mrow>
+            <mn>4</mn>
+        </mfrac>
+    </math>
+    <br>
+    <p id="item-subtitle"><strong><em>Interquartile Range</em></strong></p>
+    <p id="item-subtitle">Once you have both quartiles, you can find the IQR, which tells you how spread out the middle 50% of your data is:</p>
+    <math>
+        <mrow>
+            <mtext>IQR</mtext>
+            <mo>&equals;</mo>
+            <msub>
+                <mi>Q</mi>
+                <mn>3</mn>
+            </msub>
+            <msub>
+                <mi>Q</mi>
+                <mn>1</mn>
+            </msub>
+        </mrow>
+    </math>
+    <p id="item-subtitle">Now lets take a look at the example: </p>
+    <p id="item-subtitle">Imagine a cafe tracks the number of coffees ordered by 7 customers in a week. Calculate the mean, median and IQR</p>
+    <p id="item-subtitle">Data Set: 14, 5, 2, 8, 14, 11, 9</p>
+    <p id="item-subtitle"><strong>Step 1: Arrange the data</strong></p>
+    <p id="item-subtitle">You must always do this before working with statistics</p>
+    <math>
+        <mrow>
+            <mtext>Sorted: 2, 5, 8, 9, 11, 14, 14</mtext>
+        </mrow>
+    </math>
+    <p id="item-subtitle"><strong>Step 2: Calculate the mean</strong></p>
+    <math>
+        <mrow>
+            <mfrac>
+                <mrow>
+                    <mn>2</mn>
+                    <mo>&plus;</mo>
+                    <mn>5</mn>
+                    <mo>&plus;</mo>
+                    <mn>8</mn>
+                    <mo>&plus;</mo>
+                    <mn>9</mn>
+                    <mo>&plus;</mo>
+                    <mn>11</mn>
+                    <mo>&plus;</mo>
+                    <mn>14</mn>
+                    <mo>&plus;</mo>
+                    <mn>14</mn>
+                </mrow>
+                <mrow>7</mrow>
+            </mfrac>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mn>63</mn>
+                <mn>7</mn>
+            </mfrac>
+            <mo>&equals;</mo>
+            <mn>9</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">The Mean is 9!</p>
+    <p id="item-subtitle">Now for the median!</p>
+    <p id="item-subtitle">Since there are 7 numbers, the middle value is the 4th position</p>
+    <p id="item-subtitle">From 2,5,8,9,11,14,14 the median is 9</p>
+    <p id="item-subtitle">And finally the IQR</p>
+    <math>
+        <mrow>
+            <mtext>Position of </mtext>
+            <msub>
+                <mi>Q</mi>
+                <mn>1</mn>
+            </msub>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mn>8</mn>
+                <mn>4</mn>
+            </mfrac>
+            <mo>&equals;</mo>
+            <mn>2</mn>;
+        </mrow>
+    </math>
+    <p id="item-subtitle">So we know the Q1 value is at the 2nd position, which in our list is 5</p>
+    <math>
+        <mrow>
+            <mtext>Postion of </mtext>
+            <msub>
+                <mi>Q</mi>
+                <mn>3</mn>
+            </msub>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mrow>
+                    <mn>3</mn>
+                    <mo>&times;</mo>
+                    <mo>(</mo>
+                    <mn>8</mn>
+                    <mo>)</mo>
+                </mrow>
+                <mn>4</mn>
+            </mfrac>
+            <mo>&equals;</mo>
+            <mfrac>
+                <mn>24</mn>
+                <mn>4</mn>
+            </mfrac>
+            <mo>&equals;</mo>
+            <mn>6</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">This means the 6th number in the sortesd list is the Q3 which is 14</p>
+    <p id="item-subtitle">Now we can calculate IQR</p>
+    <math>
+        <mrow>
+            <mtext>IQR</mtext>
+            <mo>&equals;</mo>
+            <mn>14</mn>
+            <mo>&minus;</mo>
+            <mn>5</mn>
+            <mo>&equals;</mo>
+            <mn>9</mn>
+        </mrow>
+    </math>
+    <p id="item-subtitle">This means our IQR is 9!! Tada!</p>
 </body> 
 </html>
