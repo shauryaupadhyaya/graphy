@@ -119,6 +119,140 @@ html, body{
     text-align: right;
 }
 
+/* how to use popup */
+.header-row{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.how-to-use{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-top: 3px;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.how-popup{
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex; /* change to none */
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    animation: popup 0.5s ease;
+}
+
+.how-popup.active{
+    display: flex;
+}
+
+.how-content{
+    width: 100%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.how-header{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 40px;
+    flex-shrink: 0;
+}
+
+.how-header-left{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.how-header-left h2{
+    margin: 0;
+    font-size: 2rem;
+}
+
+.how-header-left p{
+    margin: 0;
+}
+
+.close-how{
+    display: flex;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.7rem;
+    transition: all 0.3s ease;
+}
+
+.close-how:hover{
+    transform: scale(1.2);
+}
+
+.close-how:active{
+    transform: scale(1);
+}
+
+.how-sections{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.how-section{
+    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    background: rgb(73, 73, 73);
+    padding: 20px;
+}
+
+.how-section h3{
+    margin: 0;
+}
+
+.how-section p{
+    margin: 0;
+    line-height: 1.7;
+}
+
+.how-section kbd{
+    display: inline-block;
+    padding: 2px 8px;
+    background: #2e2e2e;
+    border: 1px solid black;
+}
+
+@keyframes popup {
+    from{
+        opacity: 0;
+        transform: translateY(20px) scale(0.7);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 /* green display */
 .display{
     display: flex;

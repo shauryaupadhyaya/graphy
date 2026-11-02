@@ -36,7 +36,11 @@
             <div class="calc-wrapper">
                 <div class="calc">
                     <div class="calcheader">
-                        <h2 class="calctitle">Graphy</h2>
+                        <div class="header-row">
+                            <h2 class="calctitle">Graphy</h2>
+                            <button id="howToUse" class="how-to-use">ⓘ</button>
+                        </div>
+
                         <p class="calcdesc">Scientific Calculator</p>
                     </div>
 
@@ -219,6 +223,41 @@
                                 <button class="exe" id="exe">=</button>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-popup" id="howPopup">
+            <div class="how-content">
+                <div class="how-header">
+                    <div class="how-header-left">
+                        <h2>How to Use</h2>
+                        <p>Your quick guide to the Graphy Scientific Calculator</p>
+                    </div>
+
+                    <button class="close-how" id="closeHow">×</button>
+                </div>
+
+                <div class="how-sections">
+                    <div class="how-section">
+                        <h3>01 Basic Operations</h3>
+                        <p>Use <kbd>+</kbd> , <kbd>-</kbd> , <kbd>×</kbd> , <kbd>÷</kbd> for basic calculations along with the numbers</p>
+                    </div>
+
+                    <div class="how-section">
+                        <h3>02 Trigonometric Functions</h3>
+                        <p>Use <kbd>sin</kbd> , <kbd>cos</kbd> , <kbd>tan</kbd> and their inverse using the shift button</p>
+                    </div>
+
+                    <div class="how-section">
+                        <h3>03 Logarithims</h3>
+                        <p>For log with any base use the normal <kbd>log</kbd> button but for the base e logarithim press <kbd>Shift</kbd> + <kbd>log</kbd></p>
+                    </div>
+
+                    <div class="how-section">
+                        <h3>04 Powers and Roots</h3>
+                        <p>For squaring a number press the number then the <kbd>x²</kbd> button, for raising it to the power of n press the number you want to raise then press <kbd>xⁿ</kbd> followed by the power. For square root press the button <kbd>√x</kbd> followed by whatever you need to find the square root of. For finding a root of a power n first press <kbd>Shift</kbd> + <kbd>ⁿ√x</kbd> after which you enter the power like 3 (which will give you the cube root). Then press the <kbd>√x</kbd> button once again and then enter the number you want the root of.</p>
                     </div>
                 </div>
             </div>
