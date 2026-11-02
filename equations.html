@@ -1170,6 +1170,7 @@
     </math>
     <p id="item-subtitle">And now you know how to find the sum of geometric sequence!</p>
     <p id="item-subtitle">And thats all for sequences!</p>
+    <hr style="border-color: gray; width: 20%; margin-left: 0; margin-right: auto;">
     <p>4. Trigonometry</p>
     <p id="item-subtitle">Trigonometry is built on the relationships betwen the angles and sides of a triangle. For a right-angled triangle with reference angle &theta;: </p>
     <p id="item-subtitle">Hypotenuse(H): The longest side, opposite the 90&deg; angle</p>
@@ -1427,6 +1428,7 @@
     </math>
     <p id="item-subtitle">If you are a school student, its advised to know these values so its easier for your exams.</p>
     <p id="item-subtitle">Going through examples for this concept is rather complicated for HTML, so I'd suggest you lookup some examples. All information here is mathematically correct.</p>
+    <hr style="border-color: gray; width: 20%; margin-left: 0; margin-right: auto;">
     <p>5. Differentiation</p>
     <p id="item-subtitle">Differentiation is the process of finding the derivative, which represents the instantaneous rate of change (gradient of a curve at one point) or the slope of tangent at any point of curve.</p>
     <p id="item-subtitle">If the function to be differentiated is y = f(x) derivate is written as dy/dx or f'(x)</p>
@@ -1605,7 +1607,7 @@
     <p id="item-subtitle">Now you know 3 important rules and some special function differentiation.</p>
     <p id="item-subtitle">There is just a few more rules you ought to know: The Quotient Rule: </p>
     <math>
-        <mrow>
+        <mrow class="start-mrow">
             <mfrac>
                 <mi>d</mi>
                 <mi>dx</mi>
@@ -1643,7 +1645,7 @@
     <p id="item-subtitle">I know it looks weird, with so many fractions inside a fraction.</p>
     <p id="item-subtitle">Heres another way to remember it.</p>
     <math>
-        <mrow style="font-size: large">
+        <mrow style="font-size: large" class="start-mrow">
             <mfrac>
                 <mi>d</mi>
                 <mi>dx</mi>
@@ -1682,7 +1684,7 @@
     <br>
     <p id="item-subtitle">Now for the product rule, quite similar to quotient rule actually.</p>
     <math>
-        <mrow>
+        <mrow class="start-mrow">
             <mfrac>
                 <mi>d</mi>
                 <mi>dx</mi>
@@ -1707,7 +1709,7 @@
     </math>
     <p id="item-subtitle">Another way to say this is: </p>
     <math>
-        <mrow>
+        <mrow class="start-mrow">
             <mfrac>
                 <mi>d</mi>
                 <mi>dx</mi>
@@ -1738,7 +1740,7 @@
     <p id="item-subtitle">Then plug in the value of x at that point into the derivative. You now have the gradient of tangent at the point.</p>
     <p id="item-subtitle">Use the point-slope formula to write the final line equation:</p>
     <math>
-        <mrow>
+        <mrow class="start-mrow">
             <mi>y</mi>
             <mo>&minus;</mo>
             <msub>
@@ -1760,7 +1762,7 @@
     <p id="item-subtitle"><em>5.1.2 The Normal</em></p>
     <p id="item-subtitle">Perpendicular lines have gradients that multiply to -1, so to get the gradient of the normal from the tangent's gradient, use the tangent gradient's NEGATIVE RECIPROCAL</p>
     <math>
-        <mrow>
+        <mrow class="start-mrow">
             <msub>
                 <mi>m</mi>
                 <mi>n</mi>
@@ -1778,7 +1780,7 @@
     </math>
     <p id="item-subtitle">Then use the same point-slope formula.</p>
     <math>
-        <mrow>
+        <mrow class="start-mrow">
             <mi>y</mi>
             <mo>&minus;</mo>
             <msub>
@@ -1801,7 +1803,172 @@
         </mrow>
     </math>
     <p id="item-subtitle">Since we've covered tangents and normals lets try this question: </p>
-    <br>
     <p id="item-subtitle">Find the equations of the tangent and normal to the curve y = x<sup>2</sup> at the point (2, 4)</p>
-</body>
+    <math>
+        <mtext id="item-subtitle">Find Derivative: </mtext>
+        <mrow>
+            <mfrac>
+                <mi>dy</mi>
+                <mi>dx</mi>
+            </mfrac>
+            <mo>&equals;</mo>
+            <mn>2</mn>
+            <mi>x</mi>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mrow>
+            <mtext id="item-subtitle">Find the tangent slope (m<sub>t</sub>) at x = 2</mtext>
+            <mrow>
+                <msub>
+                    <mi>m</mi>
+                    <mi>t</mi>
+                </msub>
+                <mo>&equals;</mo>
+                <mn>2</mn>
+                <mo fence="true">(</mo>
+                <mn>2</mn>
+                <mo fence="true">)</mo>
+                <mo>&equals;</mo>
+                <mn>4</mn>
+            </mrow>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mtext id="item-subtitle">Find the normal slope (m<sub>n</sub>)</mtext>
+        <mrow>
+            <msub>
+                <mi>m</mi>
+                <mi>n</mi>
+            </msub>
+            <mo>&equals;</mo>
+            <mo>&minus;</mo>
+            <mfrac>
+                <mn>1</mn>
+                <mn>4</mn>
+            </mfrac>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mtext id="item-subtitle">Write the tangent equation: </mtext>
+        <mrow>
+            <mi>y</mi>
+            <mo>&minus;</mo>
+            <mn>4</mn>
+            <mo>&equals;</mo>
+            <mo>&minus;</mo>
+            <mfrac>
+                <mn>1</mn>
+                <mn>4</mn>
+            </mfrac>
+            <mo fence="true">(</mo>
+            <mn>x</mn>
+            <mo>&minus;</mo>
+            <mn>2</mn>
+            <mo fence="true">)</mo>
+            <mo>&DoubleRightArrow;</mo>
+            <mrow mathvariant="bold">
+                <mi>y</mi>
+                <mo>&equals;</mo>
+                <mn>4</mn>
+                <mi>x</mi>
+                <mo>&minus;</mo>
+                <mn>4</mn>
+            </mrow>
+        </mrow>
+    </math>
+    <br>
+    <math>
+        <mtext id="item-subtitle">Write the Normal Equation</mtext>
+        <mrow>
+            <mi>y</mi>
+            <mo>&minus;</mo>
+            <mn>4</mn>
+            <mo>&equals;</mo>
+            <mo>&minus;</mo>
+            <mfrac>
+                <mn>1</mn>
+                <mn>4</mn>
+            </mfrac>
+            <mo fence="true">(</mo>
+            <mi>x</mi>
+            <mo>&minus;</mo>
+            <mn>2</mn>
+            <mo fence="true">)</mo>
+            <mo>&DoubleRightArrow;</mo>
+            <mrow mathvariant="bold">
+                <mi>y</mi>
+                <mo>&equals;</mo>
+                <mo>&minus;</mo>
+                <mfrac>
+                    <mn>1</mn>
+                    <mn>4</mn>
+                </mfrac>
+                <mi>x</mi>
+                <mo>&plus;</mo>
+                <mfrac>
+                    <mn>9</mn>
+                    <mn>2</mn>
+                </mfrac>
+            </mrow>
+        </mrow>
+    </math>
+    <p id="item-subtitle">And tada, we've used differentiation to find both equations of tangent and normal for this question!</p>
+    <hr style="border-color: gray; width: 20%; margin-left: 0; margin-right: auto;">
+    <p>6. Integration</p>
+    <p id="item-subtitle">Now that we have learnt differentiation, now's the time to learn integration!</p>
+    <p id="item-subtitle">Integration is basically the reverse of differentiation.</p>
+    <p id="item-subtitle">If you think graphically, integration calculates area under a curve between two points.</p>
+    <p id="item-subtitle">Now as always lets take a look at the fundamental rules of differentiation.</p>
+    <p id="item-subtitle"><strong>Power rule</strong></p>
+    <math>
+        <mrow>
+            <mo>&Integral;</mo>
+            <mrow>
+                <msup>
+                    <mi>x</mi>
+                    <mi>n</mi>
+                </msup>
+                <mi>d</mi>
+                <mi>x</mi>
+            </mrow>
+            <mo>&equals;</mo>
+            <mfrac>
+                <msup>
+                    <mi>x</mi>
+                    <mrow>
+                        <mi>n</mi>
+                        <mo>&plus;</mo>
+                        <mn>1</mn>
+                    </mrow>
+                </msup>
+                <mrow>
+                    <mi>n</mi>
+                    <mo>&plus;</mo>
+                    <mn>1</mn>
+                </mrow>
+            </mfrac>
+            <mo>&plus;</mo>
+            <mi>C</mi>
+        </mrow>
+    </math>
+    <p id="item-subtitle"><strong>Constant Rule</strong></p>
+    <p id="item-subtitle">Integrating a flat number adds the variable to it.</p>
+    <math>
+        <mrow>
+            <mo>&Integral;</mo>
+            <mi>k</mi>
+            <mi>d</mi>
+            <mi>x</mi>
+            <mo>&equals;</mo>
+            <mi>k</mi>
+            <mi>x</mi>
+            <mo>&plus;</mo>
+            <mi>C</mi>
+        </mrow>
+    </math>
+</body> 
 </html>
