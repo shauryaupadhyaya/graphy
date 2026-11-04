@@ -12,9 +12,23 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             cloneNumber++;
             clone.querySelector(".equation-number").textContent = cloneNumber;
             eqInputList.appendChild(clone);
+            eqInputListCount++;
             // shopSale();
         }
     })
+    const observer = new MutationObserver((mutationsList)=> {
+        for (const mutation of mutationsList) {
+            for (const node of mutation.addedNodes) {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    const input = node.querySelector(".equation");
+                    if (input) {
+                        input.focus();
+                    }
+                }
+            }
+        }
+    })
+    observer.observe(eqInputList, {childList: true});
     let redrawTimeout;
     const canvas = document.getElementById('graph');
     canvas.width = window.innerWidth;
@@ -67,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
         drawGrid(gridSize, offsetY, offsetX);
         drawAxes(offsetX, offsetY);
-        drawGridNumbers(gridSize, offsetY, offsetX);
+        drawGridNumbers(gridSize, offsetX, offsetY);
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
                 redrawGraph(gridOffsetX, gridOffsetY);
@@ -114,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
         drawGrid(gridSize, offsetY === 0? 0 : offsetY, offsetX  === 0? 0 : offsetX);
         drawAxes(offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
-        drawGridNumbers(gridSize, offsetY === 0? 0 : offsetY, offsetX === 0? 0 : offsetX);
+        drawGridNumbers(gridSize, offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
                 console.log(input.value)
@@ -169,7 +183,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         }
 
         function mathY(py) {
-            return (originY - py) / gridSize;
+            return (py - originY) / gridSize;
         }
 
         // ai generated function below
@@ -217,14 +231,14 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                 }
 
                 if (crossings.length === 2) {
-                    ctx.moveTo(crossings[0].x, height - crossings[0].y);
-                    ctx.lineTo(crossings[1].x, height - crossings[1].y);
+                    ctx.moveTo(crossings[0].x, crossings[0].y);
+                    ctx.lineTo(crossings[1].x, crossings[1].y);
                 } else if (crossings.length === 4) {
-                    ctx.moveTo(crossings[0].x, height - crossings[0].y);
-                    ctx.lineTo(crossings[1].x, height - crossings[1].y);
+                    ctx.moveTo(crossings[0].x, crossings[0].y);
+                    ctx.lineTo(crossings[1].x, crossings[1].y);
 
-                    ctx.moveTo(crossings[2].x, height - crossings[2].y);
-                    ctx.lineTo(crossings[3].x, height - crossings[3].y);
+                    ctx.moveTo(crossings[2].x, crossings[2].y);
+                    ctx.lineTo(crossings[3].x, crossings[3].y);
                 }
             }
         }
@@ -294,13 +308,13 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         // Reset the flipped coordinate system for text
         ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'white';
         ctx.font = '12px Rubik';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
         const originX = canvas.width / 2 + offsetX;
-        const originY = canvas.height/ 2 + offsetY;
+        const originY = canvas.height/ 2 - offsetY;
 
         // X-axis numbers
         for (let x = 1; originX + x * gridSize < canvas.width; x++) {
@@ -396,30 +410,31 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     })
     setUpListenersC();
     // shopSale();
-    // const gridControls = document.getElementById("graph-nav");
-    // const gridUp = document.getElementById("graph-up");
-    // const gridDown = document.getElementById("graph-down");
-    // const gridLeft = document.getElementById("graph-left");
-    // const gridRight = document.getElementById("graph-right");
-    // gridUp.addEventListener('click', (e)=> {
-    //     e.preventDefault();
-    //     moveGrid(0, 1);
-    // })
-    // gridDown.addEventListener('click', (e)=> {
-    //     e.preventDefault();
-    //     moveGrid(0, -1);
-    // })
-    // gridLeft.addEventListener('click', (e)=> {
-    //     e.preventDefault();
-    //     moveGrid(-1, 0);
-    // })
-    // gridRight.addEventListener('click', (e)=> {
-    //     e.preventDefault();
-    //     moveGrid(1, 0);
-    // })
-    // function moveGrid(toOffsetX, toOffsetY) {
-    //     const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-    //     gridOffsetX = toOffsetX * gridSize;
-    //     gridOffsetY = toOffsetY * gridSize;
-    // }
+    const gridControls = document.getElementById("graph-nav");
+    const gridUp = document.getElementById("graph-up");
+    const gridDown = document.getElementById("graph-down");
+    const gridLeft = document.getElementById("graph-left");
+    const gridRight = document.getElementById("graph-right");
+    gridUp.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(0, 1);
+    })
+    gridDown.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(0, -1);
+    })
+    gridLeft.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(-1, 0);
+    })
+    gridRight.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(1, 0);
+    })
+    function moveGrid(toOffsetX, toOffsetY) {
+        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
+        gridOffsetX += toOffsetX * gridSize;
+        gridOffsetY += toOffsetY * gridSize;
+        redrawGraph(gridOffsetX, gridOffsetY);
+    }
 })
