@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     const equationInputTemplate = document.getElementById("equation-input-template");
     const equationInputs = document.querySelectorAll(".equation");
     const eqInputList = document.getElementById("equations-bottom");
+    let gridOffsetX = 0;
+    let gridOffsetY = 0;
     eqInputList.addEventListener('keydown', (e)=>{
         if (e.key === 'Enter' && e.target.matches('.equation')) {
             const element = e.target;
@@ -10,9 +12,23 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             cloneNumber++;
             clone.querySelector(".equation-number").textContent = cloneNumber;
             eqInputList.appendChild(clone);
+            eqInputListCount++;
             // shopSale();
         }
     })
+    const observer = new MutationObserver((mutationsList)=> {
+        for (const mutation of mutationsList) {
+            for (const node of mutation.addedNodes) {
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    const input = node.querySelector(".equation");
+                    if (input) {
+                        input.focus();
+                    }
+                }
+            }
+        }
+    })
+    observer.observe(eqInputList, {childList: true});
     let redrawTimeout;
     const canvas = document.getElementById('graph');
     canvas.width = window.innerWidth;
@@ -20,60 +36,60 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     const ctx = canvas.getContext('2d');
     ctx.translate(0, canvas.height);
     ctx.scale(1, -1);
-    function drawAxes() {
-        ctx.strokeStyle = 'white';
+    function drawAxes(offsetX, offsetY) {
+        ctx.strokeStyle = 'black';
         ctx.lineWidth = 2;
         ctx.beginPath();
         // y-axis
-        ctx.moveTo(canvas.width/2, 0);
-        ctx.lineTo(canvas.width/2, canvas.height);
+        ctx.moveTo(canvas.width/2+offsetX, 0);
+        ctx.lineTo(canvas.width/2+offsetX, canvas.height);
         // x-axis
-        ctx.moveTo(0, canvas.height/2);
-        ctx.lineTo(canvas.width, canvas.height/2);
+        ctx.moveTo(0, canvas.height/2 + offsetY);
+        ctx.lineTo(canvas.width, canvas.height/2 + offsetY);
         ctx.stroke();
     }
-    function drawGrid(gridSize) {
+    function drawGrid(gridSize, offsetY, offsetX) {
         ctx.strokeStyle = 'gray';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        for (let x = canvas.width/2; x <= canvas.width; x += gridSize) {
+        for (let x = (canvas.width/2 + offsetX); x <= canvas.width; x += gridSize) {
             let roundedX = Math.floor(x);
             ctx.moveTo(x, 0);
             ctx.lineTo(x, Math.round(canvas.height));
         }
-        for (let x = canvas.width/2 - gridSize; x>=0; x -= gridSize) {
+        for (let x = (canvas.width/2 - gridSize + offsetX); x>=0; x -= gridSize) {
             let roundedX = Math.floor(x);
             ctx.moveTo(x, 0);
             ctx.lineTo(x, Math.round(canvas.height));
         }
-        for (let y = canvas.height/2; y <= canvas.height; y += gridSize) {
+        for (let y = (canvas.height/2 + offsetY); y <= canvas.height; y += gridSize) {
             ctx.moveTo(0, y);
             ctx.lineTo(Math.round(canvas.width), y);
         }
-        for (let y = canvas.height/2 - gridSize; y>=0; y -= gridSize) {
+        for (let y = (canvas.height/2 - gridSize + offsetY); y>=0; y -= gridSize) {
             ctx.moveTo(0, y);
             ctx.lineTo(Math.round(canvas.width), y);
         }
         ctx.stroke();
     }
-    function resizeArea() {
+    function resizeArea(offsetX, offsetY) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         ctx.translate(0, canvas.height);
         ctx.scale(1, -1);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-        drawGrid(gridSize);
-        drawAxes();
-        drawGridNumbers(gridSize);
+        drawGrid(gridSize, offsetY, offsetX);
+        drawAxes(offsetX, offsetY);
+        drawGridNumbers(gridSize, offsetX, offsetY);
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
-                redrawGraph();
+                redrawGraph(gridOffsetX, gridOffsetY);
             }
         })
     }
-    window.addEventListener('resize', resizeArea);
-    resizeArea();
+    window.addEventListener('resize', resizeArea(gridOffsetX, gridOffsetY));
+    resizeArea(gridOffsetX, gridOffsetY);
     let eqInputs = eqInputList.querySelectorAll(".equations-input-box");
     eqInputList.addEventListener('click', (e)=> {
         e.preventDefault();
@@ -83,11 +99,11 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         console.log(eqInputs.length);
         if (eqInputs.length === 1) {
             eqInputs[0].querySelector(".equation").value = '';
-            redrawGraph();
+            redrawGraph(gridOffsetX, gridOffsetY);
         } else {
             const boxToDel = e.target.parentElement;
             boxToDel.remove();
-            redrawGraph();
+            redrawGraph(gridOffsetX, gridOffsetY);
         }
     })
     // eqInputs.forEach(equation => {
@@ -99,20 +115,20 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         if (e.target.matches('.equation')) {
             clearTimeout(redrawTimeout);
             redrawTimeout = setTimeout(() => {
-                redrawGraph();
+                redrawGraph(gridOffsetX, gridOffsetY);
             }, 150);
         }
     })
-    function redrawGraph() {
+    function redrawGraph(offsetX, offsetY) {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.translate(0, canvas.height);
         ctx.scale(1, -1);
         const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-        drawGrid(gridSize);
-        drawAxes();
-        drawGridNumbers(gridSize);
+        drawGrid(gridSize, offsetY === 0? 0 : offsetY, offsetX  === 0? 0 : offsetX);
+        drawAxes(offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
+        drawGridNumbers(gridSize, offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
                 console.log(input.value)
@@ -123,6 +139,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     function plotEquation(value, gridSize, color) {
         if (!value.trim()) return;
         let compiled;
+        console.log("Plotting:", value);
         try {
             const parts = value.split('=');
             if (parts.length === 2) {
@@ -143,6 +160,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             // } else {
             //     compiled = math.parse(`y-(${value})`).compile();
             // }
+            console.log("Compiled successfully", compiled);       
         } catch (error) {
             console.error("Invalid equation: ", value, error);
             return;
@@ -157,15 +175,15 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         }
         const width = canvas.width;
         const height = canvas.height;
-        const originX = width/2;
-        const originY = height/2;
+        const originX = width/2 + gridOffsetX;
+        const originY = height/2 + gridOffsetY;
         
         function mathX(px) {
             return (px - originX) / gridSize;
         }
 
         function mathY(py) {
-            return (originY - py) / gridSize;
+            return (py - originY) / gridSize;
         }
 
         // ai generated function below
@@ -203,22 +221,24 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                     const a = values[i];
                     const b = values[j];
 
-                    if ((a < 0 && b > 0) || (a > 0 && b < 0)) {
-                        crossings.push(
-                            intersection(points[i], points[j], a, b)
-                        );
+                    if ((a <= 0 && b >= 0) || (a >= 0 && b <= 0)) {
+                        if (a !== b) {
+                            crossings.push(
+                                intersection(points[i], points[j], a, b)
+                            );
+                        }
                     }
                 }
 
                 if (crossings.length === 2) {
-                    ctx.moveTo(crossings[0].x, height - crossings[0].y);
-                    ctx.lineTo(crossings[1].x, height - crossings[1].y);
+                    ctx.moveTo(crossings[0].x, crossings[0].y);
+                    ctx.lineTo(crossings[1].x, crossings[1].y);
                 } else if (crossings.length === 4) {
-                    ctx.moveTo(crossings[0].x, height - crossings[0].y);
-                    ctx.lineTo(crossings[1].x, height - crossings[1].y);
+                    ctx.moveTo(crossings[0].x, crossings[0].y);
+                    ctx.lineTo(crossings[1].x, crossings[1].y);
 
-                    ctx.moveTo(crossings[2].x, height - crossings[2].y);
-                    ctx.lineTo(crossings[3].x, height - crossings[3].y);
+                    ctx.moveTo(crossings[2].x, crossings[2].y);
+                    ctx.lineTo(crossings[3].x, crossings[3].y);
                 }
             }
         }
@@ -282,7 +302,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             return false;
         }
     }
-    function drawGridNumbers(gridSize) {
+    function drawGridNumbers(gridSize, offsetX, offsetY) {
         ctx.save();
 
         // Reset the flipped coordinate system for text
@@ -293,8 +313,8 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        const originX = canvas.width / 2;
-        const originY = canvas.height/ 2;
+        const originX = canvas.width / 2 + offsetX;
+        const originY = canvas.height/ 2 - offsetY;
 
         // X-axis numbers
         for (let x = 1; originX + x * gridSize < canvas.width; x++) {
@@ -369,7 +389,7 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                     console.log(allNumbers[i].parentElement.parentElement);
                     if (allNumbers[i].textContent === eqNumberColor) {
                         allNumbers[i].parentElement.parentElement.querySelector(".equation").dataset.color = colorToBecome;
-                        redrawGraph();
+                        redrawGraph(gridOffsetX, gridOffsetY);
                     }
                 }
             })
@@ -390,4 +410,31 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     })
     setUpListenersC();
     // shopSale();
+    const gridControls = document.getElementById("graph-nav");
+    const gridUp = document.getElementById("graph-up");
+    const gridDown = document.getElementById("graph-down");
+    const gridLeft = document.getElementById("graph-left");
+    const gridRight = document.getElementById("graph-right");
+    gridUp.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(0, 1);
+    })
+    gridDown.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(0, -1);
+    })
+    gridLeft.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(-1, 0);
+    })
+    gridRight.addEventListener('click', (e)=> {
+        e.preventDefault();
+        moveGrid(1, 0);
+    })
+    function moveGrid(toOffsetX, toOffsetY) {
+        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
+        gridOffsetX += toOffsetX * gridSize;
+        gridOffsetY += toOffsetY * gridSize;
+        redrawGraph(gridOffsetX, gridOffsetY);
+    }
 })
