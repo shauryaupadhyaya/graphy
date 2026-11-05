@@ -2,45 +2,58 @@
 
 [ext_resource type="Texture2D" uid="uid://xl7w2pew4xid" path="res://assets/free-sky-with-clouds-background-pixel-art-set/Clouds/Clouds 1/1.png" id="1_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://ckcjnjsa2kliw" path="res://assets/free-sky-with-clouds-background-pixel-art-set/Clouds/Clouds 1/2.png" id="2_iywne"]
+[ext_resource type="PackedScene" uid="uid://beyqshcc36frp" path="res://scenes/bird.tscn" id="4_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://cuomcthg7j0j4" path="res://assets/free-sky-with-clouds-background-pixel-art-set/Clouds/Clouds 1/4.png" id="4_u5sy4"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_24abd"]
 
 [node name="Game" type="Node2D" unique_id=186506690]
 
-[node name="ScrollingBG" type="Parallax2D" parent="." unique_id=2059939688]
+[node name="Sky" type="Parallax2D" parent="." unique_id=2059939688]
 scroll_scale = Vector2(0.3, 1)
 repeat_size = Vector2(1152, 0)
 autoscroll = Vector2(-20, 0)
 repeat_times = 3
 ignore_camera_scroll = true
 
-[node name="1" type="Sprite2D" parent="ScrollingBG" unique_id=201491332]
+[node name="1" type="Sprite2D" parent="Sky" unique_id=201491332]
 scale = Vector2(2, 2)
 texture = ExtResource("1_lbhrr")
 centered = false
 
-[node name="Parallax2D" type="Parallax2D" parent="." unique_id=732657163]
+[node name="Clouds_Back" type="Parallax2D" parent="." unique_id=732657163]
 scroll_scale = Vector2(0.7, 1)
 repeat_size = Vector2(1152, 0)
 autoscroll = Vector2(-50, 0)
 repeat_times = 3
 ignore_camera_scroll = true
 
-[node name="2" type="Sprite2D" parent="Parallax2D" unique_id=1628641503]
+[node name="2" type="Sprite2D" parent="Clouds_Back" unique_id=1628641503]
 scale = Vector2(2, 2)
 texture = ExtResource("2_iywne")
 centered = false
 
-[node name="Parallax2D2" type="Parallax2D" parent="." unique_id=393997931]
+[node name="Clouds_Front" type="Parallax2D" parent="." unique_id=393997931]
 scroll_scale = Vector2(0.5, 1)
 repeat_size = Vector2(1152, 0)
 autoscroll = Vector2(-70, 0)
 repeat_times = 3
 ignore_camera_scroll = true
 
-[node name="4" type="Sprite2D" parent="Parallax2D2" unique_id=2058903756]
+[node name="4" type="Sprite2D" parent="Clouds_Front" unique_id=2058903756]
 scale = Vector2(2, 2)
 texture = ExtResource("4_u5sy4")
 centered = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=89670463]
 anchor_mode = 0
+
+[node name="Player" parent="." unique_id=337532107 instance=ExtResource("4_lbhrr")]
+position = Vector2(288, 324)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1987676916]
+position = Vector2(716, 652)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=678764545]
+shape = SubResource("WorldBoundaryShape2D_24abd")
+debug_color = Color(0.9793522, 0, 0.39260617, 0.41960785)
