@@ -668,7 +668,14 @@ function moveCursor(direction){
 
     if(direction === "left"){
         if(sequence.cursor > 0){
-            sequence.cursor--;
+            const previousItem = sequence.items[sequence.cursor - 1];
+
+            if(typeof previousItem !== "string"){
+                activeSequence = previousItem.denominator;
+                activeSequence.cursor = activeSequence.items.length;
+            } else{
+                sequence.cursor--;
+            }
         } else if(fraction){
             if(sequence.field === "denominator"){
                 activeSequence = fraction.numerator;
@@ -684,7 +691,17 @@ function moveCursor(direction){
         }
     } else if(direction === "right"){
         if(sequence.cursor < sequence.items.length){
-            sequence.cursor++;
+            const nextItem = sequence.items[sequence.cursor];
+            
+            if(typeof nextItem !== "string"){
+                if(nextItem.type === "mixed"){
+                    activeSequence = nextItem.whole;
+                } else{
+                    activeSequence = nextItem.numerator;
+                }
+            } else{
+                sequence.cursor++;
+            }
         } else if(fraction){
             if(sequence.field === "whole"){
                 activeSequence = fraction.numerator;
