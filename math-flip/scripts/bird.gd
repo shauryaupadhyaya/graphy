@@ -1,12 +1,22 @@
 extends CharacterBody2D
 
+@onready var sky: Parallax2D = $"../Sky"
+@onready var clouds_back: Parallax2D = $"../Clouds_Back"
+@onready var clouds_front: Parallax2D = $"../Clouds_Front"
+
+@onready var player: CharacterBody2D = $"."
+@onready var score_menu: Panel = $"../Control/OuterPanel-Pause"
+
+@onready var pipes: Area2D = $"../Pipes"
+
 @onready var bird: AnimatedSprite2D = $Bird
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-# todo: make bird turn up when keyboard press
+
 @export var gravity: float = 900
 @export var jump_force: float = -350
 @export var is_paused: bool = true
 func _input(event: InputEvent) -> void:
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	if not is_paused:
 		if event.is_action_pressed("space"):
 			self.rotation_degrees = -20
@@ -27,4 +37,31 @@ func _physics_process(delta: float) -> void:
 func _on_world_border_body_entered(body: Node2D) -> void:
 	if body.get_instance_id() == self.get_instance_id() :
 		print("touched kill zone")
-		get_tree().paused = true
+		_show_score_menu()
+
+
+func _on_pipes_body_entered(body: Node2D) -> void:
+	if body.get_instance_id() == self.get_instance_id() :
+		
+		print("touched kill zone")
+		_show_score_menu()
+
+
+func _show_score_menu() -> void:
+	sky.autoscroll = Vector2(0, 1)
+	clouds_back.autoscroll = Vector2(1, 1)
+	clouds_front.autoscroll = Vector2(1, 1)
+	pipes.game_started = false
+	is_paused = true
+	score_menu.show()
+	bird.pause()
+
+func _hide_score_menu() -> void:
+	sky.autoscroll = Vector2(-20, 1)
+	clouds_back.autoscroll = Vector2(-50, 1)
+	clouds_front.autoscroll = Vector2(-70, 1)
+	bird.play("flap")
+	pipes.game_started = true
+	is_paused = false
+	score_menu.hide()
+	pipes.game_started = true

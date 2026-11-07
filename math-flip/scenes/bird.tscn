@@ -42,7 +42,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_24abd"]
 radius = 6.543126
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=337532107]
+[node name="Player" type="CharacterBody2D" unique_id=337532107]
+scale = Vector2(0.9, 0.9)
 script = ExtResource("2_3po83")
 
 [node name="Bird" type="AnimatedSprite2D" parent="." unique_id=828921017]

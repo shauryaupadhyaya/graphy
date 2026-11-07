@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cuomcthg7j0j4" path="res://assets/free-sky-with-clouds-background-pixel-art-set/Clouds/Clouds 1/4.png" id="4_u5sy4"]
 [ext_resource type="FontFile" uid="uid://blqite3k7ob4n" path="res://assets/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="5_iywne"]
 [ext_resource type="AudioStream" uid="uid://bb7xp5lwbpbtl" path="res://assets/make_more_sound-321-go-8-bit-video-game-sound-version-1-145007.mp3" id="6_p57ef"]
+[ext_resource type="Material" uid="uid://vvrbjxi8sp22" path="res://assets/shaders/glassmorphism.tres" id="7_0tnpc"]
+[ext_resource type="FontFile" uid="uid://bohy4k54qpcvo" path="res://assets/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="7_gee14"]
+[ext_resource type="PackedScene" uid="uid://eyrcc22duknh" path="res://scenes/pipes.tscn" id="10_vtaks"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
 size = Vector2(1169, 22)
@@ -231,11 +234,30 @@ _data = {
 &"RESET": SubResource("Animation_iywne")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24abd"]
+bg_color = Color(0.007843138, 0.23921569, 0.39607844, 0.05882353)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvsf1"]
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
 [node name="Game" type="Node2D" unique_id=186506690]
 script = ExtResource("1_u5sy4")
 
 [node name="Sky" type="Parallax2D" parent="." unique_id=2059939688]
-scroll_scale = Vector2(0.3, 1)
+scale = Vector2(1.1199996, 1.1199996)
+scroll_offset = Vector2(0, -39)
 repeat_size = Vector2(1152, 0)
 autoscroll = Vector2(-20, 0)
 repeat_times = 3
@@ -247,7 +269,8 @@ texture = ExtResource("1_lbhrr")
 centered = false
 
 [node name="Clouds_Back" type="Parallax2D" parent="." unique_id=732657163]
-scroll_scale = Vector2(0.7, 1)
+scale = Vector2(1.1199996, 1.1199996)
+scroll_offset = Vector2(0, -39)
 repeat_size = Vector2(1152, 0)
 autoscroll = Vector2(-50, 0)
 repeat_times = 3
@@ -259,7 +282,8 @@ texture = ExtResource("2_iywne")
 centered = false
 
 [node name="Clouds_Front" type="Parallax2D" parent="." unique_id=393997931]
-scroll_scale = Vector2(0.5, 1)
+scale = Vector2(1.1199996, 1.1199996)
+scroll_offset = Vector2(0, -39)
 repeat_size = Vector2(1152, 0)
 autoscroll = Vector2(-70, 0)
 repeat_times = 3
@@ -274,7 +298,7 @@ centered = false
 anchor_mode = 0
 
 [node name="Player" parent="." unique_id=337532107 instance=ExtResource("4_lbhrr")]
-position = Vector2(288, 324)
+position = Vector2(288, 324.00003)
 
 [node name="World_Border" type="Area2D" parent="." unique_id=1987676916]
 position = Vector2(716, 652)
@@ -291,6 +315,13 @@ debug_color = Color(0.9793522, 0, 0.39260617, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1682445872]
 libraries/ = SubResource("AnimationLibrary_u5sy4")
+
+[node name="three_two_one_go" type="AudioStreamPlayer2D" parent="." unique_id=1419543938]
+position = Vector2(-2, 2)
+stream = ExtResource("6_p57ef")
+
+[node name="Pipes" parent="." unique_id=792816555 instance=ExtResource("10_vtaks")]
+position = Vector2(483.00003, 321)
 
 [node name="Control" type="Control" parent="." unique_id=134348833]
 layout_mode = 3
@@ -311,10 +342,10 @@ offset_right = 77.0
 offset_bottom = -293.9998
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.1254902, 0.6156863, 0.9490196, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_constants/shadow_offset_x = 13
 theme_override_constants/shadow_offset_y = 9
+theme_override_constants/outline_size = 33
 theme_override_fonts/font = ExtResource("5_iywne")
 theme_override_font_sizes/font_size = 256
 text = "3"
@@ -332,10 +363,9 @@ offset_right = -625.99994
 offset_bottom = 154.00061
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.1254902, 0.6156863, 0.9490196, 1)
-theme_override_constants/shadow_offset_x = 13
-theme_override_constants/shadow_offset_y = 9
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 33
 theme_override_fonts/font = ExtResource("5_iywne")
 theme_override_font_sizes/font_size = 256
 text = "2"
@@ -353,10 +383,11 @@ offset_right = 751.9999
 offset_bottom = 154.00046
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.1254902, 0.6156863, 0.9490196, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 13
 theme_override_constants/shadow_offset_y = 9
+theme_override_constants/outline_size = 33
 theme_override_fonts/font = ExtResource("5_iywne")
 theme_override_font_sizes/font_size = 256
 text = "1"
@@ -374,16 +405,141 @@ offset_right = 186.5
 offset_bottom = 681.00165
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0.1254902, 0.6156863, 0.9490196, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 13
 theme_override_constants/shadow_offset_y = 9
+theme_override_constants/outline_size = 33
 theme_override_fonts/font = ExtResource("5_iywne")
 theme_override_font_sizes/font_size = 256
 text = "Go!"
 
-[node name="three_two_one_go" type="AudioStreamPlayer2D" parent="." unique_id=1419543938]
-stream = ExtResource("6_p57ef")
+[node name="OuterPanel-Pause" type="Panel" parent="Control" unique_id=762873147]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -218.5
+offset_top = -192.5
+offset_right = 218.5
+offset_bottom = 192.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_24abd")
+
+[node name="InnerPanel" type="Panel" parent="Control/OuterPanel-Pause" unique_id=1649761198]
+material = ExtResource("7_0tnpc")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vvsf1")
+
+[node name="Paused" type="Label" parent="Control/OuterPanel-Pause/InnerPanel" unique_id=1860933023]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -144.5
+offset_top = -4.0
+offset_right = 144.5
+offset_bottom = 92.99999
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("5_iywne")
+theme_override_font_sizes/font_size = 64
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="Control/OuterPanel-Pause/InnerPanel" unique_id=99068048]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.1
+anchor_bottom = 0.3
+offset_left = -3.1999893
+offset_top = -31.100006
+offset_right = 203.80002
+offset_bottom = 27.899994
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_font_sizes/font_size = 48
+text = "Score: 10"
+
+[node name="Questions" type="Label" parent="Control/OuterPanel-Pause/InnerPanel" unique_id=877512507]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.45
+anchor_right = 0.1
+anchor_bottom = 0.45
+offset_left = -3.1999893
+offset_top = -31.100006
+offset_right = 203.80002
+offset_bottom = 27.899994
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_font_sizes/font_size = 48
+text = "Answered:  0"
+
+[node name="Multiplier" type="Label" parent="Control/OuterPanel-Pause/InnerPanel" unique_id=360569785]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.6
+anchor_right = 0.1
+anchor_bottom = 0.6
+offset_left = -3.1999893
+offset_top = -31.100006
+offset_right = 203.80002
+offset_bottom = 27.899994
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_font_sizes/font_size = 48
+text = "Difficulty: x1"
+
+[node name="Total" type="Label" parent="Control/OuterPanel-Pause/InnerPanel" unique_id=1880747280]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.85
+anchor_right = 0.1
+anchor_bottom = 0.85
+offset_left = -3.1999893
+offset_top = -31.100006
+offset_right = 203.80002
+offset_bottom = 27.899994
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_font_sizes/font_size = 48
+text = "Total: 10"
 
 [connection signal="body_entered" from="World_Border" to="Player" method="_on_world_border_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="body_entered" from="Pipes" to="Player" method="_on_pipes_body_entered"]
+
+[editable path="Player"]

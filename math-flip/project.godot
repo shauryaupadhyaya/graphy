@@ -15,6 +15,10 @@ run/main_scene="uid://6g0u6i8fddqd"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://cc2j2qhuxwwh"
+
 [display]
 
 window/stretch/mode="canvas_items"
@@ -23,6 +27,11 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
+
+[global_group]
+
+kill=""
+points=""
 
 [input]
 

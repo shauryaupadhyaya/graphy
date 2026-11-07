@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://vvrbjxi8sp22"]
+
+[ext_resource type="Shader" uid="uid://c2mgnmv4aqtpg" path="res://assets/shaders/glassmorph.gdshader" id="1_2gkcw"]
+
+[resource]
+shader = ExtResource("1_2gkcw")
+shader_parameter/blur_amount = 1.3600000646
+shader_parameter/opacity = 0.274000013015
+shader_parameter/tint_color = Color(0.57420754, 0.24970138, 0.8001578, 1)

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://eyrcc22duknh"]
+
+[ext_resource type="Script" uid="uid://c82lyurj8xh1t" path="res://scripts/pipes.gd" id="1_3ahhd"]
+[ext_resource type="Texture2D" uid="uid://brqe286icnd3d" path="res://assets/pipe-green.png" id="1_f17p0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_24abd"]
+size = Vector2(48, 296)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvsf1"]
+size = Vector2(52, 24.666664)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ahhd"]
+size = Vector2(48, 104)
+
+[node name="Pipes" type="Area2D" unique_id=658793036]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_3ahhd")
+
+[node name="Bottom" type="Sprite2D" parent="." unique_id=1324058513]
+position = Vector2(0, 204.00003)
+texture = ExtResource("1_f17p0")
+
+[node name="Top" type="Sprite2D" parent="." unique_id=1921905970]
+position = Vector2(0, -225)
+texture = ExtResource("1_f17p0")
+flip_v = true
+
+[node name="TopCollision" type="CollisionShape2D" parent="." unique_id=21213846 groups=["kill"]]
+position = Vector2(0, -237.33333)
+shape = SubResource("RectangleShape2D_24abd")
+
+[node name="BottomCollision" type="CollisionShape2D" parent="." unique_id=574717925 groups=["kill"]]
+position = Vector2(0, 216.00003)
+shape = SubResource("RectangleShape2D_24abd")
+
+[node name="TopMouthCollision" type="CollisionShape2D" parent="." unique_id=1090948526 groups=["kill"]]
+position = Vector2(0, -77.000015)
+shape = SubResource("RectangleShape2D_vvsf1")
+
+[node name="BottomMouthCollision" type="CollisionShape2D" parent="." unique_id=904747845 groups=["kill"]]
+position = Vector2(0, 55.99998)
+shape = SubResource("RectangleShape2D_vvsf1")
+
+[node name="PointRewards" type="CollisionShape2D" parent="." unique_id=1887104024 groups=["points"]]
+position = Vector2(-3.1789145e-07, -10.666667)
+shape = SubResource("RectangleShape2D_3ahhd")
