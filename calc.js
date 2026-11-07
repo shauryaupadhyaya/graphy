@@ -782,6 +782,9 @@ deleteBtn.addEventListener('click', () => {
     justCalculated = false;
 });
 
+// home button
+
+
 // equal to button and solving the equation
 const executeBtn = document.getElementById("exe");
 
