@@ -691,3 +691,49 @@ html, body{
 .numrow button.format{
     font-size: 0.75rem;
 }
+
+/* fractions */
+.fraction-expression{
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 5px;
+    min-width: 25px;
+}
+
+.fraction-field{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 25px;
+    min-height: 25px;
+    padding: 2px 5px;
+}
+
+.fraction-line{
+    width: 100%;
+    height: 1px;
+    min-width: 25px;
+    background: black;
+}
+
+.mixed-expression{
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mixed-whole{
+    display: inline-flex;
+    align-items: center;
+}
+
+.editor-cursor, .cursor{
+    display: inline-block;
+    width: 2px;
+    height: 20px;
+    background: black;
+    vertical-align: middle;
+}

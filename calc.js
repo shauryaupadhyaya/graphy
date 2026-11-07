@@ -443,7 +443,7 @@ function openSettings(){
 }
 
 function saveAngle(){
-    if(!settingsOpen || settingsPage !== "angle")
+    if(!settingsOpen || settingsPage !== "angle") return;
 
     angleMode = selectedAngle;
     localStorage.setItem("angleMode", angleMode);
@@ -465,24 +465,28 @@ downArrow.addEventListener('click', () => {
 });
 
 leftArrow.addEventListener('click', () => {
-    if(!settingsOpen) return;
-
-    if(settingsPage === "main"){
-        settingsMenu.classList.remove("active");
-        settingsOpen = false;
-        settingsPage = "main";
-    } else{
-        moveAngle(-1);
+    if(!settingsOpen){
+        if(settingsPage === "main"){
+            settingsMenu.classList.remove("active");
+            settingsOpen = false;
+            settingsPage = "main";
+        } else{
+            moveAngle(-1);
+        }
+    } else if(isOn){
+        moveCursor("left");
     }
 });
 
 rightArrow.addEventListener('click', () => {
-    if(!settingsOpen) return;
-
-    if(settingsPage === "main"){
-        openSettings();
-    } else{
-        moveAngle(1);
+    if(!settingsOpen){
+        if(settingsPage === "main"){
+            openSettings();
+        } else{
+            moveAngle(1);
+        }
+    } else if(isOn){
+        moveCursor("right");
     }
 });
 
@@ -589,6 +593,15 @@ function renderSequence(sequence){
                 .replace(/\*/g, "×")
                 .replace(/\//g, "÷");
         } else{
+            if(item.type === "mixed"){
+                html += `
+                    <span class="mixed-expression">
+                        <span class="mixed-whole">
+                            ${renderSequence(item.whole)}
+                        </span>
+                `;
+            }
+
             html += `
                 <span class="fraction-expression">
                     <span class="fraction-field">
@@ -600,6 +613,10 @@ function renderSequence(sequence){
                     </span>
                 </span>
             `;
+
+            if(item.type === "mixed"){
+                html += `</span>`;
+            }
         }
     });
 
@@ -611,10 +628,43 @@ function renderSequence(sequence){
 }
 
 function moveCursor(direction){
-    if(direction === "left" && activeSequence.cursor > 0){
-        activeSequence.cursor--;
-    } else if(direction === "right" && activeSequence.cursor < activeSequence.items.length){
-        activeSequence.cursor++;
+    const sequence = activeSequence;
+    const fraction = sequence.parent;
+
+    if(direction === "left"){
+        if(sequence.cursor > 0){
+            sequence.cursor--;
+        } else if(fraction){
+            if(sequence.field === "denominator"){
+                activeSequence = fraction.numerator;
+                activeSequence.cursor = activeSequence.items.length;
+            } else if(sequence.field === "numerator" && fraction.type === "mixed"){
+                activeSequence = fraction.whole;
+                activeSequence.cursor = activeSequence.items.length;
+            } else{
+                const parentSequence = fraction.parentSequence;
+                activeSequence = parentSequence;
+                activeSequence.cursor = activeSequence.items.indexOf(fraction);
+            }
+        }
+    }
+
+    if(direction === "right"){
+        if(sequence.cursor < sequence.items.length){
+            sequence.cursor++;
+        } else if(fraction){
+            if(sequence.field === "whole"){
+                activeSequence = fraction.numerator;
+                activeSequence.cursor = 0;
+            } else if(sequence.field === "numerator"){
+                activeSequence = fraction.whole;
+                activeSequence.cursor = 0;
+            } else{
+                const parentSequence = fraction.parentSequence;
+                activeSequence = parentSequence;
+                activeSequence.cursor = activeSequence.items.indexOf(fraction) + 1;
+            }
+        }
     }
 
     updateDisplay();
@@ -624,6 +674,23 @@ function deleteEditorCharacter(){
     if(activeSequence.cursor > 0){
         activeSequence.items.splice(activeSequence.cursor - 1, 1);
         activeSequence.cursor--;
+    } else if(activeSequence.parent){
+        const fraction = activeSequence.parent;
+
+        if(activeSequence.field === "denominator"){
+            activeSequence = fraction.numerator;
+            activeSequence.cursor = activeSequence.items.length;
+        } else if(activeSequence.field === "numerator" && fraction.type === "mixed"){
+            activeSequence = fraction.whole;
+            activeSequence.cursor = activeSequence.items.length;
+        } else{
+            const parentSequence = fraction.parentSequence;
+            const index = parentSequence.items.indexOf(fraction);
+
+            parentSequence.items.splice(index, 1);
+            activeSequence = parentSequence;
+            activeSequence.cursor = index;
+        }
     }
 
     expression = serialize(rootSequence);
