@@ -452,15 +452,40 @@ function saveAngle(){
 }
 
 // arrow navigation
+function moveVerticalCursor(direction){
+    if(!isOn) return;
+
+    const fraction = activeSequence.parent;
+    if(!fraction) return;
+
+    if(direction === "down" && activeSequence.field === "numerator"){
+        activeSequence = fraction.denominator;
+        activeSequence.cursor = 0;
+    } else if(direction === "up" && activeSequence.field === "denominator"){
+        activeSequence = fraction.numerator;
+        activeSequence.cursor = activeSequence.items.length;
+    }
+
+    updateDisplay();
+}
+
 upArrow.addEventListener('click', () => {
-    if(settingsPage === "main"){
-        moveSetting(-1);
+    if(settingsOpen){
+        if(settingsPage === "main"){
+            moveSetting(-1);
+        }
+    } else{
+        moveVerticalCursor("up");
     }
 });
 
 downArrow.addEventListener('click', () => {
-    if(settingsPage === "main"){
-        moveSetting(1)
+    if(settingsOpen){
+        if(settingsPage === "main"){
+            moveSetting(1)
+        }
+    } else{
+        moveVerticalCursor("down");
     }
 });
 
