@@ -1,7 +1,9 @@
 const expressionDisplay = document.getElementById("expression");
 const resultDisplay = document.getElementById("result");
+const offDisplay = document.getElementById("offDisplay");
+const calculator = document.querySelector(".calc");
 let expression = "";
-let isOn = true;
+let isOn = false;
 let justCalculated = false;
 let ans = 0;
 let shiftActive = false;
@@ -816,6 +818,57 @@ homeBtn.addEventListener('click', () => {
     updateDisplay();
 });
 
+// power on and off button
+const powerOnOffBtn = document.querySelector(".on");
+
+powerOnOffBtn.addEventListener('click', () => {
+    isOn = !isOn;
+
+    if(!isOn){
+        calculator.classList.add("off");
+
+        settingsOpen = false;
+        settingsPage = "main";
+        settingsMenu.classList.remove("active");
+
+        howPopup.classList.remove("active");
+
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+
+        powerOnOffBtn.classList.add("off");
+    } else{
+        calculator.classList.remove("off");
+        powerOnOffBtn.classList.remove("off");
+
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
+        expression = "";
+        resultDisplay.textContent = 0;
+        justCalculated = false;
+
+        enteringRoot = false;
+        enteringSqrt = false;
+        rootIndex = "";
+
+        enteringLog = false;
+        logBase = "";
+
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+
+        settingsOpen = false;
+        settingsPage = "main";
+        selectedAngle = angleMode;
+        selectedSetting = 0;
+
+        updateSettingsDisplay();
+        updateDisplay();
+    }
+});
+
 // equal to button and solving the equation
 const executeBtn = document.getElementById("exe");
 
@@ -916,6 +969,8 @@ executeBtn.addEventListener('click', () => {
     }
 });
 
+calculator.classList.add("off");
+powerOnOffBtn.classList.add("off");
 updateDisplay();
 
 // how to use popup

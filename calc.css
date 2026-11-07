@@ -742,3 +742,67 @@ html, body{
     background: black;
     vertical-align: middle;
 }
+
+/* power on and off styles for display and button */
+.off-display{
+    display: none;
+    width: 100%;
+    min-height: 70px;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #8e9f80c9;
+    text-align: center;
+    animation: displayFade 0.5s ease;
+}
+
+.off-display h2{
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    opacity: 1;
+    color: black;
+}
+
+.off-display p{
+    margin: 0;
+    font-size: 1rem;
+    opacity: 1;
+    color: black;
+}
+
+@keyframes displayFade {
+    from{
+        opacity: 0;
+        scale: 0.9;
+    }
+    to{
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+.calc.off .expression,
+.calc.off .result,
+.calc.off .settings-menu{
+    display: none;
+}
+
+.calc.off .off-display{
+    display: flex;
+}
+
+.calc.off .calcbuttons button{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.calc.off .calcbuttons .on{
+    opacity: 1;
+    pointer-events: auto;
+    background: #ffcc00df;
+    border: 2px solid #8e7203;
+    border-radius: 50%;
+    color: #695502;
+}
