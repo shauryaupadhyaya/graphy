@@ -14,18 +14,21 @@ let angleMode = localStorage.getItem("angleMode") || "DEG";
 
 // display
 function updateDisplay(){
-    const displayExpression = expression
-        .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
-        .replace(/sqrt\(/g, '√')
-        .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
-            return `<sup>${power || "n"}</sup>`
-        })
-        .replace(/Math\.E/g, "e")
-        .replace(/Math\.PI/g, "π")
-        .replace(/\*/g, '×')
-        .replace(/\//g, '÷');
+    expression = serialize(rootSequence);
+    expressionDisplay.innerHTML = renderSequence(rootSequence);
 
-    expressionDisplay.innerHTML = displayExpression || 0;
+    // const displayExpression = expression
+    //     .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
+    //     .replace(/sqrt\(/g, '√')
+    //     .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
+    //         return `<sup>${power || "n"}</sup>`
+    //     })
+    //     .replace(/Math\.E/g, "e")
+    //     .replace(/Math\.PI/g, "π")
+    //     .replace(/\*/g, '×')
+    //     .replace(/\//g, '÷');
+
+    // expressionDisplay.innerHTML = displayExpression || 0;
 }
 
 // number and operator buttons
@@ -38,7 +41,9 @@ numberButtons.forEach((button) => {
         const value = button.textContent.trim();
 
         if(justCalculated){
-            expression = "";
+            rootSequence.items = [];
+            rootSequence.cursor = 0;
+            activeSequence = rootSequence;
             justCalculated = false;
         }
 
@@ -50,7 +55,7 @@ numberButtons.forEach((button) => {
             logBase += value;
         }
 
-        expression += value;
+        insertText(value);
         updateDisplay();
     });
 });
@@ -69,11 +74,18 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
         if(!isOn) return;
 
         if(justCalculated){
+            rootSequence.items = [..."Ans"];
+            rootSequence.cursor = 3;
+            activeSequence = rootSequence;
+
+            rootSequence.items = [..."Ans"];
+            rootSequence.cursor = 3;
+            activeSequence = rootSequence;
             expression = "Ans";
             justCalculated = false;
         }
 
-        expression += operator;
+        insertText(operator);
         updateDisplay();
     });
 });
@@ -95,6 +107,9 @@ decimalBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
@@ -103,10 +118,10 @@ decimalBtn.addEventListener('click', () => {
     if(currentNumber.includes(".")) return;
 
     if(currentNumber === ""){
-        expression += 0;
+        insertText("0");
     }
 
-    expression += ".";
+    insertText(".");
     updateDisplay();
 });
 
@@ -118,15 +133,18 @@ openBracketBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
     if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += "(";
+    insertText("(");
     updateDisplay();
 });
 
@@ -138,7 +156,7 @@ closeBracketBtn.addEventListener('click', () => {
 
     if(openCount > closeCount){
         if(/[+\-*/(]$/.test(expression)) return;
-        expression += ")";
+        insertText(")");
         updateDisplay();
     }
 });
@@ -151,11 +169,14 @@ squareBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
-    expression = `${expression}**2`;
+    insertText("**2");
     updateDisplay();
 });
 
@@ -163,11 +184,14 @@ powerBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
-    expression += "**";
+    insertText("**");
     updateDisplay();
 });
 
@@ -177,7 +201,7 @@ sqrtBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(shiftActive){
-        expression +="root(";
+        insertText("root(");
         enteringRoot = true;
         rootIndex = "";
 
@@ -190,22 +214,24 @@ sqrtBtn.addEventListener('click', () => {
     }
 
     if(enteringRoot && rootIndex){
-        expression += ",";
+        insertText(",");
         enteringRoot = false;
         updateDisplay();
         return;
     }
 
     if(justCalculated){
-        expression = "";
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
         justCalculated = false;
     }
 
     if(expression.endsWith("Math.PI") || expression.endsWith("Math.E") || expression.endsWith("Ans") || /[0-9.)]$/.test(expression)){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += `sqrt(`;
+    insertText("sqrt(");
     enteringSqrt = true;
     updateDisplay();
 });
@@ -217,11 +243,14 @@ tenPowerBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
-    expression += "*10**";
+    insertText("*10**");
     updateDisplay();
 });
 
@@ -238,7 +267,7 @@ logBtn.addEventListener('click', () => {
             justCalculated = false;
         }
 
-        expression += "ln(";
+        insertText("ln(");
 
         shiftActive = false;
         shiftBtn.classList.remove("active");
@@ -248,7 +277,7 @@ logBtn.addEventListener('click', () => {
     }
 
     if(enteringLog && logBase){
-        expression += ",";
+        insertText(",");
         enteringLog = false;
         updateDisplay();
         return;
@@ -259,7 +288,7 @@ logBtn.addEventListener('click', () => {
         justCalculated = false;
     }
 
-    expression += "log(";
+    insertText("log(");
     enteringLog = true;
     logBase = "";
     updateDisplay();
@@ -274,10 +303,10 @@ eBtn.addEventListener('click', () => {
     }
 
     if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.PI")){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += "Math.E";
+    insertText("Math.E");
     updateDisplay();
 });
 
@@ -293,15 +322,17 @@ function TrigFunctions(button, normal, inverse){
         const functionName = shiftActive ? inverse : normal;
 
         if(justCalculated){
-            expression = "";
+            rootSequence.items = [];
+            rootSequence.cursor = 0;
+            activeSequence = rootSequence;
             justCalculated = false;
         }
 
         if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
-            expression += "*";
+            insertText("*");
         }
 
-        expression += `${functionName}(`;
+        insertText(`${functionName}(`);
         shiftActive = false;
         shiftBtn.classList.remove("active");
         updateDisplay();
@@ -319,15 +350,17 @@ piBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
-        expression = "";
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
         justCalculated = false;
     }
 
     if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += "Math.PI";
+    insertText("Math.PI");
     updateDisplay();
 });
 
@@ -465,6 +498,138 @@ okBtn.addEventListener('click', () => {
 
 updateSettingsDisplay();
 
+// fraction display
+const fractionBtn = document.querySelector(".fraction");
+const mixedFractionBtn = document.querySelector(".mixedfraction");
+
+function createSequence(parent = null, field = null){
+    return{
+        items: [],
+        cursor: 0,
+        parent,
+        field
+    };
+}
+
+const rootSequence = createSequence();
+let activeSequence = rootSequence;
+
+function createFraction(type = "fraction"){
+    const fraction = {type, parentSequence: activeSequence};
+
+    if(type === "mixed"){
+        fraction.whole = createSequence(fraction, "whole");
+    }
+
+    fraction.numerator = createSequence(fraction, "numerator");
+    fraction.denominator = createSequence(fraction, "denominator");
+
+    return fraction;
+}
+
+function serialize(sequence){
+    return sequence.items.map(item => {
+        if (typeof item === "string") return item;
+
+        const numerator = serialize(item.numerator);
+        const denominator = serialize(item.denominator);
+
+        if(item.type === "mixed"){
+            return `${serialize(item.whole)}*(${numerator})/(${denominator})`;
+        }
+
+        return `(${numerator})/(${denominator})`;
+    }).join("");
+}
+
+function insertText(value){
+    const chars = [...value];
+
+    activeSequence.items.splice(activeSequence.cursor, 0, ...chars);
+    activeSequence.cursor += chars.length;
+
+    expression = serialize(rootSequence);
+    updateDisplay();
+}
+
+function insertFraction(type){
+    const fraction = createFraction(type);
+
+    activeSequence.items.splice(activeSequence.cursor, 0, fraction);
+    activeSequence.cursor++;
+
+    activeSequence = type === "mixed" ? fraction.whole : fraction.numerator;
+
+    justCalculated = false;
+    expression = serialize(rootSequence);
+    updateDisplay();
+}
+
+fractionBtn.addEventListener('click', () => {
+    if(isOn) insertFraction("fraction");
+});
+
+mixedFractionBtn.addEventListener('click', () => {
+    if(isOn) insertFraction("mixed");
+});
+
+function renderSequence(sequence){
+    let html = "";
+
+    sequence.items.forEach((item, index) => {
+        if(sequence === activeSequence && index === sequence.cursor){
+            html += `<span class="cursor"></span>`;
+        }
+
+        if(typeof item === "string"){
+            html += item
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\*/g, "×")
+                .replace(/\//g, "÷");
+        } else{
+            html += `
+                <span class="fraction-expression">
+                    <span class="fraction-field">
+                        ${renderSequence(item.numerator)}
+                    </span>
+                    <span class="fraction-line"></span>
+                    <span class="fraction-field">
+                        ${renderSequence(item.denominator)}
+                    </span>
+                </span>
+            `;
+        }
+    });
+
+    if(sequence === activeSequence && sequence.cursor === sequence.items.length){
+        html += `<span class="editor-cursor"></span>`;
+    }
+
+    return html;
+}
+
+function moveCursor(direction){
+    if(direction === "left" && activeSequence.cursor > 0){
+        activeSequence.cursor--;
+    } else if(direction === "right" && activeSequence.cursor < activeSequence.items.length){
+        activeSequence.cursor++;
+    }
+
+    updateDisplay();
+}
+
+function deleteEditorCharacter(){
+    if(activeSequence.cursor > 0){
+        activeSequence.items.splice(activeSequence.cursor - 1, 1);
+        activeSequence.cursor--;
+    }
+
+    expression = serialize(rootSequence);
+    updateDisplay();
+}
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -472,8 +637,13 @@ const deleteBtn = document.getElementById("delete");
 allClearBtn.addEventListener('click', () => {
     if(!isOn) return;
 
+    rootSequence.items = [];
+    rootSequence.cursor = 0;
+    activeSequence = rootSequence;
+
     expression = "";
     justCalculated = false;
+
     enteringRoot = false;
     enteringSqrt = false;
     rootIndex = "";
@@ -491,9 +661,8 @@ allClearBtn.addEventListener('click', () => {
 deleteBtn.addEventListener('click', () => {
     if(!isOn) return;
 
-    expression = expression.slice(0, -1);
+    deleteEditorCharacter();
     justCalculated = false;
-    updateDisplay();
 });
 
 // equal to button and solving the equation
@@ -571,6 +740,13 @@ executeBtn.addEventListener('click', () => {
 
         ans = Number(answer.toPrecision(10));
         resultDisplay.textContent = ans;
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
+
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = true;
 
