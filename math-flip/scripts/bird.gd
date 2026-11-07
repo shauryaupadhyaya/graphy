@@ -6,8 +6,8 @@ extends CharacterBody2D
 
 @onready var player: CharacterBody2D = $"."
 @onready var score_menu: Panel = $"../Control/OuterPanel-Pause"
+@onready var spawner: Node2D = $"../Spawner"
 
-@onready var pipes: Node2D = $"../Pipes"
 @onready var score_counter: Label = $"../Control/ScoreCounter"
 
 @onready var bird: AnimatedSprite2D = $Bird
@@ -46,7 +46,7 @@ func _show_score_menu() -> void:
 	sky.autoscroll = Vector2(0, 1)
 	clouds_back.autoscroll = Vector2(1, 1)
 	clouds_front.autoscroll = Vector2(1, 1)
-	pipes.game_started = false
+	spawner.spawn = false
 	is_paused = true
 	score_menu.show()
 	bird.pause()
@@ -56,24 +56,23 @@ func _hide_score_menu() -> void:
 	clouds_back.autoscroll = Vector2(-50, 1)
 	clouds_front.autoscroll = Vector2(-70, 1)
 	bird.play("flap")
-	pipes.game_started = true
+	spawner.spawn = true
 	is_paused = false
 	score_menu.hide()
-	pipes.game_started = true
 
 
-func _on_pipe_bottom_body_entered(body: Node2D) -> void:
-	if body.get_instance_id() == self.get_instance_id():
-		_show_score_menu()
-
-
-
-func _on_pipe_top_body_entered(body: Node2D) -> void:
-	if body.get_instance_id() == self.get_instance_id():
-		_show_score_menu()
-
-func _on_point_rewards_area_body_entered(body: Node2D) -> void:
-	if body.get_instance_id() == self.get_instance_id():
-		Manager._increment_score(1)
-		score_counter.text = str(Manager.score)
-		print(Manager.score)
+#func _on_pipe_bottom_body_entered(body: Node2D) -> void:
+	#if body.get_instance_id() == self.get_instance_id():
+		#_show_score_menu()
+#
+#
+#
+#func _on_pipe_top_body_entered(body: Node2D) -> void:
+	#if body.get_instance_id() == self.get_instance_id():
+		#_show_score_menu()
+#
+#func _on_point_rewards_area_body_entered(body: Node2D) -> void:
+	#if body.get_instance_id() == self.get_instance_id():
+		#Manager._increment_score(1)
+		#score_counter.text = str(Manager.score)
+		#print(Manager.score)

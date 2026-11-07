@@ -30,7 +30,7 @@ shape = SubResource("RectangleShape2D_24abd")
 position = Vector2(0, 55.99998)
 shape = SubResource("RectangleShape2D_vvsf1")
 
-[node name="PipeTop" type="Area2D" parent="." unique_id=1003662832 groups=["kill"]]
+[node name="PipeTop" type="Area2D" parent="." unique_id=1003662832]
 
 [node name="Top" type="Sprite2D" parent="PipeTop" unique_id=1921905970]
 position = Vector2(0, -225)
@@ -50,3 +50,5 @@ shape = SubResource("RectangleShape2D_vvsf1")
 [node name="PointRewards" type="CollisionShape2D" parent="PointRewardsArea" unique_id=1887104024]
 position = Vector2(-3.1789145e-07, -10.666667)
 shape = SubResource("RectangleShape2D_3ahhd")
+
+[connection signal="body_entered" from="PointRewardsArea" to="." method="_on_point_rewards_area_body_entered"]
