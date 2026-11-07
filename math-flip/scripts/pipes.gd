@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 
 @export var speed: float = 200.0
 @export var game_started: bool = false

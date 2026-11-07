@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 buses/default_bus_layout="uid://cc2j2qhuxwwh"
 
+[autoload]
+
+Manager="*uid://dbsw3q2717i7e"
+
 [display]
 
 window/stretch/mode="canvas_items"

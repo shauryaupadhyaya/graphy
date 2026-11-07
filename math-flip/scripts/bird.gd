@@ -7,7 +7,8 @@ extends CharacterBody2D
 @onready var player: CharacterBody2D = $"."
 @onready var score_menu: Panel = $"../Control/OuterPanel-Pause"
 
-@onready var pipes: Area2D = $"../Pipes"
+@onready var pipes: Node2D = $"../Pipes"
+@onready var score_counter: Label = $"../Control/ScoreCounter"
 
 @onready var bird: AnimatedSprite2D = $Bird
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
@@ -21,6 +22,7 @@ func _input(event: InputEvent) -> void:
 		if event.is_action_pressed("space"):
 			self.rotation_degrees = -20
 			pass
+	
 
 func _physics_process(delta: float) -> void:
 	if not is_paused:
@@ -36,13 +38,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_world_border_body_entered(body: Node2D) -> void:
 	if body.get_instance_id() == self.get_instance_id() :
-		print("touched kill zone")
-		_show_score_menu()
-
-
-func _on_pipes_body_entered(body: Node2D) -> void:
-	if body.get_instance_id() == self.get_instance_id() :
-		
 		print("touched kill zone")
 		_show_score_menu()
 
@@ -65,3 +60,20 @@ func _hide_score_menu() -> void:
 	is_paused = false
 	score_menu.hide()
 	pipes.game_started = true
+
+
+func _on_pipe_bottom_body_entered(body: Node2D) -> void:
+	if body.get_instance_id() == self.get_instance_id():
+		_show_score_menu()
+
+
+
+func _on_pipe_top_body_entered(body: Node2D) -> void:
+	if body.get_instance_id() == self.get_instance_id():
+		_show_score_menu()
+
+func _on_point_rewards_area_body_entered(body: Node2D) -> void:
+	if body.get_instance_id() == self.get_instance_id():
+		Manager._increment_score(1)
+		score_counter.text = str(Manager.score)
+		print(Manager.score)

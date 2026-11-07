@@ -538,8 +538,26 @@ theme_override_fonts/font = ExtResource("7_gee14")
 theme_override_font_sizes/font_size = 48
 text = "Total: 10"
 
+[node name="ScoreCounter" type="Label" parent="Control" unique_id=1766976612]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -85.0
+offset_bottom = 123.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 22
+theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_font_sizes/font_size = 102
+text = "0"
+
 [connection signal="body_entered" from="World_Border" to="Player" method="_on_world_border_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="body_entered" from="Pipes" to="Player" method="_on_pipes_body_entered"]
+[connection signal="body_entered" from="Pipes/PipeBottom" to="Player" method="_on_pipe_bottom_body_entered"]
+[connection signal="body_entered" from="Pipes/PipeTop" to="Player" method="_on_pipe_top_body_entered"]
+[connection signal="body_entered" from="Pipes/PointRewardsArea" to="Player" method="_on_point_rewards_area_body_entered"]
 
 [editable path="Player"]
+[editable path="Pipes"]

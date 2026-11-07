@@ -7,7 +7,7 @@ extends Node2D
 @onready var sky: Parallax2D = $Sky
 @onready var clouds_back: Parallax2D = $Clouds_Back
 @onready var clouds_front: Parallax2D = $Clouds_Front
-@onready var pipes: Area2D = $Pipes
+@onready var pipes: Node2D = $Pipes
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
