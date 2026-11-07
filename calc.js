@@ -783,7 +783,38 @@ deleteBtn.addEventListener('click', () => {
 });
 
 // home button
+const homeBtn = document.querySelector(".home");
 
+homeBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    rootSequence.items = [];
+    rootSequence.cursor = 0;
+    activeSequence = rootSequence;
+
+    expression = "";
+    resultDisplay.textContent = 0;
+    justCalculated = false;
+
+    enteringRoot = false;
+    enteringSqrt = false;
+    rootIndex = "";
+
+    enteringLog = false;
+    logBase = "";
+
+    shiftActive = false;
+    shiftBtn.classList.remove("active");
+
+    settingsOpen = false;
+    settingsPage = "main";
+    selectedAngle = angleMode;
+    selectedSetting = 0;
+    settingsMenu.classList.remove("active");
+
+    updateSettingsDisplay();
+    updateDisplay();
+});
 
 // equal to button and solving the equation
 const executeBtn = document.getElementById("exe");
