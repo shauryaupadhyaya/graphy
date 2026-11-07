@@ -458,12 +458,18 @@ function moveVerticalCursor(direction){
     const fraction = activeSequence.parent;
     if(!fraction) return;
 
+    let targetSequence = null;
+
     if(direction === "down" && activeSequence.field === "numerator"){
-        activeSequence = fraction.denominator;
-        activeSequence.cursor = 0;
+        targetSequence = fraction.denominator;
     } else if(direction === "up" && activeSequence.field === "denominator"){
-        activeSequence = fraction.numerator;
-        activeSequence.cursor = activeSequence.items.length;
+        targetSequence = fraction.numerator;
+    }
+
+    if(targetSequence){
+        const oldCursor = activeSequence.cursor;
+        activeSequence = targetSequence;
+        activeSequence.cursor = Math.min(oldCursor, activeSequence.items.length);
     }
 
     updateDisplay();
@@ -471,9 +477,7 @@ function moveVerticalCursor(direction){
 
 upArrow.addEventListener('click', () => {
     if(settingsOpen){
-        if(settingsPage === "main"){
-            moveSetting(-1);
-        }
+        if(settingsPage === "main") moveSetting(-1);
     } else{
         moveVerticalCursor("up");
     }
@@ -481,22 +485,20 @@ upArrow.addEventListener('click', () => {
 
 downArrow.addEventListener('click', () => {
     if(settingsOpen){
-        if(settingsPage === "main"){
-            moveSetting(1)
-        }
+        if(settingsPage === "main") moveSetting(1);
     } else{
         moveVerticalCursor("down");
     }
 });
 
 leftArrow.addEventListener('click', () => {
-    if(!settingsOpen){
-        if(settingsPage === "main"){
+    if(settingsOpen){
+        if(settingsPage === "angle"){
+            moveAngle(-1);
+        } else{
             settingsMenu.classList.remove("active");
             settingsOpen = false;
             settingsPage = "main";
-        } else{
-            moveAngle(-1);
         }
     } else if(isOn){
         moveCursor("left");
@@ -504,7 +506,7 @@ leftArrow.addEventListener('click', () => {
 });
 
 rightArrow.addEventListener('click', () => {
-    if(!settingsOpen){
+    if(settingsOpen){
         if(settingsPage === "main"){
             openSettings();
         } else{
@@ -595,7 +597,15 @@ function insertFraction(type){
 }
 
 fractionBtn.addEventListener('click', () => {
-    if(isOn) insertFraction("fraction");
+    if(!isOn) return;
+
+    if(shiftActive){
+        insertFraction("mixed");
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+    } else{
+        insertFraction("fraction");
+    }
 });
 
 mixedFractionBtn.addEventListener('click', () => {
@@ -662,19 +672,17 @@ function moveCursor(direction){
         } else if(fraction){
             if(sequence.field === "denominator"){
                 activeSequence = fraction.numerator;
-                activeSequence.cursor = activeSequence.items.length;
+                activeSequence.cursor = fraction.numerator.items.length;
             } else if(sequence.field === "numerator" && fraction.type === "mixed"){
                 activeSequence = fraction.whole;
-                activeSequence.cursor = activeSequence.items.length;
+                activeSequence.cursor = fraction.whole.items.length;
             } else{
                 const parentSequence = fraction.parentSequence;
                 activeSequence = parentSequence;
-                activeSequence.cursor = activeSequence.items.indexOf(fraction);
+                activeSequence.cursor = parentSequence.items.indexOf(fraction);
             }
         }
-    }
-
-    if(direction === "right"){
+    } else if(direction === "right"){
         if(sequence.cursor < sequence.items.length){
             sequence.cursor++;
         } else if(fraction){
@@ -687,7 +695,7 @@ function moveCursor(direction){
             } else{
                 const parentSequence = fraction.parentSequence;
                 activeSequence = parentSequence;
-                activeSequence.cursor = activeSequence.items.indexOf(fraction) + 1;
+                activeSequence.cursor = parentSequence.items.indexOf(fraction) + 1;
             }
         }
     }
