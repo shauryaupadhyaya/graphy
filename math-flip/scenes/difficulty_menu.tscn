@@ -1,0 +1,252 @@
+[gd_scene format=3 uid="uid://d1dvw7jrebos7"]
+
+[ext_resource type="FontFile" uid="uid://blqite3k7ob4n" path="res://assets/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="1_uu84u"]
+[ext_resource type="FontFile" uid="uid://b4qj5lsvi2050" path="res://assets/Jersey_25/Jersey25-Regular.ttf" id="2_bvmav"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qaso5"]
+bg_color = Color(0.6279779, 0.61135876, 0.9576883, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uu84u"]
+bg_color = Color(0.3137255, 0.23137255, 0.6901961, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ugo8b"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bvmav"]
+bg_color = Color(0.3137255, 0.23137255, 0.6901961, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5ek2"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qkx4s"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w74tr"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fuo31"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_24abd"]
+bg_color = Color(0.3137255, 0.23137255, 0.6901961, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v75ch"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_van8r"]
+bg_color = Color(0.4592114, 0.3981012, 0.8882535, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7foii"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qkf0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="DifficultyMenu" type="Control" unique_id=820684943]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=942256961]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qaso5")
+
+[node name="Title" type="Label" parent="." unique_id=1930578665]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.15
+anchor_right = 0.5
+anchor_bottom = 0.15
+offset_left = -223.0
+offset_top = -60.0
+offset_right = 223.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0.31328577, 0.2303853, 0.6913936, 1)
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 10
+theme_override_fonts/font = ExtResource("1_uu84u")
+theme_override_font_sizes/font_size = 99
+text = "Difficulty"
+
+[node name="Easy" type="Button" parent="." unique_id=2037815599]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.4
+anchor_right = 0.3
+anchor_bottom = 0.4
+offset_left = -115.5
+offset_top = -44.0
+offset_right = 115.5
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_uu84u")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_uu84u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ugo8b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ugo8b")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ugo8b")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ugo8b")
+text = "Easy"
+
+[node name="Medium" type="Button" parent="." unique_id=2088402624]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.6
+anchor_right = 0.7
+anchor_bottom = 0.6
+offset_left = -115.5
+offset_top = -44.0
+offset_right = 115.5
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_uu84u")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_bvmav")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_w5ek2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qkx4s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_w74tr")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fuo31")
+text = "Medium"
+
+[node name="Hard" type="Button" parent="." unique_id=336220221]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.8
+anchor_right = 0.3
+anchor_bottom = 0.8
+offset_left = -115.5
+offset_top = -44.0
+offset_right = 115.5
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_uu84u")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_24abd")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_v75ch")
+theme_override_styles/hover = SubResource("StyleBoxFlat_van8r")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7foii")
+theme_override_styles/focus = SubResource("StyleBoxFlat_1qkf0")
+text = "Hard"
+
+[node name="Multipler_Easy" type="Label" parent="." unique_id=609807435]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.492
+anchor_top = 0.4
+anchor_right = 0.6
+anchor_bottom = 0.4
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_bvmav")
+theme_override_font_sizes/font_size = 48
+text = "1x Multipler"
+
+[node name="Multipler_Medium" type="Label" parent="." unique_id=1314575774]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.447
+anchor_top = 0.6
+anchor_right = 0.455
+anchor_bottom = 0.6
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_bvmav")
+theme_override_font_sizes/font_size = 48
+text = "1.5x Multipler"
+
+[node name="Multipler_Hard" type="Label" parent="." unique_id=2133642565]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.483
+anchor_top = 0.8
+anchor_right = 0.6
+anchor_bottom = 0.8
+offset_left = -38.25
+offset_top = -29.399994
+offset_right = 59.549988
+offset_bottom = 19.600006
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_bvmav")
+theme_override_font_sizes/font_size = 48
+text = "2x Multipler"
