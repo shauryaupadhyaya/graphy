@@ -48,6 +48,19 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     renderer.setSize(maincanvas.clientWidth, maincanvas.clientHeight);
     maincanvas.appendChild(renderer.domElement)
     const controls = new OrbitControls( camera, renderer.domElement );
+
+    // resize canvas based on sidebar
+    function resizeRenderer(){
+        const width = maincanvas.clientWidth;
+        const height = maincanvas.clientHeight;
+
+        if(!width || !height) return;
+        renderer.setSize(width, height, false);
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    }
+
     // box to show points limit
     const material = new THREE.LineBasicMaterial({color: 0x0000ff, linewidth: 2});
     const boxGeometry = new THREE.BoxGeometry(50, 50, 50);
@@ -284,4 +297,39 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         redrawGraph();
         console.log('Extending Equation: ', equationNumber);
     })
+
+    // resize equation sidebar
+    const equations = document.getElementById("equations");
+    let isResizing = false;
+
+    equations.addEventListener("pointerdown", (e) => {
+        const rect = equations.getBoundingClientRect();
+
+        if(e.clientX < rect.right - 2) return;
+
+        isResizing = true;
+        equations.classList.add("resizing");
+        equations.setPointerCapture(e.pointerId);
+    });
+
+    equations.addEventListener("pointermove", (e) => {
+        if(!isResizing) return;
+
+        const minWidth = 200;
+        const maxWidth = window.innerWidth * 0.4;
+
+        const newWidth = Math.max(minWidth, Math.min(e.clientX, maxWidth));
+        equations.style.width = `${newWidth}px`;
+
+        resizeRenderer();
+    });
+
+    function stopResizing(){
+        isResizing = false;
+        equations.classList.remove("resizing");
+        resizeRenderer();
+    }
+
+    equations.addEventListener("pointerup", stopResizing);
+    equations.addEventListener("pointercancel", stopResizing);
 })
