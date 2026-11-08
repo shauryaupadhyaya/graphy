@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://d1dvw7jrebos7"]
 
+[ext_resource type="Script" uid="uid://chetwnpm2m1fo" path="res://scripts/difficulty_menu.gd" id="1_ugo8b"]
 [ext_resource type="FontFile" uid="uid://blqite3k7ob4n" path="res://assets/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="1_uu84u"]
 [ext_resource type="FontFile" uid="uid://b4qj5lsvi2050" path="res://assets/Jersey_25/Jersey25-Regular.ttf" id="2_bvmav"]
 
@@ -107,6 +108,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ugo8b")
 
 [node name="Panel" type="Panel" parent="." unique_id=942256961]
 layout_mode = 1
@@ -250,3 +252,7 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_bvmav")
 theme_override_font_sizes/font_size = 48
 text = "2x Multipler"
+
+[connection signal="pressed" from="Easy" to="." method="_on_easy_pressed"]
+[connection signal="pressed" from="Medium" to="." method="_on_medium_pressed"]
+[connection signal="pressed" from="Hard" to="." method="_on_hard_pressed"]
