@@ -1,6 +1,5 @@
 const expressionDisplay = document.getElementById("expression");
 const resultDisplay = document.getElementById("result");
-const offDisplay = document.getElementById("offDisplay");
 const calculator = document.querySelector(".calc");
 let expression = "";
 let isOn = false;
@@ -19,7 +18,10 @@ function updateDisplay(){
     expression = serialize(rootSequence);
     expressionDisplay.innerHTML = renderSequence(rootSequence);
 
-    // const displayExpression = expression
+    // expression = serialize(rootSequence);
+    // let displayExpression = renderSequence(rootSequence);
+    
+    // displayExpression = displayExpression
     //     .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
     //     .replace(/sqrt\(/g, '√')
     //     .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
@@ -117,7 +119,23 @@ decimalBtn.addEventListener('click', () => {
         return;
     }
 
-    const currentNumber = expression.split(/[+\-*/()]/).pop();
+    let start = activeSequence.cursor;
+    let end = activeSequence.cursor;
+
+    while(start > 0){
+        const item = activeSequence.items[start - 1];
+        if(typeof item !== "string" || !/[0-9.]/.test(item)) break;
+        start--;
+    }
+
+    while(end < activeSequence.items.length){
+        const item = activeSequence.items[end];
+        if(typeof item !== "string" || !/[0-9.]/.test(item)) break;
+        end++;
+    }
+
+    const currentNumber = activeSequence.items.slice(start, end).join("");
+    
     if(currentNumber.includes(".")) return;
 
     if(currentNumber === ""){
@@ -208,6 +226,7 @@ sqrtBtn.addEventListener('click', () => {
         rootSequence.cursor = 0;
         activeSequence = rootSequence;
 
+        justCalculated = false;
         insertText("root(");
         enteringRoot = true;
         rootIndex = "";
@@ -215,7 +234,6 @@ sqrtBtn.addEventListener('click', () => {
         shiftActive = false;
         shiftBtn.classList.remove("active");
 
-        justCalculated = false;
         updateDisplay();
         return;
     }
@@ -295,6 +313,10 @@ logBtn.addEventListener('click', () => {
     }
 
     if(justCalculated){
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
         expression = "";
         justCalculated = false;
     }
@@ -309,6 +331,10 @@ eBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
         expression = "";
         justCalculated = false;
     }
@@ -577,7 +603,7 @@ function serialize(sequence){
         const denominator = serialize(item.denominator);
 
         if(item.type === "mixed"){
-            return `${serialize(item.whole)}*(${numerator})/(${denominator})`;
+            return `(${serialize(item.whole)})+(${numerator})/(${denominator})`;
         }
 
         return `(${numerator})/(${denominator})`;
@@ -623,22 +649,46 @@ mixedFractionBtn.addEventListener('click', () => {
     if(isOn) insertFraction("mixed");
 });
 
+function formatExpression(text){
+    return text
+        .replace(/Math\.E/g, "e")
+        .replace(/Math\.PI/g, "π")
+        .replace(/\//g, "÷")
+        .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
+        .replace(/sqrt\(/g, '√(')
+        .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
+            return `<sup>${power || "n"}</sup>`;
+        })
+        .replace(/\*/g, "×");
+}
+
 function renderSequence(sequence){
     let html = "";
+    let textBuffer = "";
+
+    function flushText(){
+        if(!textBuffer) return;
+
+        const formatText = textBuffer
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+        html += formatExpression(formatText);
+        textBuffer = "";
+    }
 
     sequence.items.forEach((item, index) => {
         if(sequence === activeSequence && index === sequence.cursor){
+            flushText();
             html += `<span class="cursor"></span>`;
         }
 
         if(typeof item === "string"){
-            html += item
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/\*/g, "×")
-                .replace(/\//g, "÷");
+            textBuffer += item;
         } else{
+            flushText();
+
             if(item.type === "mixed"){
                 html += `
                     <span class="mixed-expression">
@@ -665,6 +715,8 @@ function renderSequence(sequence){
             }
         }
     });
+
+    flushText();
 
     if(sequence === activeSequence && sequence.cursor === sequence.items.length){
         html += `<span class="editor-cursor"></span>`;
@@ -710,6 +762,8 @@ function moveCursor(direction){
                 } else{
                     activeSequence = nextItem.numerator;
                 }
+
+                activeSequence.cursor = 0;
             } else{
                 sequence.cursor++;
             }
@@ -788,6 +842,11 @@ allClearBtn.addEventListener('click', () => {
 
 deleteBtn.addEventListener('click', () => {
     if(!isOn) return;
+
+    enteringRoot = false;
+    rootIndex = "";
+    enteringLog = false;
+    logBase = "";
 
     deleteEditorCharacter();
     justCalculated = false;
@@ -900,9 +959,15 @@ executeBtn.addEventListener('click', () => {
             .replace(/\)(\d)/g, ")*$1");
         
         const rootFunction = (index, value) => {
-            if(index === 0) throw new Error ("Invalid root");
+            if(!Number.isFinite(index) || index <= 0){
+                throw new Error ("Invalid root");
+            }
 
-            if(value < 0 && Number.isInteger(index) && index % 2 !== 0){
+            if(value < 0){
+                if(!Number.isInteger(index) || index % 2 === 0){
+                    throw new Error ("Invalid root");
+                }
+
                 return -Math.pow(-value, 1 / index)
             }
 
@@ -911,7 +976,7 @@ executeBtn.addEventListener('click', () => {
 
         const logFunction = (base, value) => {
             if(base <= 0 || base === 1 || value <= 0){
-                throw new Error("Invalid logarithim");
+                throw new Error("Invalid logarithm");
             }
 
             return Math.log(value) / Math.log(base);
@@ -997,3 +1062,4 @@ document.addEventListener('keydown', (e) => {
         howPopup.classList.remove("active");
     }
 });
+
