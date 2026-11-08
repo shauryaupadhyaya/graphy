@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://fmryi0q3dcbn" path="res://scripts/load_scores.gd" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://eyrcc22duknh" path="res://scenes/pipes.tscn" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://d1ebmas2k2qjp" path="res://scripts/pipe_spawner.gd" id="11_kvpfn"]
+[ext_resource type="FontFile" uid="uid://b4qj5lsvi2050" path="res://assets/Jersey_25/Jersey25-Regular.ttf" id="13_kvuet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
 size = Vector2(1169, 22)
@@ -253,6 +254,18 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpyhh"]
+bg_color = Color(0.8509804, 0.90588236, 0.9529412, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="Game" type="Node2D" unique_id=186506690]
 script = ExtResource("1_u5sy4")
@@ -560,6 +573,97 @@ theme_override_constants/outline_size = 22
 theme_override_fonts/font = ExtResource("7_gee14")
 theme_override_font_sizes/font_size = 102
 text = "0"
+
+[node name="QuestionsBox" type="Control" parent="Control" unique_id=1759442398]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Question" type="Label" parent="Control/QuestionsBox" unique_id=328326138]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.063
+anchor_top = 0.1
+anchor_right = 0.083
+anchor_bottom = 0.1
+offset_top = -24.5
+offset_right = 298.0
+offset_bottom = 24.5
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("13_kvuet")
+theme_override_font_sizes/font_size = 48
+text = "Solve x: 5x = 20"
+
+[node name="Option1" type="Button" parent="Control/QuestionsBox" unique_id=1458338658]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.2
+anchor_right = 0.08
+anchor_bottom = 0.2
+offset_top = -28.5
+offset_right = 116.0
+offset_bottom = 28.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_kvuet")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+text = "2"
+
+[node name="Option2" type="Button" parent="Control/QuestionsBox" unique_id=1945689021]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.22
+anchor_bottom = 0.2
+offset_top = -28.5
+offset_right = 116.0
+offset_bottom = 28.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_kvuet")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+text = "3"
+
+[node name="Option3" type="Button" parent="Control/QuestionsBox" unique_id=100970234]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.3
+anchor_right = 0.08
+anchor_bottom = 0.3
+offset_top = -28.5
+offset_right = 116.0
+offset_bottom = 28.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_kvuet")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+text = "4"
+
+[node name="Option4" type="Button" parent="Control/QuestionsBox" unique_id=750998899]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.3
+anchor_right = 0.22
+anchor_bottom = 0.3
+offset_top = -28.5
+offset_right = 116.0
+offset_bottom = 28.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("13_kvuet")
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+text = "5"
 
 [connection signal="body_entered" from="World_Border" to="Player" method="_on_world_border_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

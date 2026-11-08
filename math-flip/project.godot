@@ -22,6 +22,7 @@ buses/default_bus_layout="uid://cc2j2qhuxwwh"
 [autoload]
 
 Manager="*uid://dbsw3q2717i7e"
+QuestionManager="*uid://dt7b143ou0ksw"
 
 [display]
 
