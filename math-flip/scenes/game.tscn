@@ -800,7 +800,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 22
 theme_override_fonts/font = ExtResource("7_gee14")
 theme_override_font_sizes/font_size = 102
-text = "0"
+text = "0.0"
 
 [node name="QuestionsBox" type="Control" parent="Control" unique_id=1759442398]
 layout_mode = 1

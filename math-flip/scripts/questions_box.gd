@@ -6,6 +6,7 @@ extends Control
 # load options - done
 # if timer runs out deduct 1 from score for easy, 2 for medium, 4 for hard
 @onready var question_text: Label = $QuestionBG/Question
+@onready var score_counter: Label = $"../ScoreCounter"
 #@onready var option_1: Button = $QuestionBG/Option1
 #@onready var option_2: Button = $QuestionBG/Option2
 #@onready var option_3: Button = $QuestionBG/Option3
@@ -24,7 +25,7 @@ extends Control
 func _ready() -> void:
 	hide()
 	QuestionManager.connect("questions_unlocked", _load_question)
-	question_timer.connect("timeout", _hide_panel)
+	question_timer.connect("timeout", _timer_out)
 
 func _load_question() -> void:
 	@warning_ignore("unused_variable")
@@ -85,5 +86,19 @@ func _start_timer() -> void:
 func _stop_timer() -> void:
 	question_timer.stop()
 
+func _timer_out() -> void:
+	Manager.score -= 1
+	Manager.total_score = Manager.score + Manager.questions_score
+	_update_score()
+
+func _update_score() -> void:
+	Manager.total_score = Manager.score + Manager.questions_score
+	score_counter.text = str(Manager.total_score)
+	QuestionManager._increment_pipes()
+
 func _process(_delta: float) -> void:
 	question_timer_bar.value = (question_timer.time_left / question_timer.wait_time) * 100
+
+
+# todo: connect answers to questions
+# todo: restart game
