@@ -7,7 +7,7 @@ extends Node2D
 @onready var sky: Parallax2D = $Sky
 @onready var clouds_back: Parallax2D = $Clouds_Back
 @onready var clouds_front: Parallax2D = $Clouds_Front
-@onready var timer: Timer = $Timer
+@onready var timer: Timer = $PipeTimer
 @onready var spawner: Node2D = $Spawner
 
 # Called when the node enters the scene tree for the first time.

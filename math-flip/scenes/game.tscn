@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://d1ebmas2k2qjp" path="res://scripts/pipe_spawner.gd" id="11_kvpfn"]
 [ext_resource type="FontFile" uid="uid://b4qj5lsvi2050" path="res://assets/Jersey_25/Jersey25-Regular.ttf" id="13_kvuet"]
 [ext_resource type="Script" uid="uid://d26ohf1x841xn" path="res://scripts/questions_box.gd" id="13_trtic"]
+[ext_resource type="Script" uid="uid://cy6bi2dfic5c6" path="res://scripts/question_timer.gd" id="15_ir15t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
 size = Vector2(1169, 22)
@@ -276,6 +277,198 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_trtic"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ir15t"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ca42v"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rysoc"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ssvqc"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_264po"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kice"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5newe"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37s47"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bt5mj"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1j6l"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pl11u"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhx41"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnb83"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sww3w"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_suyxu"]
+bg_color = Color(0.514905, 0.6802195, 0.816786, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [sub_resource type="Gradient" id="Gradient_vvsf1"]
 offsets = PackedFloat32Array(0, 0.6369193, 0.65647924)
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0)
@@ -370,7 +563,7 @@ libraries/ = SubResource("AnimationLibrary_u5sy4")
 position = Vector2(-2, 2)
 stream = ExtResource("6_p57ef")
 
-[node name="Timer" type="Timer" parent="." unique_id=795261956]
+[node name="PipeTimer" type="Timer" parent="." unique_id=795261956]
 wait_time = 4.5
 autostart = true
 
@@ -610,7 +803,6 @@ theme_override_font_sizes/font_size = 102
 text = "0"
 
 [node name="QuestionsBox" type="Control" parent="Control" unique_id=1759442398]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -633,23 +825,25 @@ offset_bottom = 264.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_kvuet")
 
 [node name="Question" type="Label" parent="Control/QuestionsBox/QuestionBG" unique_id=328326138]
+custom_maximum_size = Vector2(353.1, -1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.063
+anchor_left = 0.4
 anchor_top = 0.1
-anchor_right = 0.083
-anchor_bottom = 0.1
-offset_left = 43.911
-offset_top = -1.8000011
-offset_right = 341.911
-offset_bottom = 62.9
-grow_vertical = 2
+anchor_right = 0.6
+anchor_bottom = 0.2
+offset_left = -120.0
+offset_top = -13.800003
+offset_right = 142.29999
+offset_bottom = 36.000004
+grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 32
 text = "Solve x: 5x = 20"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Option1" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=1458338658]
 layout_mode = 1
@@ -666,6 +860,10 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_trtic")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ir15t")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ca42v")
+theme_override_styles/focus = SubResource("StyleBoxFlat_rysoc")
 text = "2"
 
 [node name="Option2" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=1945689021]
@@ -684,6 +882,10 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ssvqc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_264po")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kice")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5newe")
 text = "3"
 
 [node name="Option3" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=100970234]
@@ -701,6 +903,10 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_37s47")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bt5mj")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e1j6l")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pl11u")
 text = "4"
 
 [node name="Option4" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=750998899]
@@ -719,6 +925,10 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bhx41")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qnb83")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_sww3w")
+theme_override_styles/focus = SubResource("StyleBoxFlat_suyxu")
 text = "5"
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/QuestionsBox" unique_id=2115682120]
@@ -732,7 +942,7 @@ anchor_bottom = 0.4212963
 grow_horizontal = 2
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Control/QuestionsBox/CenterContainer" unique_id=1066934446]
+[node name="QuestionTimeBar" type="TextureProgressBar" parent="Control/QuestionsBox/CenterContainer" unique_id=1066934446]
 texture_filter = 2
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
@@ -740,6 +950,11 @@ value = 50.0
 fill_mode = 5
 texture_under = SubResource("GradientTexture2D_24abd")
 texture_progress = SubResource("GradientTexture2D_ir15t")
+
+[node name="QuestionTimer" type="Timer" parent="." unique_id=727152349]
+wait_time = 5.0
+one_shot = true
+script = ExtResource("15_ir15t")
 
 [connection signal="body_entered" from="World_Border" to="Player" method="_on_world_border_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

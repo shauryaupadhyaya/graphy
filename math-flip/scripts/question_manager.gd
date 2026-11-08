@@ -7,8 +7,7 @@ extends Node
 
 var questions_answerd: int = 0 # check the number questions answered by user
 var pipes_passed: int = 0 # counts pipe passed by user for regenerating questions
-var pipes_per_questions: int = 10 # stores number of pipes to unlock after each q, easy: questions show up every 15, medium: 13, hard: 10
-var questions_unlocked: int = 0 # stores number of questions answered
+var pipes_per_questions: int = 1 # stores number of pipes to unlock after each q, easy: questions show up every 15, medium: 13, hard: 10
 
 var questions_data: Dictionary
 var question: Dictionary
@@ -36,3 +35,22 @@ func _get_question(difficulty: String) -> Dictionary:
 
 func _check_answer(question_tocheck: Dictionary, chosen_answer: int) -> bool:
 	return question_tocheck["correct_answer"] == chosen_answer
+
+func _increment_pipes() -> void:
+	pipes_passed += 1
+	_check_question_unlock()
+
+signal questions_unlocked
+func _check_question_unlock() -> void:
+	if pipes_passed >= pipes_per_questions:
+		pipes_passed = 0
+		match Manager.difficulty:
+			1.0:
+				_get_question("easy")
+			1.5:
+				_get_question("medium")
+			2.0:
+				_get_question("hard")
+			_:
+				print("boing... unspecified difficulty")
+		questions_unlocked.emit()

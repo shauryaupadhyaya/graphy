@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var pipe_scene: PackedScene
-@onready var timer: Timer = $"../Timer"
+@onready var timer: Timer = $"../PipeTimer"
 @export var spawn: bool = true
 @onready var score_counter: Label = $"../Control/ScoreCounter"
 @onready var player: CharacterBody2D = $"../Player"
@@ -19,11 +19,22 @@ func _spawn_pipe() -> void:
 	timer.start()
 
 func _update_score() -> void:
-	score_counter.text = str(Manager.score)
+	Manager.total_score = Manager.score + Manager.questions_score
+	score_counter.text = str(Manager.total_score)
+	QuestionManager._increment_pipes()
 
 func _player_die() -> void: 
 	player._show_score_menu()
 	var children = self.get_children(true)
 	for child in children:
 		child._stop_moving()
-		print("stopped pipe")
+
+func _stop_pipes() -> void:
+	var children = self.get_children(true)
+	for child in children:
+		child._stop_moving()
+		
+func _start_pipes() -> void:
+	var children = self.get_children(true)
+	for child in children:
+		child._start_moving()
