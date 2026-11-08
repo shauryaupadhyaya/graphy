@@ -26,3 +26,4 @@ func _player_die() -> void:
 	var children = self.get_children(true)
 	for child in children:
 		child._stop_moving()
+		print("stopped pipe")

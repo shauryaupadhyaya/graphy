@@ -24,4 +24,4 @@ func _kill_player(_body: Node2D) -> void:
 
 func _stop_moving() -> void:
 	game_started = false
-	position.x = self.position.x
+	set_process(false)

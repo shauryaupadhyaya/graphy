@@ -40,6 +40,7 @@ func _on_world_border_body_entered(body: Node2D) -> void:
 	if body.get_instance_id() == self.get_instance_id() :
 		print("touched kill zone")
 		_show_score_menu()
+		spawner._player_die()
 
 
 func _show_score_menu() -> void:

@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://eyrcc22duknh" path="res://scenes/pipes.tscn" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://d1ebmas2k2qjp" path="res://scripts/pipe_spawner.gd" id="11_kvpfn"]
 [ext_resource type="FontFile" uid="uid://b4qj5lsvi2050" path="res://assets/Jersey_25/Jersey25-Regular.ttf" id="13_kvuet"]
+[ext_resource type="Script" uid="uid://d26ohf1x841xn" path="res://scripts/questions_box.gd" id="13_trtic"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lbhrr"]
 size = Vector2(1169, 22)
@@ -255,6 +256,14 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvuet"]
+border_color = Color(0.086629234, 0.08662928, 0.086629175, 1)
+border_blend = true
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gpyhh"]
 bg_color = Color(0.8509804, 0.90588236, 0.9529412, 1)
 border_width_left = 4
@@ -266,6 +275,32 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="Gradient" id="Gradient_vvsf1"]
+offsets = PackedFloat32Array(0, 0.6369193, 0.65647924)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_24abd"]
+gradient = SubResource("Gradient_vvsf1")
+width = 90
+height = 90
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_trtic"]
+offsets = PackedFloat32Array(0, 0.31540343, 0.3422983, 0.5, 0.5244499)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ir15t"]
+gradient = SubResource("Gradient_trtic")
+width = 90
+height = 90
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
 
 [node name="Game" type="Node2D" unique_id=186506690]
 script = ExtResource("1_u5sy4")
@@ -575,35 +610,54 @@ theme_override_font_sizes/font_size = 102
 text = "0"
 
 [node name="QuestionsBox" type="Control" parent="Control" unique_id=1759442398]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("13_trtic")
 
-[node name="Question" type="Label" parent="Control/QuestionsBox" unique_id=328326138]
+[node name="QuestionBG" type="Panel" parent="Control/QuestionsBox" unique_id=938508460]
+material = ExtResource("7_0tnpc")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.05
+offset_left = -227.0
+offset_right = 227.0
+offset_bottom = 264.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvuet")
+
+[node name="Question" type="Label" parent="Control/QuestionsBox/QuestionBG" unique_id=328326138]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.063
 anchor_top = 0.1
 anchor_right = 0.083
 anchor_bottom = 0.1
-offset_top = -24.5
-offset_right = 298.0
-offset_bottom = 24.5
+offset_left = 43.911
+offset_top = -1.8000011
+offset_right = 341.911
+offset_bottom = 62.9
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 35
 text = "Solve x: 5x = 20"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Option1" type="Button" parent="Control/QuestionsBox" unique_id=1458338658]
+[node name="Option1" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=1458338658]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.06
-anchor_top = 0.2
-anchor_right = 0.08
-anchor_bottom = 0.2
+anchor_left = 0.2
+anchor_top = 0.5
+anchor_right = 0.2
+anchor_bottom = 0.5
 offset_top = -28.5
 offset_right = 116.0
 offset_bottom = 28.5
@@ -614,16 +668,17 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
 text = "2"
 
-[node name="Option2" type="Button" parent="Control/QuestionsBox" unique_id=1945689021]
+[node name="Option2" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=1945689021]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.2
-anchor_top = 0.2
-anchor_right = 0.22
-anchor_bottom = 0.2
+anchor_left = 0.8
+anchor_top = 0.5
+anchor_right = 0.8
+anchor_bottom = 0.5
+offset_left = -116.0
 offset_top = -28.5
-offset_right = 116.0
 offset_bottom = 28.5
+grow_horizontal = 0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
@@ -631,13 +686,13 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
 text = "3"
 
-[node name="Option3" type="Button" parent="Control/QuestionsBox" unique_id=100970234]
+[node name="Option3" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=100970234]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.06
-anchor_top = 0.3
-anchor_right = 0.08
-anchor_bottom = 0.3
+anchor_left = 0.2
+anchor_top = 0.75
+anchor_right = 0.2
+anchor_bottom = 0.75
 offset_top = -28.5
 offset_right = 116.0
 offset_bottom = 28.5
@@ -648,22 +703,43 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
 text = "4"
 
-[node name="Option4" type="Button" parent="Control/QuestionsBox" unique_id=750998899]
+[node name="Option4" type="Button" parent="Control/QuestionsBox/QuestionBG" unique_id=750998899]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.2
-anchor_top = 0.3
-anchor_right = 0.22
-anchor_bottom = 0.3
+anchor_left = 0.8
+anchor_top = 0.75
+anchor_right = 0.8
+anchor_bottom = 0.75
+offset_left = -116.0
 offset_top = -28.5
-offset_right = 116.0
 offset_bottom = 28.5
+grow_horizontal = 0
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_gpyhh")
 text = "5"
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/QuestionsBox" unique_id=2115682120]
+propagate_maximum_size = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.17708333
+anchor_top = 0.1095679
+anchor_right = 0.31180558
+anchor_bottom = 0.4212963
+grow_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control/QuestionsBox/CenterContainer" unique_id=1066934446]
+texture_filter = 2
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+value = 50.0
+fill_mode = 5
+texture_under = SubResource("GradientTexture2D_24abd")
+texture_progress = SubResource("GradientTexture2D_ir15t")
 
 [connection signal="body_entered" from="World_Border" to="Player" method="_on_world_border_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
