@@ -80,9 +80,6 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
             rootSequence.cursor = 3;
             activeSequence = rootSequence;
 
-            rootSequence.items = [..."Ans"];
-            rootSequence.cursor = 3;
-            activeSequence = rootSequence;
             expression = "Ans";
             justCalculated = false;
         }
@@ -109,11 +106,15 @@ decimalBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
-        rootSequence.items = [..."Ans"];
-        rootSequence.cursor = 3;
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
         activeSequence = rootSequence;
-        expression = "Ans";
+
+        expression = "";
         justCalculated = false;
+
+        insertText("0.");
+        return;
     }
 
     const currentNumber = expression.split(/[+\-*/()]/).pop();
@@ -203,6 +204,10 @@ sqrtBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(shiftActive){
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
         insertText("root(");
         enteringRoot = true;
         rootIndex = "";
@@ -265,6 +270,10 @@ logBtn.addEventListener('click', () => {
 
     if(shiftActive){
         if(justCalculated){
+            rootSequence.items = [];
+            rootSequence.cursor = 0;
+            activeSequence = rootSequence;
+
             expression = "";
             justCalculated = false;
         }
@@ -709,7 +718,7 @@ function moveCursor(direction){
                 activeSequence = fraction.numerator;
                 activeSequence.cursor = 0;
             } else if(sequence.field === "numerator"){
-                activeSequence = fraction.whole;
+                activeSequence = fraction.denominator;
                 activeSequence.cursor = 0;
             } else{
                 const parentSequence = fraction.parentSequence;
@@ -947,10 +956,7 @@ executeBtn.addEventListener('click', () => {
         rootSequence.items = [..."Ans"];
         rootSequence.cursor = 3;
         activeSequence = rootSequence;
-
-        rootSequence.items = [..."Ans"];
-        rootSequence.cursor = 3;
-        activeSequence = rootSequence;
+        
         expression = "Ans";
         justCalculated = true;
 
