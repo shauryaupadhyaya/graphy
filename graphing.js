@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         ctx.stroke();
     }
     function resizeArea(offsetX, offsetY) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
         ctx.translate(0, canvas.height);
         ctx.scale(1, -1);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -437,4 +437,41 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         gridOffsetY += toOffsetY * gridSize;
         redrawGraph(gridOffsetX, gridOffsetY);
     }
+
+    // resize equations sidebar dragging
+    const equations = document.getElementById("equations");
+    let isResizing = false;
+
+    equations.addEventListener("pointerdown", (e) => {
+        const rect = equations.getBoundingClientRect();
+        
+        if(e.clientX < rect.right - 2) return;
+
+        isResizing = true;
+        equations.classList.add("resizing");
+        equations.setPointerCapture(e.pointerId);
+    });
+
+    equations.addEventListener("pointermove", (e) => {
+        if(!isResizing) return;
+        
+        const minWidth = 200;
+        const maxWidth = window.innerWidth * 0.4;
+
+        const newWidth = Math.max(minWidth, Math.min(e.clientX, maxWidth));
+        equations.style.width = `${newWidth}px`;
+
+        redrawGraph(gridOffsetX, gridOffsetY);
+    });
+
+    function stopResizing(){
+        if(!isResizing) return;
+
+        isResizing = false;
+        equations.classList.remove("resizing");
+        redrawGraph(gridOffsetX, gridOffsetY);
+    }
+
+    equations.addEventListener("pointerup", stopResizing);
+    equations.addEventListener("pointercancel", stopResizing);
 })
