@@ -123,6 +123,15 @@ func _check_answer(index: int) -> void:
 		_stop_timer()
 		_awardPoints()
 		hide()
+	# else by ai
+	else:
+		match Manager.difficulty:
+			1.0:
+				Manager.score -= 2
+			1.5:
+				Manager.score -= 3
+			2.0:
+				Manager.score -= 5
 	pass
 	#todo: loop through available options, find which one matches answer and then check
 # todo: connect answers to questions

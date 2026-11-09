@@ -42,20 +42,6 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvsf1"]
-bg_color = Color(0.3137255, 0.23137255, 0.6901961, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wu84c"]
-bg_color = Color(0.5118311, 0.46769953, 0.9215047, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
 [node name="Main Menu" type="Control" unique_id=2087038402]
 layout_mode = 3
 anchors_preset = 15
@@ -117,24 +103,4 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_rtw2f")
 theme_override_styles/focus = SubResource("StyleBoxFlat_oa1go")
 text = "Start"
 
-[node name="Settings" type="Button" parent="." unique_id=274801143]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.38172743
-anchor_top = 0.5766975
-anchor_right = 0.61827254
-anchor_bottom = 0.68626547
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("2_bqqt6")
-theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_vvsf1")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_wu84c")
-theme_override_styles/hover = SubResource("StyleBoxFlat_wu84c")
-theme_override_styles/focus = SubResource("StyleBoxFlat_wu84c")
-text = "Settings"
-metadata/_edit_use_anchors_ = true
-
 [connection signal="pressed" from="Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]
