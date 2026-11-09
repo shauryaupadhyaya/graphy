@@ -12,31 +12,60 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     // normal code
     let gridOffsetX = 0;
     let gridOffsetY = 0;
-    eqInputList.addEventListener('keydown', (e)=>{
-        if (e.key === 'Enter' && e.target.matches('.equation')) {
-            const element = e.target;
-            const clone = equationInputTemplate.content.cloneNode(true);
-            let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
-            cloneNumber++;
-            clone.querySelector(".equation-number").textContent = cloneNumber;
-            extendZBtns = document.querySelectorAll('.extend-z');
-            eqInputList.appendChild(clone);
+
+    // multiple equations adding
+    function updateEquationNumbers(){
+        const boxes = eqInputList.querySelectorAll(".equations-input-box");
+
+        boxes.forEach((box, index) => {
+            box.querySelector(".equation-number").textContent = index + 1;
+        });
+    }
+
+    function addEquation(){
+        const clone = equationInputTemplate.content.cloneNode(true);
+
+        eqInputList.appendChild(clone);
+        updateEquationNumbers();
+
+        const inputs = eqInputList.querySelectorAll(".equation");
+        inputs[inputs.length - 1].focus();
+
+        extendZBtns = document.querySelectorAll(".extend-z");
+    }
+
+    eqInputList.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" && e.target.matches(".equation")){
+            addEquation();
         }
-    })
+    });
+
+    document.getElementById("add-equation").addEventListener("click", addEquation);
+
+    // eqInputList.addEventListener('keydown', (e)=>{
+    //     if (e.key === 'Enter' && e.target.matches('.equation')) {
+    //         const element = e.target;
+    //         const clone = equationInputTemplate.content.cloneNode(true);
+    //         let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
+    //         cloneNumber++;
+    //         clone.querySelector(".equation-number").textContent = cloneNumber;
+    //         extendZBtns = document.querySelectorAll('.extend-z');
+    //         eqInputList.appendChild(clone);
+    //     }
+    // })
+
     let eqInputs = eqInputList.querySelectorAll(".equations-input-box");
     eqInputList.addEventListener('click', (e)=> {
-        e.preventDefault();
         const button = e.target.closest(".equation-delete");
+
         if (!button || !eqInputList.contains(button)) return;
-        eqInputs = eqInputList.querySelectorAll(".equations-input-box");
-        console.log(eqInputs.length);
-        if (eqInputs.length === 1) {
-            eqInputs[0].querySelector(".equation").value = '';
-            redrawGraph(gridOffsetX, gridOffsetY);
+        
+        const boxes = eqInputList.querySelectorAll(".equations-input-box");
+        
+        if (boxes.length === 1) {
+            boxes[0].querySelector(".equation").value = '';
         } else {
-            const boxToDel = e.target.parentElement;
-            boxToDel.remove();
-            redrawGraph(gridOffsetX, gridOffsetY);
+            button.closest(".equations-input-box").remove();
         }
     })
     // create new threejs scene to hold all points
@@ -48,6 +77,19 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     renderer.setSize(maincanvas.clientWidth, maincanvas.clientHeight);
     maincanvas.appendChild(renderer.domElement)
     const controls = new OrbitControls( camera, renderer.domElement );
+
+    // resize canvas based on sidebar
+    function resizeRenderer(){
+        const width = maincanvas.clientWidth;
+        const height = maincanvas.clientHeight;
+
+        if(!width || !height) return;
+        renderer.setSize(width, height, false);
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+    }
+
     // box to show points limit
     const material = new THREE.LineBasicMaterial({color: 0x0000ff, linewidth: 2});
     const boxGeometry = new THREE.BoxGeometry(50, 50, 50);
@@ -284,4 +326,39 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         redrawGraph();
         console.log('Extending Equation: ', equationNumber);
     })
+
+    // resize equation sidebar
+    const equations = document.getElementById("equations");
+    let isResizing = false;
+
+    equations.addEventListener("pointerdown", (e) => {
+        const rect = equations.getBoundingClientRect();
+
+        if(e.clientX < rect.right - 2) return;
+
+        isResizing = true;
+        equations.classList.add("resizing");
+        equations.setPointerCapture(e.pointerId);
+    });
+
+    equations.addEventListener("pointermove", (e) => {
+        if(!isResizing) return;
+
+        const minWidth = 200;
+        const maxWidth = window.innerWidth * 0.4;
+
+        const newWidth = Math.max(minWidth, Math.min(e.clientX, maxWidth));
+        equations.style.width = `${newWidth}px`;
+
+        resizeRenderer();
+    });
+
+    function stopResizing(){
+        isResizing = false;
+        equations.classList.remove("resizing");
+        resizeRenderer();
+    }
+
+    equations.addEventListener("pointerup", stopResizing);
+    equations.addEventListener("pointercancel", stopResizing);
 })

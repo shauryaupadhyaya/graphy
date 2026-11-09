@@ -1,7 +1,8 @@
 const expressionDisplay = document.getElementById("expression");
 const resultDisplay = document.getElementById("result");
+const calculator = document.querySelector(".calc");
 let expression = "";
-let isOn = true;
+let isOn = false;
 let justCalculated = false;
 let ans = 0;
 let shiftActive = false;
@@ -14,18 +15,24 @@ let angleMode = localStorage.getItem("angleMode") || "DEG";
 
 // display
 function updateDisplay(){
-    const displayExpression = expression
-        .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
-        .replace(/sqrt\(/g, '√')
-        .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
-            return `<sup>${power || "n"}</sup>`
-        })
-        .replace(/Math\.E/g, "e")
-        .replace(/Math\.PI/g, "π")
-        .replace(/\*/g, '×')
-        .replace(/\//g, '÷');
+    expression = serialize(rootSequence);
+    expressionDisplay.innerHTML = renderSequence(rootSequence);
 
-    expressionDisplay.innerHTML = displayExpression || 0;
+    // expression = serialize(rootSequence);
+    // let displayExpression = renderSequence(rootSequence);
+    
+    // displayExpression = displayExpression
+    //     .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
+    //     .replace(/sqrt\(/g, '√')
+    //     .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
+    //         return `<sup>${power || "n"}</sup>`
+    //     })
+    //     .replace(/Math\.E/g, "e")
+    //     .replace(/Math\.PI/g, "π")
+    //     .replace(/\*/g, '×')
+    //     .replace(/\//g, '÷');
+
+    // expressionDisplay.innerHTML = displayExpression || 0;
 }
 
 // number and operator buttons
@@ -38,7 +45,9 @@ numberButtons.forEach((button) => {
         const value = button.textContent.trim();
 
         if(justCalculated){
-            expression = "";
+            rootSequence.items = [];
+            rootSequence.cursor = 0;
+            activeSequence = rootSequence;
             justCalculated = false;
         }
 
@@ -50,7 +59,7 @@ numberButtons.forEach((button) => {
             logBase += value;
         }
 
-        expression += value;
+        insertText(value);
         updateDisplay();
     });
 });
@@ -69,11 +78,15 @@ Object.entries(operatorButtons).forEach(([id, operator]) => {
         if(!isOn) return;
 
         if(justCalculated){
+            rootSequence.items = [..."Ans"];
+            rootSequence.cursor = 3;
+            activeSequence = rootSequence;
+
             expression = "Ans";
             justCalculated = false;
         }
 
-        expression += operator;
+        insertText(operator);
         updateDisplay();
     });
 });
@@ -95,18 +108,41 @@ decimalBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
-        expression = "Ans";
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
+        expression = "";
         justCalculated = false;
+
+        insertText("0.");
+        return;
     }
 
-    const currentNumber = expression.split(/[+\-*/()]/).pop();
+    let start = activeSequence.cursor;
+    let end = activeSequence.cursor;
+
+    while(start > 0){
+        const item = activeSequence.items[start - 1];
+        if(typeof item !== "string" || !/[0-9.]/.test(item)) break;
+        start--;
+    }
+
+    while(end < activeSequence.items.length){
+        const item = activeSequence.items[end];
+        if(typeof item !== "string" || !/[0-9.]/.test(item)) break;
+        end++;
+    }
+
+    const currentNumber = activeSequence.items.slice(start, end).join("");
+    
     if(currentNumber.includes(".")) return;
 
     if(currentNumber === ""){
-        expression += 0;
+        insertText("0");
     }
 
-    expression += ".";
+    insertText(".");
     updateDisplay();
 });
 
@@ -118,15 +154,18 @@ openBracketBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
     if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += "(";
+    insertText("(");
     updateDisplay();
 });
 
@@ -138,7 +177,7 @@ closeBracketBtn.addEventListener('click', () => {
 
     if(openCount > closeCount){
         if(/[+\-*/(]$/.test(expression)) return;
-        expression += ")";
+        insertText(")");
         updateDisplay();
     }
 });
@@ -151,11 +190,14 @@ squareBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
-    expression = `${expression}**2`;
+    insertText("**2");
     updateDisplay();
 });
 
@@ -163,11 +205,14 @@ powerBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
-    expression += "**";
+    insertText("**");
     updateDisplay();
 });
 
@@ -177,35 +222,41 @@ sqrtBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(shiftActive){
-        expression +="root(";
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
+        justCalculated = false;
+        insertText("root(");
         enteringRoot = true;
         rootIndex = "";
 
         shiftActive = false;
         shiftBtn.classList.remove("active");
 
-        justCalculated = false;
         updateDisplay();
         return;
     }
 
     if(enteringRoot && rootIndex){
-        expression += ",";
+        insertText(",");
         enteringRoot = false;
         updateDisplay();
         return;
     }
 
     if(justCalculated){
-        expression = "";
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
         justCalculated = false;
     }
 
     if(expression.endsWith("Math.PI") || expression.endsWith("Math.E") || expression.endsWith("Ans") || /[0-9.)]$/.test(expression)){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += `sqrt(`;
+    insertText("sqrt(");
     enteringSqrt = true;
     updateDisplay();
 });
@@ -217,11 +268,14 @@ tenPowerBtn.addEventListener('click', () => {
     if(!isOn || !expression) return;
 
     if(justCalculated){
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
         expression = "Ans";
         justCalculated = false;
     }
 
-    expression += "*10**";
+    insertText("*10**");
     updateDisplay();
 });
 
@@ -234,11 +288,15 @@ logBtn.addEventListener('click', () => {
 
     if(shiftActive){
         if(justCalculated){
+            rootSequence.items = [];
+            rootSequence.cursor = 0;
+            activeSequence = rootSequence;
+
             expression = "";
             justCalculated = false;
         }
 
-        expression += "ln(";
+        insertText("ln(");
 
         shiftActive = false;
         shiftBtn.classList.remove("active");
@@ -248,18 +306,22 @@ logBtn.addEventListener('click', () => {
     }
 
     if(enteringLog && logBase){
-        expression += ",";
+        insertText(",");
         enteringLog = false;
         updateDisplay();
         return;
     }
 
     if(justCalculated){
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
         expression = "";
         justCalculated = false;
     }
 
-    expression += "log(";
+    insertText("log(");
     enteringLog = true;
     logBase = "";
     updateDisplay();
@@ -269,15 +331,19 @@ eBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
         expression = "";
         justCalculated = false;
     }
 
     if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.PI")){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += "Math.E";
+    insertText("Math.E");
     updateDisplay();
 });
 
@@ -293,15 +359,17 @@ function TrigFunctions(button, normal, inverse){
         const functionName = shiftActive ? inverse : normal;
 
         if(justCalculated){
-            expression = "";
+            rootSequence.items = [];
+            rootSequence.cursor = 0;
+            activeSequence = rootSequence;
             justCalculated = false;
         }
 
         if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
-            expression += "*";
+            insertText("*");
         }
 
-        expression += `${functionName}(`;
+        insertText(`${functionName}(`);
         shiftActive = false;
         shiftBtn.classList.remove("active");
         updateDisplay();
@@ -319,15 +387,17 @@ piBtn.addEventListener('click', () => {
     if(!isOn) return;
 
     if(justCalculated){
-        expression = "";
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
         justCalculated = false;
     }
 
     if(/[0-9.)]$/.test(expression) || expression.endsWith("Ans") || expression.endsWith("Math.E") || expression.endsWith("Math.PI")){
-        expression += "*";
+        insertText("*");
     }
 
-    expression += "Math.PI";
+    insertText("Math.PI");
     updateDisplay();
 });
 
@@ -410,7 +480,7 @@ function openSettings(){
 }
 
 function saveAngle(){
-    if(!settingsOpen || settingsPage !== "angle")
+    if(!settingsOpen || settingsPage !== "angle") return;
 
     angleMode = selectedAngle;
     localStorage.setItem("angleMode", angleMode);
@@ -419,37 +489,68 @@ function saveAngle(){
 }
 
 // arrow navigation
+function moveVerticalCursor(direction){
+    if(!isOn) return;
+
+    const fraction = activeSequence.parent;
+    if(!fraction) return;
+
+    let targetSequence = null;
+
+    if(direction === "down" && activeSequence.field === "numerator"){
+        targetSequence = fraction.denominator;
+    } else if(direction === "up" && activeSequence.field === "denominator"){
+        targetSequence = fraction.numerator;
+    }
+
+    if(targetSequence){
+        const oldCursor = activeSequence.cursor;
+        activeSequence = targetSequence;
+        activeSequence.cursor = Math.min(oldCursor, activeSequence.items.length);
+    }
+
+    updateDisplay();
+}
+
 upArrow.addEventListener('click', () => {
-    if(settingsPage === "main"){
-        moveSetting(-1);
+    if(settingsOpen){
+        if(settingsPage === "main") moveSetting(-1);
+    } else{
+        moveVerticalCursor("up");
     }
 });
 
 downArrow.addEventListener('click', () => {
-    if(settingsPage === "main"){
-        moveSetting(1)
+    if(settingsOpen){
+        if(settingsPage === "main") moveSetting(1);
+    } else{
+        moveVerticalCursor("down");
     }
 });
 
 leftArrow.addEventListener('click', () => {
-    if(!settingsOpen) return;
-
-    if(settingsPage === "main"){
-        settingsMenu.classList.remove("active");
-        settingsOpen = false;
-        settingsPage = "main";
-    } else{
-        moveAngle(-1);
+    if(settingsOpen){
+        if(settingsPage === "angle"){
+            moveAngle(-1);
+        } else{
+            settingsMenu.classList.remove("active");
+            settingsOpen = false;
+            settingsPage = "main";
+        }
+    } else if(isOn){
+        moveCursor("left");
     }
 });
 
 rightArrow.addEventListener('click', () => {
-    if(!settingsOpen) return;
-
-    if(settingsPage === "main"){
-        openSettings();
-    } else{
-        moveAngle(1);
+    if(settingsOpen){
+        if(settingsPage === "main"){
+            openSettings();
+        } else{
+            moveAngle(1);
+        }
+    } else if(isOn){
+        moveCursor("right");
     }
 });
 
@@ -465,6 +566,252 @@ okBtn.addEventListener('click', () => {
 
 updateSettingsDisplay();
 
+// fraction display
+const fractionBtn = document.querySelector(".fraction");
+const mixedFractionBtn = document.querySelector(".mixedfraction");
+
+function createSequence(parent = null, field = null){
+    return{
+        items: [],
+        cursor: 0,
+        parent,
+        field
+    };
+}
+
+const rootSequence = createSequence();
+let activeSequence = rootSequence;
+
+function createFraction(type = "fraction"){
+    const fraction = {type, parentSequence: activeSequence};
+
+    if(type === "mixed"){
+        fraction.whole = createSequence(fraction, "whole");
+    }
+
+    fraction.numerator = createSequence(fraction, "numerator");
+    fraction.denominator = createSequence(fraction, "denominator");
+
+    return fraction;
+}
+
+function serialize(sequence){
+    return sequence.items.map(item => {
+        if (typeof item === "string") return item;
+
+        const numerator = serialize(item.numerator);
+        const denominator = serialize(item.denominator);
+
+        if(item.type === "mixed"){
+            return `(${serialize(item.whole)})+(${numerator})/(${denominator})`;
+        }
+
+        return `(${numerator})/(${denominator})`;
+    }).join("");
+}
+
+function insertText(value){
+    const chars = [...value];
+
+    activeSequence.items.splice(activeSequence.cursor, 0, ...chars);
+    activeSequence.cursor += chars.length;
+
+    expression = serialize(rootSequence);
+    updateDisplay();
+}
+
+function insertFraction(type){
+    const fraction = createFraction(type);
+
+    activeSequence.items.splice(activeSequence.cursor, 0, fraction);
+    activeSequence.cursor++;
+
+    activeSequence = type === "mixed" ? fraction.whole : fraction.numerator;
+
+    justCalculated = false;
+    expression = serialize(rootSequence);
+    updateDisplay();
+}
+
+fractionBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    if(shiftActive){
+        insertFraction("mixed");
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+    } else{
+        insertFraction("fraction");
+    }
+});
+
+mixedFractionBtn.addEventListener('click', () => {
+    if(isOn) insertFraction("mixed");
+});
+
+function formatExpression(text){
+    return text
+        .replace(/Math\.E/g, "e")
+        .replace(/Math\.PI/g, "π")
+        .replace(/\//g, "÷")
+        .replace(/root\((\d+(?:\.\d+)?|Ans),/g, '<sup>$1</sup>√(')
+        .replace(/sqrt\(/g, '√(')
+        .replace(/\*\*(\d+(?:\.\d+)?|Ans)?/g, (match, power) => {
+            return `<sup>${power || "n"}</sup>`;
+        })
+        .replace(/\*/g, "×");
+}
+
+function renderSequence(sequence){
+    let html = "";
+    let textBuffer = "";
+
+    function flushText(){
+        if(!textBuffer) return;
+
+        const formatText = textBuffer
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+
+        html += formatExpression(formatText);
+        textBuffer = "";
+    }
+
+    sequence.items.forEach((item, index) => {
+        if(sequence === activeSequence && index === sequence.cursor){
+            flushText();
+            html += `<span class="cursor"></span>`;
+        }
+
+        if(typeof item === "string"){
+            textBuffer += item;
+        } else{
+            flushText();
+
+            if(item.type === "mixed"){
+                html += `
+                    <span class="mixed-expression">
+                        <span class="mixed-whole">
+                            ${renderSequence(item.whole)}
+                        </span>
+                `;
+            }
+
+            html += `
+                <span class="fraction-expression">
+                    <span class="fraction-field">
+                        ${renderSequence(item.numerator)}
+                    </span>
+                    <span class="fraction-line"></span>
+                    <span class="fraction-field">
+                        ${renderSequence(item.denominator)}
+                    </span>
+                </span>
+            `;
+
+            if(item.type === "mixed"){
+                html += `</span>`;
+            }
+        }
+    });
+
+    flushText();
+
+    if(sequence === activeSequence && sequence.cursor === sequence.items.length){
+        html += `<span class="editor-cursor"></span>`;
+    }
+
+    return html;
+}
+
+function moveCursor(direction){
+    const sequence = activeSequence;
+    const fraction = sequence.parent;
+
+    if(direction === "left"){
+        if(sequence.cursor > 0){
+            const previousItem = sequence.items[sequence.cursor - 1];
+
+            if(typeof previousItem !== "string"){
+                activeSequence = previousItem.denominator;
+                activeSequence.cursor = activeSequence.items.length;
+            } else{
+                sequence.cursor--;
+            }
+        } else if(fraction){
+            if(sequence.field === "denominator"){
+                activeSequence = fraction.numerator;
+                activeSequence.cursor = fraction.numerator.items.length;
+            } else if(sequence.field === "numerator" && fraction.type === "mixed"){
+                activeSequence = fraction.whole;
+                activeSequence.cursor = fraction.whole.items.length;
+            } else{
+                const parentSequence = fraction.parentSequence;
+                activeSequence = parentSequence;
+                activeSequence.cursor = parentSequence.items.indexOf(fraction);
+            }
+        }
+    } else if(direction === "right"){
+        if(sequence.cursor < sequence.items.length){
+            const nextItem = sequence.items[sequence.cursor];
+            
+            if(typeof nextItem !== "string"){
+                if(nextItem.type === "mixed"){
+                    activeSequence = nextItem.whole;
+                } else{
+                    activeSequence = nextItem.numerator;
+                }
+
+                activeSequence.cursor = 0;
+            } else{
+                sequence.cursor++;
+            }
+        } else if(fraction){
+            if(sequence.field === "whole"){
+                activeSequence = fraction.numerator;
+                activeSequence.cursor = 0;
+            } else if(sequence.field === "numerator"){
+                activeSequence = fraction.denominator;
+                activeSequence.cursor = 0;
+            } else{
+                const parentSequence = fraction.parentSequence;
+                activeSequence = parentSequence;
+                activeSequence.cursor = parentSequence.items.indexOf(fraction) + 1;
+            }
+        }
+    }
+
+    updateDisplay();
+}
+
+function deleteEditorCharacter(){
+    if(activeSequence.cursor > 0){
+        activeSequence.items.splice(activeSequence.cursor - 1, 1);
+        activeSequence.cursor--;
+    } else if(activeSequence.parent){
+        const fraction = activeSequence.parent;
+
+        if(activeSequence.field === "denominator"){
+            activeSequence = fraction.numerator;
+            activeSequence.cursor = activeSequence.items.length;
+        } else if(activeSequence.field === "numerator" && fraction.type === "mixed"){
+            activeSequence = fraction.whole;
+            activeSequence.cursor = activeSequence.items.length;
+        } else{
+            const parentSequence = fraction.parentSequence;
+            const index = parentSequence.items.indexOf(fraction);
+
+            parentSequence.items.splice(index, 1);
+            activeSequence = parentSequence;
+            activeSequence.cursor = index;
+        }
+    }
+
+    expression = serialize(rootSequence);
+    updateDisplay();
+}
+
 // all clear and delete buttons
 const allClearBtn = document.getElementById("allclear");
 const deleteBtn = document.getElementById("delete");
@@ -472,8 +819,13 @@ const deleteBtn = document.getElementById("delete");
 allClearBtn.addEventListener('click', () => {
     if(!isOn) return;
 
+    rootSequence.items = [];
+    rootSequence.cursor = 0;
+    activeSequence = rootSequence;
+
     expression = "";
     justCalculated = false;
+
     enteringRoot = false;
     enteringSqrt = false;
     rootIndex = "";
@@ -491,9 +843,98 @@ allClearBtn.addEventListener('click', () => {
 deleteBtn.addEventListener('click', () => {
     if(!isOn) return;
 
-    expression = expression.slice(0, -1);
+    enteringRoot = false;
+    rootIndex = "";
+    enteringLog = false;
+    logBase = "";
+
+    deleteEditorCharacter();
     justCalculated = false;
+});
+
+// home button
+const homeBtn = document.querySelector(".home");
+
+homeBtn.addEventListener('click', () => {
+    if(!isOn) return;
+
+    rootSequence.items = [];
+    rootSequence.cursor = 0;
+    activeSequence = rootSequence;
+
+    expression = "";
+    resultDisplay.textContent = 0;
+    justCalculated = false;
+
+    enteringRoot = false;
+    enteringSqrt = false;
+    rootIndex = "";
+
+    enteringLog = false;
+    logBase = "";
+
+    shiftActive = false;
+    shiftBtn.classList.remove("active");
+
+    settingsOpen = false;
+    settingsPage = "main";
+    selectedAngle = angleMode;
+    selectedSetting = 0;
+    settingsMenu.classList.remove("active");
+
+    updateSettingsDisplay();
     updateDisplay();
+});
+
+// power on and off button
+const powerOnOffBtn = document.querySelector(".on");
+
+powerOnOffBtn.addEventListener('click', () => {
+    isOn = !isOn;
+
+    if(!isOn){
+        calculator.classList.add("off");
+
+        settingsOpen = false;
+        settingsPage = "main";
+        settingsMenu.classList.remove("active");
+
+        howPopup.classList.remove("active");
+
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+
+        powerOnOffBtn.classList.add("off");
+    } else{
+        calculator.classList.remove("off");
+        powerOnOffBtn.classList.remove("off");
+
+        rootSequence.items = [];
+        rootSequence.cursor = 0;
+        activeSequence = rootSequence;
+
+        expression = "";
+        resultDisplay.textContent = 0;
+        justCalculated = false;
+
+        enteringRoot = false;
+        enteringSqrt = false;
+        rootIndex = "";
+
+        enteringLog = false;
+        logBase = "";
+
+        shiftActive = false;
+        shiftBtn.classList.remove("active");
+
+        settingsOpen = false;
+        settingsPage = "main";
+        selectedAngle = angleMode;
+        selectedSetting = 0;
+
+        updateSettingsDisplay();
+        updateDisplay();
+    }
 });
 
 // equal to button and solving the equation
@@ -518,9 +959,15 @@ executeBtn.addEventListener('click', () => {
             .replace(/\)(\d)/g, ")*$1");
         
         const rootFunction = (index, value) => {
-            if(index === 0) throw new Error ("Invalid root");
+            if(!Number.isFinite(index) || index <= 0){
+                throw new Error ("Invalid root");
+            }
 
-            if(value < 0 && Number.isInteger(index) && index % 2 !== 0){
+            if(value < 0){
+                if(!Number.isInteger(index) || index % 2 === 0){
+                    throw new Error ("Invalid root");
+                }
+
                 return -Math.pow(-value, 1 / index)
             }
 
@@ -529,7 +976,7 @@ executeBtn.addEventListener('click', () => {
 
         const logFunction = (base, value) => {
             if(base <= 0 || base === 1 || value <= 0){
-                throw new Error("Invalid logarithim");
+                throw new Error("Invalid logarithm");
             }
 
             return Math.log(value) / Math.log(base);
@@ -571,6 +1018,10 @@ executeBtn.addEventListener('click', () => {
 
         ans = Number(answer.toPrecision(10));
         resultDisplay.textContent = ans;
+        rootSequence.items = [..."Ans"];
+        rootSequence.cursor = 3;
+        activeSequence = rootSequence;
+        
         expression = "Ans";
         justCalculated = true;
 
@@ -589,6 +1040,8 @@ executeBtn.addEventListener('click', () => {
     }
 });
 
+calculator.classList.add("off");
+powerOnOffBtn.classList.add("off");
 updateDisplay();
 
 // how to use popup
@@ -609,3 +1062,4 @@ document.addEventListener('keydown', (e) => {
         howPopup.classList.remove("active");
     }
 });
+

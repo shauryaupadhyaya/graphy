@@ -2,20 +2,50 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
     const equationInputTemplate = document.getElementById("equation-input-template");
     const equationInputs = document.querySelectorAll(".equation");
     const eqInputList = document.getElementById("equations-bottom");
-    let gridOffsetX = 0;
-    let gridOffsetY = 0;
-    eqInputList.addEventListener('keydown', (e)=>{
-        if (e.key === 'Enter' && e.target.matches('.equation')) {
-            const element = e.target;
-            const clone = equationInputTemplate.content.cloneNode(true);
-            let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
-            cloneNumber++;
-            clone.querySelector(".equation-number").textContent = cloneNumber;
-            eqInputList.appendChild(clone);
-            eqInputListCount++;
-            // shopSale();
+    let view = {
+        xMin: -10,
+        xMax: 10,
+        yMin: -10,
+        yMax: 10
+    };
+
+    // eqInputList.addEventListener('keydown', (e)=>{
+    //     if (e.key === 'Enter' && e.target.matches('.equation')) {
+    //         const element = e.target;
+    //         const clone = equationInputTemplate.content.cloneNode(true);
+    //         let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
+    //         cloneNumber++;
+    //         clone.querySelector(".equation-number").textContent = cloneNumber;
+    //         eqInputList.appendChild(clone);
+    //         eqInputListCount++;
+    //         // shopSale();
+    //     }
+    // });
+
+    function updateEquationNumbers(){
+        const boxes = eqInputList.querySelectorAll(".equations-input-box");
+
+        boxes.forEach((box, index) => {
+            box.querySelector(".equation-number").textContent = index + 1
+        });
+    }
+
+    function addEquation(){
+        const clone = equationInputTemplate.content.cloneNode(true);
+
+        eqInputList.appendChild(clone);
+        updateEquationNumbers();
+    }
+
+    const addEq = document.getElementById("add-equation");
+    addEq.addEventListener("click", addEquation);
+    
+    eqInputList.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" && e.target.matches(".equation")){
+            addEquation();
         }
-    })
+    });
+
     const observer = new MutationObserver((mutationsList)=> {
         for (const mutation of mutationsList) {
             for (const node of mutation.addedNodes) {
@@ -27,70 +57,138 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                 }
             }
         }
-    })
+    });
+
     observer.observe(eqInputList, {childList: true});
     let redrawTimeout;
+
     const canvas = document.getElementById('graph');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    
     const ctx = canvas.getContext('2d');
-    ctx.translate(0, canvas.height);
-    ctx.scale(1, -1);
-    function drawAxes(offsetX, offsetY) {
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        // y-axis
-        ctx.moveTo(canvas.width/2+offsetX, 0);
-        ctx.lineTo(canvas.width/2+offsetX, canvas.height);
-        // x-axis
-        ctx.moveTo(0, canvas.height/2 + offsetY);
-        ctx.lineTo(canvas.width, canvas.height/2 + offsetY);
-        ctx.stroke();
+
+    function screenToMathX(screenX){
+        return view.xMin + (screenX / canvas.width) * (view.xMax - view.xMin);
     }
-    function drawGrid(gridSize, offsetY, offsetX) {
-        ctx.strokeStyle = 'gray';
+    
+    function screenToMathY(screenY){
+        return view.yMax - (screenY / canvas.height) * (view.yMax - view.yMin);
+    }
+
+    function mathToScreenX(x){
+        return ((x - view.xMin) / (view.xMax - view.xMin)) * canvas.width;
+    }
+
+    function mathToScreenY(y){
+        return ((view.yMax - y) / (view.yMax - view.yMin)) * canvas.height;
+    }
+
+    function getGridStep(range){
+        const roughStep = range / 10;
+        const power = Math.pow(10, Math.floor(Math.log10(roughStep)));
+        const fraction = roughStep / power;
+
+        let niceFraction;
+
+        if(fraction <= 1) niceFraction = 1;
+        else if (fraction <= 2) niceFraction = 2;
+        else if (fraction <= 5) niceFraction = 5;
+        else niceFraction = 10;
+
+        return niceFraction * power;
+    }
+
+    function drawGrid(){
+        const xStep = getGridStep(view.xMax - view.xMin);
+        const yStep = getGridStep(view.yMax - view.yMin);
+
+        ctx.strokeStyle = '#555555';
         ctx.lineWidth = 1;
         ctx.beginPath();
-        for (let x = (canvas.width/2 + offsetX); x <= canvas.width; x += gridSize) {
-            let roundedX = Math.floor(x);
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, Math.round(canvas.height));
+
+        for(let x = Math.ceil(view.xMin / xStep) * xStep; x <= view.xMax; x += xStep){
+            const px = mathToScreenX(x);
+            ctx.moveTo(px, 0);
+            ctx.lineTo(px, canvas.height);
         }
-        for (let x = (canvas.width/2 - gridSize + offsetX); x>=0; x -= gridSize) {
-            let roundedX = Math.floor(x);
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, Math.round(canvas.height));
+
+        for(let y = Math.ceil(view.yMin / yStep) * yStep; y <= view.yMax; y += yStep){
+            const py = mathToScreenY(y);
+            ctx.moveTo(0, py);
+            ctx.lineTo(canvas.width, py);
         }
-        for (let y = (canvas.height/2 + offsetY); y <= canvas.height; y += gridSize) {
-            ctx.moveTo(0, y);
-            ctx.lineTo(Math.round(canvas.width), y);
-        }
-        for (let y = (canvas.height/2 - gridSize + offsetY); y>=0; y -= gridSize) {
-            ctx.moveTo(0, y);
-            ctx.lineTo(Math.round(canvas.width), y);
-        }
+
         ctx.stroke();
     }
-    function resizeArea(offsetX, offsetY) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        ctx.translate(0, canvas.height);
-        ctx.scale(1, -1);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-        drawGrid(gridSize, offsetY, offsetX);
-        drawAxes(offsetX, offsetY);
-        drawGridNumbers(gridSize, offsetX, offsetY);
-        document.querySelectorAll(".equation").forEach(input => {
-            if (input.value.trim() !== '') {
-                redrawGraph(gridOffsetX, gridOffsetY);
-            }
-        })
+
+    function drawAxes(){
+        ctx.strokeStyle = '#aaaaaa';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        if(view.xMin <= 0 && view.xMax >= 0){
+            const x = mathToScreenX(0);
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
+        }
+
+        if(view.yMin <= 0 && view.yMax >= 0){
+            const y = mathToScreenY(0);
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+        }
+
+        ctx.stroke();
     }
-    window.addEventListener('resize', resizeArea(gridOffsetX, gridOffsetY));
-    resizeArea(gridOffsetX, gridOffsetY);
+    
+    // function drawAxes(offsetX, offsetY) {
+    //     ctx.strokeStyle = 'black';
+    //     ctx.lineWidth = 2;
+    //     ctx.beginPath();
+    //     // y-axis
+    //     ctx.moveTo(canvas.width/2+offsetX, 0);
+    //     ctx.lineTo(canvas.width/2+offsetX, canvas.height);
+    //     // x-axis
+    //     ctx.moveTo(0, canvas.height/2 + offsetY);
+    //     ctx.lineTo(canvas.width, canvas.height/2 + offsetY);
+    //     ctx.stroke();
+    // }
+
+    // function drawGrid(gridSize, offsetY, offsetX) {
+    //     ctx.strokeStyle = 'gray';
+    //     ctx.lineWidth = 1;
+    //     ctx.beginPath();
+    //     for (let x = (canvas.width/2 + offsetX); x <= canvas.width; x += gridSize) {
+    //         let roundedX = Math.floor(x);
+    //         ctx.moveTo(x, 0);
+    //         ctx.lineTo(x, Math.round(canvas.height));
+    //     }
+    //     for (let x = (canvas.width/2 - gridSize + offsetX); x>=0; x -= gridSize) {
+    //         let roundedX = Math.floor(x);
+    //         ctx.moveTo(x, 0);
+    //         ctx.lineTo(x, Math.round(canvas.height));
+    //     }
+    //     for (let y = (canvas.height/2 + offsetY); y <= canvas.height; y += gridSize) {
+    //         ctx.moveTo(0, y);
+    //         ctx.lineTo(Math.round(canvas.width), y);
+    //     }
+    //     for (let y = (canvas.height/2 - gridSize + offsetY); y>=0; y -= gridSize) {
+    //         ctx.moveTo(0, y);
+    //         ctx.lineTo(Math.round(canvas.width), y);
+    //     }
+    //     ctx.stroke();
+    // }
+
+    function resizeArea(offsetX, offsetY) {
+        redrawGraph();
+    }
+
+    window.addEventListener('resize', resizeArea);
+    resizeArea();
+
     let eqInputs = eqInputList.querySelectorAll(".equations-input-box");
+    
     eqInputList.addEventListener('click', (e)=> {
         e.preventDefault();
         const button = e.target.closest(".equation-delete");
@@ -99,47 +197,161 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         console.log(eqInputs.length);
         if (eqInputs.length === 1) {
             eqInputs[0].querySelector(".equation").value = '';
-            redrawGraph(gridOffsetX, gridOffsetY);
+            redrawGraph();
         } else {
             const boxToDel = e.target.parentElement;
             boxToDel.remove();
-            redrawGraph(gridOffsetX, gridOffsetY);
+
+            updateEquationNumbers();
+            redrawGraph();
         }
-    })
+    });
+
     // eqInputs.forEach(equation => {
     //     equation.querySelector('.equation').addEventListener('input', (e)=> {
     //         redrawGraph();
     //     })
     // })
+    
     eqInputList.addEventListener('input', (e)=> {
         if (e.target.matches('.equation')) {
             clearTimeout(redrawTimeout);
             redrawTimeout = setTimeout(() => {
-                redrawGraph(gridOffsetX, gridOffsetY);
+                redrawGraph();
             }, 150);
         }
-    })
+    });
+
     function redrawGraph(offsetX, offsetY) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.translate(0, canvas.height);
-        ctx.scale(1, -1);
-        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-        drawGrid(gridSize, offsetY === 0? 0 : offsetY, offsetX  === 0? 0 : offsetX);
-        drawAxes(offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
-        drawGridNumbers(gridSize, offsetX === 0? 0 : offsetX, offsetY === 0? 0 : offsetY);
+        
+        drawGrid();
+        drawAxes();
+        drawGridNumbers();
+        
         document.querySelectorAll(".equation").forEach(input => {
             if (input.value.trim() !== '') {
-                console.log(input.value)
-                plotEquation(input.value, gridSize, input.dataset.color);
+                plotEquation(input.value, input.dataset.color);
             }
-        })
+        });
     }
-    function plotEquation(value, gridSize, color) {
+
+    // zoom with scroll
+    function zoomAt(clientX, clientY, factor){
+        const rect = canvas.getBoundingClientRect();
+
+        const mouseX = clientX - rect.left;
+        const mouseY = clientY - rect.top;
+
+        const anchorX = screenToMathX(mouseX);
+        const anchorY = screenToMathY(mouseY);
+
+        view.xMin = anchorX - (anchorX - view.xMin) / factor;
+        view.xMax = anchorX + (view.xMax - anchorX) / factor;
+        view.yMin = anchorY - (anchorY - view.yMin) / factor;
+        view.yMax = anchorY + (view.yMax - anchorY) / factor;
+
+        // const oldGridSize = getGridSize();
+
+        // const graphX = (mouseX - (canvas.width / 2 + gridOffsetX)) / oldGridSize;
+        // const graphY = (canvas.height / 2 - gridOffsetY - mouseY) / oldGridSize;
+
+        // zoom = Math.max(0.2, Math.min(zoom * zoomFactor, 8));
+
+        // const newGridSize = getGridSize();
+
+        // gridOffsetX = mouseX - canvas.width / 2 - graphX * newGridSize;
+        // gridOffsetY = mouseY - canvas.height / 2 - graphY * newGridSize;
+
+        redrawGraph();
+    }
+
+    canvas.addEventListener("wheel", (e) => {
+        if(!e.ctrlKey && !e.metaKey) return;
+
+        e.preventDefault();
+        const factor = Math.exp(-e.deltaY * 0.01);
+        zoomAt(e.clientX, e.clientY, factor);
+    }, {passive: false});
+
+    let lastGestureScale = 1;
+
+    canvas.addEventListener("gesturestart", (e) => {
+        e.preventDefault();
+        lastGestureScale = 1;
+    });
+
+    canvas.addEventListener("gesturechange", (e) => {
+        e.preventDefault();
+
+        const factor = e.scale / lastGestureScale;
+        lastGestureScale = e.scale;
+
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.clientX || rect.left + rect.width / 2;
+        const clientY = e.clientY || rect.top + rect.height / 2;
+
+        zoomAt(clientX, clientY, factor);
+    });
+
+    canvas.addEventListener("gestureend", (e) => {
+        e.preventDefault();
+        lastGestureScale = 1;
+    });
+
+    // click and drag to pan graph
+    let isPanning = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    canvas.addEventListener("pointerdown", (e) => {
+        if(e.button !== 0) return;
+
+        isPanning = true;
+
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+
+        canvas.setPointerCapture(e.pointerId);
+        canvas.style.cursor = "grabbing";
+    });
+
+    canvas.addEventListener("pointermove", (e) => {
+        if(!isPanning) return;
+
+        const dx = e.clientX - lastMouseX;
+        const dy = e.clientY - lastMouseY;
+
+        const xUnitsPerPixel = (view.xMax - view.xMin) / canvas.width;
+        const yUnitsPerPixel = (view.yMax - view.yMin) / canvas.height;
+
+        view.xMin -= dx * xUnitsPerPixel;
+        view.xMax -= dx * xUnitsPerPixel;
+        view.yMin += dy * yUnitsPerPixel;
+        view.yMax += dy * yUnitsPerPixel;
+
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+
+        redrawGraph();
+    });
+
+    function stopPanning(){
+        isPanning = false;
+        canvas.style.cursor = "grab";
+    }
+
+    canvas.addEventListener("pointerup", stopPanning);
+    canvas.addEventListener("pointercancel", stopPanning);
+
+    function plotEquation(value, color) {
         if (!value.trim()) return;
         let compiled;
         console.log("Plotting:", value);
+        
         try {
             const parts = value.split('=');
             if (parts.length === 2) {
@@ -150,21 +362,12 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             } else {
                 return;
             }
-            // if (node.isOperatorNode && node.op === '=') {
-            //     const difference = new Math.operatorNode(
-            //         '-',
-            //         'subtract',
-            //         node.args
-            //     );
-            //     compiled = difference.compile();
-            // } else {
-            //     compiled = math.parse(`y-(${value})`).compile();
-            // }
             console.log("Compiled successfully", compiled);       
         } catch (error) {
             console.error("Invalid equation: ", value, error);
             return;
         }
+        
         function evaluate(x, y) {
             try {
                 const result = compiled.evaluate({x, y});
@@ -173,17 +376,16 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                 return NaN;
             }
         }
+
         const width = canvas.width;
         const height = canvas.height;
-        const originX = width/2 + gridOffsetX;
-        const originY = height/2 + gridOffsetY;
         
         function mathX(px) {
-            return (px - originX) / gridSize;
+            return screenToMathX(px);
         }
 
         function mathY(py) {
-            return (py - originY) / gridSize;
+            return screenToMathY(py);
         }
 
         // ai generated function below
@@ -302,56 +504,47 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             return false;
         }
     }
-    function drawGridNumbers(gridSize, offsetX, offsetY) {
-        ctx.save();
 
-        // Reset the flipped coordinate system for text
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
+    function drawGridNumbers(gridSize, offsetX, offsetY) {
+        const xStep = getGridStep(view.xMax - view.xMin);
+        const yStep = getGridStep(view.yMax - view.yMin);
+
+        const hasYAxis = view.xMin <= 0 && view.xMax >= 0;
+        const hasXAxis = view.yMin<= 0 && view.yMax >= 0;
+
+        const axisX = hasYAxis ? mathToScreenX(0) : 0;
+        const axisY = hasXAxis ? mathToScreenY(0) : canvas.height;
+
+        ctx.save();
 
         ctx.fillStyle = 'white';
         ctx.font = '12px Rubik';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
 
-        const originX = canvas.width / 2 + offsetX;
-        const originY = canvas.height/ 2 - offsetY;
-
         // X-axis numbers
-        for (let x = 1; originX + x * gridSize < canvas.width; x++) {
-            ctx.fillText(
-                x,
-                originX + x * gridSize,
-                originY + 8
-            );
-        }
+        for (let x = Math.ceil(view.xMin / xStep) * xStep; x <= view.xMax; x+= xStep) {
+            if(Math.abs(x) < 0.0000001) continue;
 
-        for (let x = 1; originX - x * gridSize > 0; x++) {
-            ctx.fillText(
-                -x,
-                originX - x * gridSize,
-                originY + 8
-            );
+            const px = mathToScreenX(x);
+            const py = hasXAxis ? axisY + 8 : canvas.height - 20;
+
+            ctx.fillText(Number(x.toPrecision(6)), px, py);
         }
 
         // Y-axis numbers
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
 
-        for (let y = 1; originY - y * gridSize > 0; y++) {
-            ctx.fillText(
-                y,
-                originX + 8,
-                originY - y * gridSize
-            );
+        for (let y = Math.ceil(view.yMin / yStep) * yStep; y <= view.yMax; y += yStep){
+            if(Math.abs(y) < 0.0000001) continue;
+
+            const px = hasYAxis ? axisX + 8 : 8;
+            const py = mathToScreenY(y);
+
+            ctx.fillText(Number(y.toPrecision(6)), px, py);
         }
 
-        for (let y = 1; originY + y * gridSize < canvas.height; y++) {
-            ctx.fillText(
-                -y,
-                originX + 8,
-                originY + y * gridSize
-            );
-        }
         ctx.restore();
     }
     let eqNumberColor = 1;
@@ -389,12 +582,13 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
                     console.log(allNumbers[i].parentElement.parentElement);
                     if (allNumbers[i].textContent === eqNumberColor) {
                         allNumbers[i].parentElement.parentElement.querySelector(".equation").dataset.color = colorToBecome;
-                        redrawGraph(gridOffsetX, gridOffsetY);
+                        redrawGraph();
                     }
                 }
-            })
-        })
+            });
+        });
     }
+
     eqInputList.addEventListener("click", (e)=> {
         const button = e.target.closest(".color-pick");
         if (!button) return;
@@ -407,34 +601,78 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
             colorMenu.classList.add("slideIn");
         }
         console.log("Equation being edited: ", eqNumberColor);
-    })
+    });
+
     setUpListenersC();
+    
     // shopSale();
-    const gridControls = document.getElementById("graph-nav");
-    const gridUp = document.getElementById("graph-up");
-    const gridDown = document.getElementById("graph-down");
-    const gridLeft = document.getElementById("graph-left");
-    const gridRight = document.getElementById("graph-right");
-    gridUp.addEventListener('click', (e)=> {
-        e.preventDefault();
-        moveGrid(0, 1);
-    })
-    gridDown.addEventListener('click', (e)=> {
-        e.preventDefault();
-        moveGrid(0, -1);
-    })
-    gridLeft.addEventListener('click', (e)=> {
-        e.preventDefault();
-        moveGrid(-1, 0);
-    })
-    gridRight.addEventListener('click', (e)=> {
-        e.preventDefault();
-        moveGrid(1, 0);
-    })
-    function moveGrid(toOffsetX, toOffsetY) {
-        const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
-        gridOffsetX += toOffsetX * gridSize;
-        gridOffsetY += toOffsetY * gridSize;
-        redrawGraph(gridOffsetX, gridOffsetY);
+    // const gridControls = document.getElementById("graph-nav");
+    // const gridUp = document.getElementById("graph-up");
+    // const gridDown = document.getElementById("graph-down");
+    // const gridLeft = document.getElementById("graph-left");
+    // const gridRight = document.getElementById("graph-right");
+    
+    // gridUp.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(0, 1);
+    // })
+    
+    // gridDown.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(0, -1);
+    // })
+    
+    // gridLeft.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(-1, 0);
+    // })
+    
+    // gridRight.addEventListener('click', (e)=> {
+    //     e.preventDefault();
+    //     moveGrid(1, 0);
+    // })
+    
+    // function moveGrid(toOffsetX, toOffsetY) {
+    //     const gridSize = Math.max(15, Math.round(Math.min(canvas.height, canvas.width)/20))
+    //     gridOffsetX += toOffsetX * gridSize;
+    //     gridOffsetY += toOffsetY * gridSize;
+    //     redrawGraph(gridOffsetX, gridOffsetY);
+    // }
+
+    // resize equations sidebar dragging
+    const equations = document.getElementById("equations");
+    let isResizing = false;
+
+    equations.addEventListener("pointerdown", (e) => {
+        const rect = equations.getBoundingClientRect();
+        
+        if(e.clientX < rect.right - 2) return;
+
+        isResizing = true;
+        equations.classList.add("resizing");
+        equations.setPointerCapture(e.pointerId);
+    });
+
+    equations.addEventListener("pointermove", (e) => {
+        if(!isResizing) return;
+        
+        const minWidth = 200;
+        const maxWidth = window.innerWidth * 0.4;
+
+        const newWidth = Math.max(minWidth, Math.min(e.clientX, maxWidth));
+        equations.style.width = `${newWidth}px`;
+
+        redrawGraph();
+    });
+
+    function stopResizing(){
+        if(!isResizing) return;
+
+        isResizing = false;
+        equations.classList.remove("resizing");
+        redrawGraph();
     }
+
+    equations.addEventListener("pointerup", stopResizing);
+    equations.addEventListener("pointercancel", stopResizing);
 })

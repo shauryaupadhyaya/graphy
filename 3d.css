@@ -51,15 +51,25 @@ nav {
     flex-shrink: 0;
 }
 
+nav a{
+    text-decoration: none;
+    color: var(--text);
+}
+
 main {
     display: flex;
     flex-direction: row;
     flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
 }
 
 #nav-right {
     display: flex;
     gap: 20px;
+    font-size: 0.98rem;
+    font-weight: 500;
 }
 
 #equations {
@@ -68,14 +78,32 @@ main {
     align-items: center;
     background-color: var(--mantle);
     width: 20%;
+    min-width: 200px;
+    max-width: 40%;
     flex-shrink: 0;
     min-height: 0;
+    position: relative;
+    user-select: none;
+}
+
+#equations::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    cursor: ew-resize;
+    z-index: 20;
+}
+
+#equations.resizing::after{
+    background-color: var(--blue);
 }
 
 #equations-title {
-    color: black;
+    color: var(--text);
     font-family: 'Rubik';
-    margin: 15px 10px;
     align-items: center;
 }
 
@@ -90,7 +118,7 @@ main {
 
 .equation-delete {
     background-color: var(--surface0);
-    color: black;
+    color: var(--text);
     font-family: 'Rubik';
     border: 0px;
     font-size: 20px;
@@ -152,9 +180,12 @@ main {
 }
 
 #maincanvas {
-    width: 80%;
+    flex: 1;
+    width: 0;
+    min-width: 0;
     height: 100%;
-    image-rendering: pixelated;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 #maincanvas canvas {
@@ -170,7 +201,7 @@ main {
     padding: 0;
     flex-shrink: 0;
     box-sizing: border-box;
-    color: black;
+    color: var(--text);
     background: none;
     border: none;
     position: absolute;
@@ -306,4 +337,24 @@ main {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+}
+
+#equations-top{
+    display: flex;
+    margin: 15px 0px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 15px;
+    gap: 10px;
+}
+
+#add-equation{
+    background: var(--mantle);
+    border: none;
+    color: var(--text);
+    font-size: 1.3rem;
+    align-items: center;
+    justify-content: center;
 }

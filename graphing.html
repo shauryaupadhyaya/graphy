@@ -9,16 +9,18 @@
 <body>
     <nav>
         <div id="nav-left">
-            <p>Graphy</p>
+            <a href="index.html">Graphy</a>
         </div>
         <div id="nav-right">
-            <p>Scientific Calculator</p>
+            <a href="calc.html">Scientific Calculator</a>
+            <a href="3d.html">3D Graph</a>
         </div>
     </nav>
     <main>
         <div id="equations">
             <div id="equations-top">
                 <p id="equations-title">Equations</p>
+                <button id="add-equation" type="button">+</button>
             </div>
             <div id="equations-bottom">
                 <div class="equations-input-box">
@@ -53,12 +55,12 @@
             <button class="color-pick">✎</button>
         </div>
     </template>
-    <div id="graph-nav">
+    <!-- <div id="graph-nav">
         <button id="graph-up">W</button>
         <button id="graph-down">S</button>
         <button id="graph-left">A</button>
         <button id="graph-right">D</button>
-    </div>
+    </div> -->
     <script src="graphing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.js"></script>
 </body>
