@@ -10,10 +10,10 @@ extends Panel
 # medium: 1.5x
 # hard: 2x
 func _load_scores() -> void:
-	score.text = str(Manager.score)
-	questions.text = str(Manager.questions_score)
-	multiplier.text = str(str(Manager.difficulty), "x")
-	total.text = str(Manager.total_score * Manager.difficulty)
+	score.text = str("Score: ", Manager.score)
+	questions.text = str("Qs Score: ", Manager.questions_score)
+	multiplier.text = str("Difficulty: ",str(Manager.difficulty), "x")
+	total.text = str("Total Score: ", Manager.total_score * Manager.difficulty)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action("ui_accept") && self.visible:

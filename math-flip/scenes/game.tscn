@@ -8,7 +8,6 @@
 [ext_resource type="FontFile" uid="uid://blqite3k7ob4n" path="res://assets/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="5_iywne"]
 [ext_resource type="AudioStream" uid="uid://bb7xp5lwbpbtl" path="res://assets/make_more_sound-321-go-8-bit-video-game-sound-version-1-145007.mp3" id="6_p57ef"]
 [ext_resource type="Material" uid="uid://vvrbjxi8sp22" path="res://assets/shaders/glassmorphism.tres" id="7_0tnpc"]
-[ext_resource type="FontFile" uid="uid://bohy4k54qpcvo" path="res://assets/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="7_gee14"]
 [ext_resource type="Script" uid="uid://fmryi0q3dcbn" path="res://scripts/load_scores.gd" id="10_dinhu"]
 [ext_resource type="PackedScene" uid="uid://eyrcc22duknh" path="res://scenes/pipes.tscn" id="10_vtaks"]
 [ext_resource type="Script" uid="uid://d1ebmas2k2qjp" path="res://scripts/pipe_spawner.gd" id="11_kvpfn"]
@@ -663,7 +662,6 @@ theme_override_font_sizes/font_size = 256
 text = "Go!"
 
 [node name="OuterPanel-Pause" type="Panel" parent="Control" unique_id=762873147]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -705,7 +703,7 @@ offset_bottom = 92.99999
 grow_horizontal = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("5_iywne")
+theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 64
 text = "Paused"
 horizontal_alignment = 1
@@ -726,7 +724,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 text = "Score: 10"
 
@@ -745,7 +743,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 text = "Answered:  0"
 
@@ -764,7 +762,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 text = "Difficulty: x1"
 
@@ -783,9 +781,29 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 11
-theme_override_fonts/font = ExtResource("7_gee14")
+theme_override_fonts/font = ExtResource("13_kvuet")
 theme_override_font_sizes/font_size = 48
 text = "Total: 10"
+
+[node name="Paused2" type="Label" parent="Control/OuterPanel-Pause/InnerPanel" unique_id=1375863874]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -144.5
+offset_top = -40.5
+offset_right = 144.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("13_kvuet")
+theme_override_font_sizes/font_size = 32
+text = "Press enter to restart"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ScoreCounter" type="Label" parent="Control" unique_id=1766976612]
 layout_mode = 1

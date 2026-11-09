@@ -253,6 +253,20 @@ theme_override_fonts/font = ExtResource("2_bvmav")
 theme_override_font_sizes/font_size = 48
 text = "2x Multipler"
 
+[node name="Back" type="Button" parent="." unique_id=1263007049]
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 52.0
+theme_override_fonts/font = ExtResource("2_bvmav")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_uu84u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ugo8b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ugo8b")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ugo8b")
+theme_override_styles/focus = SubResource("StyleBoxFlat_ugo8b")
+text = "Back to Main menu"
+
 [connection signal="pressed" from="Easy" to="." method="_on_easy_pressed"]
 [connection signal="pressed" from="Medium" to="." method="_on_medium_pressed"]
 [connection signal="pressed" from="Hard" to="." method="_on_hard_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]
