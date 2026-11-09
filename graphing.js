@@ -9,16 +9,40 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         yMax: 10
     };
 
-    eqInputList.addEventListener('keydown', (e)=>{
-        if (e.key === 'Enter' && e.target.matches('.equation')) {
-            const element = e.target;
-            const clone = equationInputTemplate.content.cloneNode(true);
-            let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
-            cloneNumber++;
-            clone.querySelector(".equation-number").textContent = cloneNumber;
-            eqInputList.appendChild(clone);
-            eqInputListCount++;
-            // shopSale();
+    // eqInputList.addEventListener('keydown', (e)=>{
+    //     if (e.key === 'Enter' && e.target.matches('.equation')) {
+    //         const element = e.target;
+    //         const clone = equationInputTemplate.content.cloneNode(true);
+    //         let cloneNumber = element.parentElement.querySelector(".equation-number").textContent;
+    //         cloneNumber++;
+    //         clone.querySelector(".equation-number").textContent = cloneNumber;
+    //         eqInputList.appendChild(clone);
+    //         eqInputListCount++;
+    //         // shopSale();
+    //     }
+    // });
+
+    function updateEquationNumbers(){
+        const boxes = eqInputList.querySelectorAll(".equations-input-box");
+
+        boxes.forEach((box, index) => {
+            box.querySelector(".equation-number").textContent = index + 1
+        });
+    }
+
+    function addEquation(){
+        const clone = equationInputTemplate.content.cloneNode(true);
+
+        eqInputList.appendChild(clone);
+        updateEquationNumbers();
+    }
+
+    const addEq = document.getElementById("add-equation");
+    addEq.addEventListener("click", addEquation);
+    
+    eqInputList.addEventListener("keydown", (e) => {
+        if(e.key === "Enter" && e.target.matches(".equation")){
+            addEquation();
         }
     });
 
@@ -177,6 +201,8 @@ document.addEventListener('DOMContentLoaded', async (e)=>{
         } else {
             const boxToDel = e.target.parentElement;
             boxToDel.remove();
+
+            updateEquationNumbers();
             redrawGraph();
         }
     });

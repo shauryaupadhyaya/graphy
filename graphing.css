@@ -306,47 +306,13 @@ main {
     cursor: grabbing;
 }
 
-/* #graph-nav {
-    position: absolute;
-    top: 59px;
-    right: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+#equations-top{
+    display: flex;
 }
 
-#graph-nav button {
-    padding: 7px 10px;
-}
-
-#graph-up {
-    background-color: var(--maroon);
+#add-equation{
+    background: var(--mantle);
     border: none;
-    border-radius: 5px;
-    color: var(--base);
-    grid-column: 2;
+    color: var(--text);
+    font-size: 1.3rem;
 }
-#graph-down {
-    background-color: var(--maroon);
-    border: none;
-    border-radius: 5px;
-    color: var(--base);
-    grid-column: 2;
-    grid-row: 3;
-}
-#graph-right {
-    background-color: var(--green);
-    border: none;
-    border-radius: 5px;
-    color: var(--base);
-    grid-column: 3;
-    grid-row: 2;
-}
-#graph-left {
-    background-color: var(--green);
-    border: none;
-    border-radius: 5px;
-    color: var(--base);
-    grid-column: 1;
-    grid-row: 2;
-} */
