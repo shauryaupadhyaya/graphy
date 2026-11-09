@@ -302,7 +302,11 @@ main {
     display: block;
 }
 
-#graph-nav {
+#graph:active{
+    cursor: grabbing;
+}
+
+/* #graph-nav {
     position: absolute;
     top: 59px;
     right: 0;
@@ -345,4 +349,4 @@ main {
     color: var(--base);
     grid-column: 1;
     grid-row: 2;
-}
+} */
