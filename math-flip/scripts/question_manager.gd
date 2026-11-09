@@ -7,7 +7,7 @@ extends Node
 
 var questions_answerd: int = 0 # check the number questions answered by user
 var pipes_passed: int = 0 # counts pipe passed by user for regenerating questions
-var pipes_per_questions: int = 1 # stores number of pipes to unlock after each q, easy: questions show up every 15, medium: 13, hard: 10
+var pipes_per_questions: int = 3 # stores number of pipes to unlock after each q, easy: questions show up every 15, medium: 13, hard: 10
 
 var questions_data: Dictionary
 var question: Dictionary
@@ -16,6 +16,7 @@ func _ready() -> void:
 	var file = FileAccess.open("res://questions.json", FileAccess.READ)
 	if file == null:
 		print("failed to find file")
+		return
 	var json_text = file.get_as_text()
 	file.close()
 	questions_data = JSON.parse_string(json_text)
@@ -44,13 +45,4 @@ signal questions_unlocked
 func _check_question_unlock() -> void:
 	if pipes_passed >= pipes_per_questions:
 		pipes_passed = 0
-		match Manager.difficulty:
-			1.0:
-				_get_question("easy")
-			1.5:
-				_get_question("medium")
-			2.0:
-				_get_question("hard")
-			_:
-				print("boing... unspecified difficulty")
 		questions_unlocked.emit()

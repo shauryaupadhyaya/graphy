@@ -4,7 +4,9 @@ extends Control
 # hide panel on load. only show panel when QuestionManager pipes passed is more than questions unlocked + 1 times 10 - done
 # get questions from question manager - done
 # load options - done
-# if timer runs out deduct 1 from score for easy, 2 for medium, 4 for hard
+# if timer runs out deduct 2 from score for easy, 3 for medium, 5 for hard
+# give 1 for easy, 2 for medium and 3 points for hard
+
 @onready var question_text: Label = $QuestionBG/Question
 @onready var score_counter: Label = $"../ScoreCounter"
 #@onready var option_1: Button = $QuestionBG/Option1
@@ -21,15 +23,16 @@ extends Control
 @onready var clouds_back: Parallax2D = $"../../Clouds_Back"
 @onready var clouds_front: Parallax2D = $"../../Clouds_Front"
 @onready var question_timer: Timer = $"../../QuestionTimer"
-
+var question: Dictionary = {}
 func _ready() -> void:
 	hide()
 	QuestionManager.connect("questions_unlocked", _load_question)
 	question_timer.connect("timeout", _timer_out)
+	for i in range(options.size()):
+		options[i].connect("pressed", _check_answer.bind(i))
 
 func _load_question() -> void:
 	@warning_ignore("unused_variable")
-	var question: Dictionary = {}
 	match Manager.difficulty:
 		1.0:
 			question = QuestionManager._get_question("easy")
@@ -79,6 +82,11 @@ func _hide_panel() -> void:
 	spawner.spawn = true
 	spawner._start_pipes()
 	_stop_timer()
+	player.set_collision_layer_value(1, false)
+	player.set_collision_mask_value(1, false)
+	await get_tree().create_timer(0.5).timeout
+	player.set_collision_layer_value(1, true)
+	player.set_collision_mask_value(1, true)
 	
 func _start_timer() -> void:
 	question_timer.start()
@@ -86,19 +94,47 @@ func _start_timer() -> void:
 func _stop_timer() -> void:
 	question_timer.stop()
 
+# if timer runs out deduct 2 from score for easy, 3 for medium, 5 for hard
+# give 1 for easy, 2 for medium and 3 points for hard for answering correctly
 func _timer_out() -> void:
-	Manager.score -= 1
-	Manager.total_score = Manager.score + Manager.questions_score
+	match Manager.difficulty:
+		1.0:
+			Manager.score -= 2
+		1.5:
+			Manager.score -= 3
+		2.0:
+			Manager.score -= 5
 	_update_score()
+	_hide_panel()
+	hide()
 
 func _update_score() -> void:
 	Manager.total_score = Manager.score + Manager.questions_score
 	score_counter.text = str(Manager.total_score)
-	QuestionManager._increment_pipes()
 
 func _process(_delta: float) -> void:
 	question_timer_bar.value = (question_timer.time_left / question_timer.wait_time) * 100
 
-
+func _check_answer(index: int) -> void:
+	var isCorrect: bool = false
+	isCorrect = QuestionManager._check_answer(question, index)
+	if isCorrect:
+		_hide_panel()
+		_stop_timer()
+		_awardPoints()
+		hide()
+	pass
+	#todo: loop through available options, find which one matches answer and then check
 # todo: connect answers to questions
 # todo: restart game
+
+func _awardPoints() -> void:
+	match Manager.difficulty:
+		1.0:
+			Manager.score += 1
+		1.5:
+			Manager.score += 2
+		2.0:
+			Manager.score += 3
+	Manager.total_score = Manager.score + Manager.questions_score
+	score_counter.text = str(Manager.total_score)

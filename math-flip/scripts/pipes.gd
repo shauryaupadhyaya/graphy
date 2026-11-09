@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 		position.x -= (speed * delta)
 
 func _on_point_rewards_area_body_entered(_body: Node2D) -> void:
+	print("PIPE REWARD")
 	Manager._increment_score(1)
 	get_parent()._update_score()
 

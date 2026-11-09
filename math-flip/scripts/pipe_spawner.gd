@@ -5,12 +5,11 @@ extends Node2D
 @export var spawn: bool = true
 @onready var score_counter: Label = $"../Control/ScoreCounter"
 @onready var player: CharacterBody2D = $"../Player"
-
 func _ready() -> void:
 	timer.connect("timeout", _spawn_pipe)
 
 func _spawn_pipe() -> void:
-	timer.wait_time = 1.3
+	timer.wait_time = 1.5
 	if spawn:
 		var pipe = pipe_scene.instantiate()
 		pipe.game_started = true
@@ -30,11 +29,13 @@ func _player_die() -> void:
 		child._stop_moving()
 
 func _stop_pipes() -> void:
+	timer.stop()
 	var children = self.get_children(true)
 	for child in children:
 		child._stop_moving()
 		
 func _start_pipes() -> void:
+	timer.start()
 	var children = self.get_children(true)
 	for child in children:
 		child._start_moving()

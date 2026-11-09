@@ -51,6 +51,7 @@ func _show_score_menu() -> void:
 	is_paused = true
 	score_menu.show()
 	bird.pause()
+	score_menu._load_scores()
 
 func _hide_score_menu() -> void:
 	sky.autoscroll = Vector2(-20, 1)
