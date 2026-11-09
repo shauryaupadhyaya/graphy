@@ -104,7 +104,6 @@ main {
 #equations-title {
     color: var(--text);
     font-family: 'Rubik';
-    margin: 15px 10px;
     align-items: center;
 }
 
@@ -338,4 +337,24 @@ main {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+}
+
+#equations-top{
+    display: flex;
+    margin: 15px 0px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 15px;
+    gap: 10px;
+}
+
+#add-equation{
+    background: var(--mantle);
+    border: none;
+    color: var(--text);
+    font-size: 1.3rem;
+    align-items: center;
+    justify-content: center;
 }
