@@ -1,17 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 :root{
-    --bg: #24273a;
-    --surface: #363a4f;
-    --surface-hover: #41465e;
-    --border: #;
-    --text: #;
-    --muted: #;
+    color-scheme: light dark;
+
+    --base: light-dark(#eff1f5, #24273a);
+    --mantle: light-dark(#e6e9ef, #1e2030);
+    --crust: light-dark(#dce0e8, #181926);
+    --surface0: light-dark(#ccd0da, #363a4f);
+    --surface1: light-dark(#bcc0cc, #494d64);
+    --surface2: light-dark(#acb0be, #5b6078);
+    --overlay0: light-dark(#9ca0b0, #6e738d);
+    --overlay1: light-dark(#8c8fa1, #8087a2);
+    --overlay2: light-dark(#7c7f93, #939ab7);
+    --subtext0: light-dark(#6c6f85, #a5adcb);
+    --subtext1: light-dark(#5c5f77, #b8c0e0);
+    --text: light-dark(#4c4f69, #cad3f5);
+    --rosewater: light-dark(#dc8a78, #f4dbd6);
+    --flamingo: light-dark(#dd7878, #f0c6c6);
+    --pink: light-dark(#ea76cb, #f5bde6);
+    --mauve: light-dark(#8839ef, #c6a0f6);
+    --red: light-dark(#d20f39, #ed8796);
+    --maroon: light-dark(#e64553, #ee99a0);
+    --peach: light-dark(#fe640b, #f5a97f);
+    --yellow: light-dark(#df8e1d, #eed49f);
+    --green: light-dark(#40a02b, #a6da95);
+    --teal: light-dark(#179299, #8bd5ca);
+    --sky: light-dark(#04a5e5, #8bd5ca);
+    --sapphire: light-dark(#209fb5, #7dc4e4);
+    --blue: light-dark(#1e66f5, #8aadf4);
+    --lavender: light-dark(#7287fd, #b7bdf8);
 }
 
 html{
     font-family: 'IBM Plex Serif', serif;
+    background-color: var(--base);
     scroll-behavior: smooth;
+}
+
+body{
+    margin: 0;
+    background-color: var(--base);
+    color: var(--text);
 }
 
 /* nav */
@@ -24,16 +53,16 @@ html{
     left: 3vw;
     right: 3vw;
     z-index: 1000;
-    border: 1px solid black;
+    border: 1px solid var(--surface1);
     padding: 15px 20px;
     border-radius: 12px;
-    background-color: rgba(255,255,255,0.7);
+    background-color: var(--mantle);
     backdrop-filter: blur(5px);
 }
 
 .nav > a{
     text-decoration: none;
-    color: black;
+    color: var(--text);
     font-size: 1.5rem;
     font-weight: 700;
 }
@@ -46,7 +75,7 @@ html{
 
 .nav-links a{
     text-decoration: none;
-    color: black;
+    color: var(--text);
     font-size: 1.15rem;
     font-weight: 600;
     transition: opacity 0.5s ease;
@@ -86,6 +115,7 @@ html{
 
 #heroTitle p{
     margin: 0;
+    font-size: 1.3rem;
 }
 
 #about, #tools, #team{
@@ -95,7 +125,7 @@ html{
 .explore{
     font-size: 1.3rem;
     text-decoration: none;
-    color: black;
+    color: var(--text);
     transition: all 0.3s ease;
 }
 
@@ -178,7 +208,7 @@ html{
     aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: 10px;
-    border: 1.5px solid black;
+    border: 1.5px solid var(--overlay2);
     transition: all 0.3s ease;
 }
 
@@ -217,7 +247,7 @@ html{
     position: relative;
     height: 350px;
     overflow: hidden;
-    border: 1px solid black;
+    border: 1px solid var(--overlay2);
     border-radius: 15px;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -308,11 +338,12 @@ html{
     max-width: 900px;
     height: 75vh;
     overflow: hidden;
-    border: 1px solid black;
+    border: 1px solid var(--overlay2);
     border-radius: 15px;
     background: white;
     transform: translateY(20px) scale(0.97);
     transition: transform 0.3s ease;
+    background-color: var(--base);
 }
 
 .profile-modal.active .profile-panel{
@@ -347,6 +378,7 @@ html{
     padding: 35px;
     padding-right: 15px;
     overflow-y: auto;
+    background-color: var(--base);
 }
 
 .profile-close{
@@ -358,9 +390,9 @@ html{
     place-items: center;
     width: 40px;
     height: 40px;
-    border: 1px solid black;
+    border: 1px solid var(--text);
     border-radius: 50%;
-    background: white;
+    background: var(--crust);
 }
 
 .profile-header{
@@ -405,8 +437,8 @@ html{
     padding: 12px 16px;
     border: 1px solid black;
     border-radius: 10px;
-    background-color: #000000;
-    color: white;
+    background-color: var(--crust);
+    color: var(--text);
     text-decoration: none;
     font-size: 1.1rem;
     text-align: center;
@@ -415,8 +447,8 @@ html{
 }
 
 .profile-github:hover{
-    background: white;
-    color: #000;
+    background: var(--text);
+    color: var(--mantle);
 }
 
 body.modal-open{
@@ -427,7 +459,7 @@ body.modal-open{
 #footer{
     margin-top: 60px;
     padding: 25px 0 15px;
-    border-top: 1px solid black;
+    border-top: 1px solid var(--overlay2);
 }
 
 .footer-wrapper{
@@ -459,14 +491,14 @@ body.modal-open{
 
 #footerTitle{
     text-decoration: none;
-    color: black;
+    color: var(--text);
     font-size: 1.5rem;
     font-weight: 800;
 }
 
 .tools a{
     text-decoration: none;
-    color: black;
+    color: var(--text);
 }
 
 .quick-links{
@@ -488,14 +520,14 @@ body.modal-open{
 
 #quickLinks a{
     text-decoration: none;
-    color: black;
+    color: var(--text);
 }
 
 .footer-bottom{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px black solid;
+    border-top: 1px solid var(--overlay2);
     padding: 20px 30px 0;
 }
 
@@ -505,5 +537,5 @@ body.modal-open{
 
 .footer-bottom p a{
     text-decoration: none;
-    color: #000000;
+    color: var(--text);
 }
