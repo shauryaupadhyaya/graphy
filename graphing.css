@@ -64,6 +64,18 @@ nav {
     flex-shrink: 0;
 }
 
+nav a{
+    text-decoration: none;
+    color: var(--text);
+}
+
+#nav-right{
+    display: flex;
+    gap: 20px;
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+
 .vr {
     border-left: 4px solid var(--base);
     width: 4px;

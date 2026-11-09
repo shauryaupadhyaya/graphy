@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
+:root{
+    --bg: #24273a;
+    --surface: #363a4f;
+    --surface-hover: #41465e;
+    --border: #;
+    --text: #;
+    --muted: #;
+}
+
 html{
     font-family: 'IBM Plex Serif', serif;
+    scroll-behavior: smooth;
 }
 
 /* nav */
@@ -53,10 +63,17 @@ html{
     justify-content: center;
 }
 
-#heroTitle{
+.heroHeader{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    text-align: center;
+}
+
+#heroTitle{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
     align-items: center;
     justify-content: center;
     margin-top: 10vh;
@@ -77,9 +94,16 @@ html{
 
 .explore{
     font-size: 1.3rem;
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease;
 }
 
-.exploretools{
+.explore:hover{
+    transform: scale(1.01) translateY(2px);
+}
+
+/* .exploretools{
     margin-top: 15px;
     display: flex;
     flex-direction: row;
@@ -101,7 +125,7 @@ html{
 .exploretools a:hover{
     transform: translateY(-5px);
     box-shadow: 0 5px 10px black;
-}
+} */
 
 /* general styles */
 .main{
@@ -111,14 +135,15 @@ html{
 }
 
 .section-header{
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     margin: 0;
+    margin-bottom: 20px;
 }
 
 /* products section */
 .tool-cards{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 60px;
 }
 
@@ -126,7 +151,11 @@ html{
     display: flex;
     flex-direction: column;
     gap: 15px;
-    padding: 15px 0;
+    padding: 15px;
+    border-radius: 20px;
+    background-color: #363a4f;
+    color: white;
+    justify-content: space-between;
 }
 
 .tool-header{
@@ -134,8 +163,27 @@ html{
     font-size: 1.5rem;
 }
 
+.tool-header a{
+    text-decoration: none;
+    color: white;
+}
+
 .tool-desc{
     margin: 0;
+}
+
+.tool-card img{
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1.5px solid black;
+    transition: all 0.3s ease;
+}
+
+.tool-card img:hover{
+    transform: translateY(5px);
 }
 
 /* team section */
@@ -143,6 +191,10 @@ html{
     display: flex;
     flex-direction: column;
     gap: 40px;
+}
+
+#team-header{
+    margin-bottom: 0;
 }
 
 .team-title-head{
@@ -393,11 +445,12 @@ body.modal-open{
 .footerhead{
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
 }
 
 .tools{
     margin: 0;
+    font-size: 0.9rem;
 }
 
 #tools-header{

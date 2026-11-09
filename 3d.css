@@ -51,6 +51,11 @@ nav {
     flex-shrink: 0;
 }
 
+nav a{
+    text-decoration: none;
+    color: var(--text);
+}
+
 main {
     display: flex;
     flex-direction: row;
@@ -63,6 +68,8 @@ main {
 #nav-right {
     display: flex;
     gap: 20px;
+    font-size: 0.98rem;
+    font-weight: 500;
 }
 
 #equations {
