@@ -1,0 +1,13 @@
+QUIET KEYS CUSTOM ASSET LICENSE v1.0
+Licensor: ailora will | 2026
+
+Permission is granted, free of charge, to use, copy and modify these assets in personal and commercial end products (including games, apps, videos, websites and printed works), and to distribute those end products with these assets incorporated. You may share source assets privately with collaborators solely to produce your end product, provided they follow these terms. Attribution is optional; “Quiet Keys by ailora will” is appreciated.
+
+You may not sell, sublicense or redistribute the assets, modified or unmodified, as standalone assets, as an asset collection, or in a template/tool whose primary value is access to these assets. Do not claim authorship of the original assets. This license does not transfer ownership or grant rights to the licensor's name or brand.
+
+Assets are supplied AS IS, without warranties of any kind. To the extent permitted by applicable law, the licensor is not liable for damages arising from their use. AI assistance was used for design and code; no guarantee of exclusive rights is made. This is not a CC0 dedication or an open-source license.
+
+日本語
+個人・商用の完成作品（ゲーム、アプリ、動画、Webサイト、印刷物等）への利用、複製、改変、および素材を組み込んだ完成作品の配布を無償で許可します。共同制作に必要な範囲で、同じ条件を守る共同制作者に非公開で元素材を共有できます。クレジットは任意です（例：Quiet Keys by ailora will）。
+改変の有無を問わず、素材単体、素材集、または素材へのアクセスを主な価値とするテンプレート／ツールとしての販売・再許諾・再配布は禁止します。原素材を自作と称さないでください。所有権や作者名・ブランドに関する権利は移転しません。
+素材は現状有姿で提供し、保証はありません。適用法で認められる範囲で利用に伴う損害の責任を負いません。デザイン・コード制作にAI補助を使用しており、独占的権利は保証しません。CC0やオープンソースライセンスではありません。
