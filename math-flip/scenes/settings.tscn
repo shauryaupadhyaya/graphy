@@ -6,6 +6,8 @@
 [ext_resource type="FontFile" uid="uid://blqite3k7ob4n" path="res://assets/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="4_f4mfi"]
 [ext_resource type="Texture2D" uid="uid://dxjey3wbiwydo" path="res://assets/speaker-svgrepo-com.svg" id="5_es4n0"]
 [ext_resource type="Script" uid="uid://bnc6pxo274py5" path="res://scripts/volume_bar.gd" id="6_gis3k"]
+[ext_resource type="FontFile" uid="uid://b4qj5lsvi2050" path="res://assets/Jersey_25/Jersey25-Regular.ttf" id="7_83j8s"]
+[ext_resource type="StyleBox" uid="uid://budmav1v1jjpe" path="res://assets/styles/audio-cues-disabled.tres" id="8_gjs24"]
 
 [sub_resource type="ImageTexture" id="ImageTexture_am25x"]
 
@@ -142,3 +144,35 @@ theme_override_styles/grabber_highlight = SubResource("StyleBoxFlat_gis3k")
 theme_override_styles/grabber_pressed = SubResource("StyleBoxFlat_gjs24")
 value = 30.0
 script = ExtResource("6_gis3k")
+
+[node name="Label2" type="Label" parent="." unique_id=206947713]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 60.0
+offset_top = -16.5
+offset_right = 133.0
+offset_bottom = 16.5
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("7_83j8s")
+theme_override_font_sizes/font_size = 40
+text = "Audio Cues (questions)"
+
+[node name="Button" type="Button" parent="." unique_id=1459041762]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 425.0
+offset_top = -20.0
+offset_right = 550.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("7_83j8s")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = ExtResource("8_gjs24")
+text = "Disabled"

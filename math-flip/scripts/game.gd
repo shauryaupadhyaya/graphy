@@ -32,6 +32,7 @@ func _input(event: InputEvent) -> void:
 		elif not outer_panel_pause.visible:
 			outer_panel_pause.visible = true
 			player.is_paused = true
+			outer_panel_pause._load_scores()
 			_pause_bg()
 
 func _pause_bg() -> void:

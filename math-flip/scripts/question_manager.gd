@@ -23,6 +23,13 @@ func _ready() -> void:
 	if questions_data == null:
 		print("Invalid JSON")
 		return
+	match Manager.difficulty:
+		1.0:
+			pipes_per_questions = 5
+		1.5:
+			pipes_per_questions = 4
+		2.0:
+			pipes_per_questions = 3
 
 func _increment_points(amount: int) -> void:
 	Manager.questions_score += float(amount * Manager.difficulty)
