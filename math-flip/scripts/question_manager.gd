@@ -35,6 +35,7 @@ func _increment_points(amount: int) -> void:
 	Manager.questions_score += float(amount * Manager.difficulty)
 	Manager.total_score = Manager.score + Manager.questions_score
 
+
 func _get_question(difficulty: String) -> Dictionary:
 	var difficulty_questions = questions_data["questions"][difficulty]
 	var random_question = difficulty_questions.pick_random()

@@ -140,10 +140,9 @@ func _check_answer(index: int) -> void:
 func _awardPoints() -> void:
 	match Manager.difficulty:
 		1.0:
-			Manager.score += 1
+			QuestionManager._increment_points(1)
 		1.5:
-			Manager.score += 2
+			QuestionManager._increment_points(2)
 		2.0:
-			Manager.score += 3
-	Manager.total_score = Manager.score + Manager.questions_score
+			QuestionManager._increment_points(3)
 	score_counter.text = str(Manager.total_score)

@@ -36,10 +36,11 @@ func _input(event: InputEvent) -> void:
 			_pause_bg()
 
 func _pause_bg() -> void:
-	sky.autoscroll = Vector2(0, 1)
+	sky.autoscroll = Vector2(1, 1)
 	clouds_back.autoscroll = Vector2(1, 1)
 	clouds_front.autoscroll = Vector2(1, 1)
 	spawner.spawn = false
+	spawner._stop_pipes()
 	bird.pause()
 
 func _unpause_bg() -> void:
@@ -48,3 +49,4 @@ func _unpause_bg() -> void:
 	clouds_front.autoscroll = Vector2(-70, 1)
 	bird.play("flap")
 	spawner.spawn = true
+	spawner._start_pipes()
